@@ -17,20 +17,26 @@
   <meta http-equiv="window-target" content="_top" />
   
   
-  <title>两数相加（含单向链表构建、检索） | 极地东风</title>
-  <meta name="description" content="两数相加问题描述：给出两个 非空 的链表用来表示两个非负的整数。其中，它们各自的位数是按照 逆序 的方式存储的，并且它们的每个节点只能存储 一位 数字。如果，我们将这两个数相加起来，则会返回一个新的链表来表示它们的和。您可以假设除了数字 0 之外，这两个数都不会以 0 开头。示例 ： 123输入：(2 -&gt; 4 -&gt; 3) + (5 -&gt; 6 -&gt; 4)输出：7 -&gt;">
+  <title>fabric 的数据库原理 | 极地东风</title>
+  <meta name="description" content="[toc] 账本的必要性：fabrc 账本是指用来记录和维护 fabric 交易的一组 nosql 数据库。我们知道 orderer 节点将 client 来发的交易进行排序、切块打包后的区块通过 grpc 协议，发送给 peer 的 leader 节点, leader 节点再将接收到的区块通过 gossip 协议分发给组织内其他的 peer 节点。这样每个 peer 节点都会拥有同样的区块文件。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="两数相加（含单向链表构建、检索）">
-<meta property="og:url" content="http://zhaobiao666.github.io/leetcode/twoPlus/index.html">
+<meta property="og:title" content="fabric 的数据库原理">
+<meta property="og:url" content="http://zhaobiao666.github.io/blockchain/fabric/fabric-database-principle/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="两数相加问题描述：给出两个 非空 的链表用来表示两个非负的整数。其中，它们各自的位数是按照 逆序 的方式存储的，并且它们的每个节点只能存储 一位 数字。如果，我们将这两个数相加起来，则会返回一个新的链表来表示它们的和。您可以假设除了数字 0 之外，这两个数都不会以 0 开头。示例 ： 123输入：(2 -&gt; 4 -&gt; 3) + (5 -&gt; 6 -&gt; 4)输出：7 -&gt;">
+<meta property="og:description" content="[toc] 账本的必要性：fabrc 账本是指用来记录和维护 fabric 交易的一组 nosql 数据库。我们知道 orderer 节点将 client 来发的交易进行排序、切块打包后的区块通过 grpc 协议，发送给 peer 的 leader 节点, leader 节点再将接收到的区块通过 gossip 协议分发给组织内其他的 peer 节点。这样每个 peer 节点都会拥有同样的区块文件。">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2020-11-12T03:34:09.000Z">
-<meta property="article:modified_time" content="2020-11-12T05:53:25.986Z">
+<meta property="og:image" content="https://raw.githubusercontent.com/zhaobiao666/material-library/main/blog/picutre/fabric-compositeHistoryKey.png">
+<meta property="og:image" content="https://github.com/zhaobiao666/material-library/blob/main/blog/picutre/fabric-blockfile.png?raw=true">
+<meta property="article:published_time" content="2020-11-12T13:38:29.000Z">
+<meta property="article:modified_time" content="2020-11-12T13:54:14.404Z">
 <meta property="article:author" content="极地东风">
+<meta property="article:tag" content="blockchain">
+<meta property="article:tag" content="fabric">
+<meta property="article:tag" content="database">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/zhaobiao666/material-library/main/blog/picutre/fabric-compositeHistoryKey.png">
   <!-- Canonical links -->
-  <link rel="canonical" href="http://zhaobiao666.github.io/leetcode/twoPlus/index.html">
+  <link rel="canonical" href="http://zhaobiao666.github.io/blockchain/fabric/fabric-database-principle/index.html">
   
     <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
   
@@ -351,21 +357,21 @@
   <div class="slimContent">
     <nav id="toc" class="article-toc">
       <h3 class="toc-title">文章目录</h3>
-      <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#两数相加"><span class="toc-number">1.</span> <span class="toc-text">两数相加</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#解法"><span class="toc-number">2.</span> <span class="toc-text">解法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#补充"><span class="toc-number">3.</span> <span class="toc-text">补充</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#构造链表："><span class="toc-number">3.1.</span> <span class="toc-text">构造链表：</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#遍历链表："><span class="toc-number">3.2.</span> <span class="toc-text">遍历链表：</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#用例："><span class="toc-number">3.3.</span> <span class="toc-text">用例：</span></a></li></ol></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#账本的必要性："><span class="toc-number">1.</span> <span class="toc-text">账本的必要性：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#账本的分类："><span class="toc-number">2.</span> <span class="toc-text">账本的分类：</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#历史数据库-history-DB"><span class="toc-number">2.1.</span> <span class="toc-text">历史数据库(history DB):</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#世界状态数据库（world-state-DB）："><span class="toc-number">2.2.</span> <span class="toc-text">世界状态数据库（world state DB）：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#私有数据库（private-DB）："><span class="toc-number">2.3.</span> <span class="toc-text">私有数据库（private DB）：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#区块索引数据库（Index-DB）"><span class="toc-number">2.4.</span> <span class="toc-text">区块索引数据库（Index DB）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#idstore-数据库"><span class="toc-number">2.5.</span> <span class="toc-text">idstore 数据库</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#补充："><span class="toc-number">2.6.</span> <span class="toc-text">补充：</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#区块数据文件："><span class="toc-number">2.6.1.</span> <span class="toc-text">区块数据文件：</span></a></li></ol></li></ol></li></ol>
     </nav>
   </div>
 </aside>
 
 <main class="main" role="main">
   <div class="content">
-  <article id="post-leetcode/twoPlus" class="article article-type-post" itemscope itemtype="http://schema.org/BlogPosting">
+  <article id="post-blockchain/fabric/fabric-database-principle" class="article article-type-post" itemscope itemtype="http://schema.org/BlogPosting">
     
     <div class="article-header">
       
         
   
     <h1 class="article-title" itemprop="name">
-      两数相加（含单向链表构建、检索）
+      fabric 的数据库原理
     </h1>
   
 
@@ -373,42 +379,78 @@
       <div class="article-meta">
         <span class="article-date">
     <i class="icon icon-calendar-check"></i>
-	<a href="/leetcode/twoPlus/" class="article-date">
-	  <time datetime="2020-11-12T03:34:09.000Z" itemprop="datePublished">2020-11-12</time>
+	<a href="/blockchain/fabric/fabric-database-principle/" class="article-date">
+	  <time datetime="2020-11-12T13:38:29.000Z" itemprop="datePublished">2020-11-12</time>
 	</a>
 </span>
         
   <span class="article-category">
     <i class="icon icon-folder"></i>
-    <a class="article-category-link" href="/categories/leetcode/">leetcode</a>
+    <a class="article-category-link" href="/categories/blockchain/">blockchain</a>►<a class="article-category-link" href="/categories/blockchain/fabric/">fabric</a>
   </span>
 
         
+  <span class="article-tag">
+    <i class="icon icon-tags"></i>
+	<a class="article-tag-link" href="/tags/blockchain/" rel="tag">blockchain</a>, <a class="article-tag-link" href="/tags/database/" rel="tag">database</a>, <a class="article-tag-link" href="/tags/fabric/" rel="tag">fabric</a>
+  </span>
+
 
         
 
-        <span class="post-comment"><i class="icon icon-comment"></i> <a href="/leetcode/twoPlus/#comments" class="article-comment-link">评论</a></span>
+        <span class="post-comment"><i class="icon icon-comment"></i> <a href="/blockchain/fabric/fabric-database-principle/#comments" class="article-comment-link">评论</a></span>
         
       </div>
     </div>
     <div class="article-entry marked-body" itemprop="articleBody">
       
-        <h4 id="两数相加"><a href="#两数相加" class="headerlink" title="两数相加"></a>两数相加</h4><p>问题描述：<br>给出两个 <code>非空</code> 的链表用来表示两个非负的整数。其中，它们各自的位数是按照 逆序 的方式存储的，并且它们的每个节点只能存储 一位 数字。<br>如果，我们将这两个数相加起来，则会返回一个新的链表来表示它们的和。<br>您可以假设除了数字 0 之外，这两个数都不会以 0 开头。<br>示例 ：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">输入：(2 -&gt; 4 -&gt; 3) + (5 -&gt; 6 -&gt; 4)</span><br><span class="line">输出：7 -&gt; 0 -&gt; 8</span><br><span class="line">原因：342 + 465 &#x3D; 807</span><br></pre></td></tr></table></figure>
-<p>链接：<a href="https://leetcode-cn.com/problems/add-two-numbers" target="_blank" rel="noopener">原题链接</a></p>
-<h4 id="解法"><a href="#解法" class="headerlink" title="解法"></a>解法</h4><ul>
-<li>思路：设置一个进位标记位 <code>carry</code>（默认为0），当位数之和 &gt;=10 时候，carry 置 1；且每次位数相加时，加上 carry  <figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">addTwoNumbers</span><span class="params">(l1 *ListNode, l2 *ListNode)</span> *<span class="title">ListNode</span></span> &#123;</span><br><span class="line">	<span class="comment">// 从低位到高位遍历</span></span><br><span class="line">	<span class="keyword">var</span> sum ListNode</span><br><span class="line">	cursor1 := l1</span><br><span class="line">	cursor2 := l2</span><br><span class="line">	<span class="comment">// 用于保存 sum 尾部的地址</span></span><br><span class="line">	cursorSum := &amp;sum</span><br><span class="line">	<span class="comment">// 进位标志位</span></span><br><span class="line">	carry := <span class="number">0</span></span><br><span class="line">	<span class="keyword">for</span> &#123;</span><br><span class="line">		<span class="keyword">if</span> cursor1 != <span class="literal">nil</span> || cursor2 != <span class="literal">nil</span> || carry &gt;<span class="number">0</span> &#123;</span><br><span class="line">			<span class="comment">// 单个位相加的值</span></span><br><span class="line">			byteSum := <span class="number">0</span></span><br><span class="line">			<span class="keyword">if</span> cursor1 != <span class="literal">nil</span> &#123;</span><br><span class="line">				byteSum = byteSum + cursor1.Val</span><br><span class="line">				cursor1 = cursor1.Next</span><br><span class="line">			&#125;</span><br><span class="line">			<span class="keyword">if</span> cursor2 != <span class="literal">nil</span> &#123;</span><br><span class="line">				byteSum = byteSum + cursor2.Val</span><br><span class="line">				cursor2 = cursor2.Next</span><br><span class="line">			&#125;</span><br><span class="line">            cursorSum.Next = <span class="built_in">new</span>(ListNode)</span><br><span class="line">            cursorSum = cursorSum.Next</span><br><span class="line">			cursorSum.Val, carry = (byteSum+ carry)%<span class="number">10</span>, (byteSum+ carry)/<span class="number">10</span></span><br><span class="line">			<span class="keyword">continue</span></span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">break</span></span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> sum.Next</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>时间复杂度：O(N)<br>空间复杂度：O(N)</p>
-</blockquote>
+        <p>[toc]</p>
+<h3 id="账本的必要性："><a href="#账本的必要性：" class="headerlink" title="账本的必要性："></a>账本的必要性：</h3><p>fabrc 账本是指用来记录和维护 fabric 交易的一组 <code>nosql</code> 数据库。我们知道 <code>orderer</code> 节点将 <code>client</code> 来发的交易进行<strong>排序</strong>、<strong>切块</strong>打包后的区块通过 <code>grpc</code> 协议，发送给 peer 的 <code>leader</code> 节点, leader 节点再将接收到的区块通过 <code>gossip</code> 协议分发给组织内其他的 peer 节点。这样每个 peer 节点都会拥有同样的区块文件。虽然这个区块文件记录了所有了的交易数据，但是有个致命的缺陷 —— 很难检索某个交易对象的历史交易记录，且很难查某个交易对象的当前值，甚至有时候还需要存放一些私有数据。<br>    因此，fabric 使用多个 nosql 来记录交易对象的索引、交易对象的当前值以提高效率，以及特定的私有数据，用于提高 fabric 的交易效率，也能协助用户快速获取目标交易对象的当前值。</p>
+<hr>
+<h3 id="账本的分类："><a href="#账本的分类：" class="headerlink" title="账本的分类："></a>账本的分类：</h3><h4 id="历史数据库-history-DB"><a href="#历史数据库-history-DB" class="headerlink" title="历史数据库(history DB):"></a>历史数据库(history DB):</h4><p><strong>功能：用于存储所有 <code>有效交易</code> 的关键信息的数据库，通过历史状态数据能查询到每一笔有效交易是在哪个区块中，以及对应的交易ID是多少</strong></p>
+<ul>
+<li><p>历史状态数据库使用 levelDB 存储，并且只存储有效记录的 key（这里的key指的是交易中的key），而<code>不存储 value</code></p>
+</li>
+<li><p>使用组合键的方式进行存储到数据库中，构成组合键的源码为：</p>
+  <figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// CompositeKeySep is a nil byte used as a separator between different components of a composite key</span></span><br><span class="line"><span class="keyword">var</span> CompositeKeySep = []<span class="keyword">byte</span>&#123;<span class="number">0x00</span>&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//ConstructCompositeHistoryKey builds the History Key of namespace~key~blocknum~trannum</span></span><br><span class="line"><span class="comment">// using an order preserving encoding so that history query results are ordered by height</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">ConstructCompositeHistoryKey</span><span class="params">(ns <span class="keyword">string</span>, key <span class="keyword">string</span>, blocknum <span class="keyword">uint64</span>, trannum <span class="keyword">uint64</span>)</span> []<span class="title">byte</span></span> &#123;</span><br><span class="line">    <span class="keyword">var</span> compositeKey []<span class="keyword">byte</span></span><br><span class="line">    compositeKey = <span class="built_in">append</span>(compositeKey, []<span class="keyword">byte</span>(ns)...)</span><br><span class="line">    compositeKey = <span class="built_in">append</span>(compositeKey, CompositeKeySep...)</span><br><span class="line">    compositeKey = <span class="built_in">append</span>(compositeKey, []<span class="keyword">byte</span>(key)...)</span><br><span class="line">    compositeKey = <span class="built_in">append</span>(compositeKey, CompositeKeySep...)</span><br><span class="line">    compositeKey = <span class="built_in">append</span>(compositeKey, util.EncodeOrderPreservingVarUint64(blocknum)...)</span><br><span class="line">    compositeKey = <span class="built_in">append</span>(compositeKey, util.EncodeOrderPreservingVarUint64(trannum)...)</span><br><span class="line">    <span class="keyword">return</span> compositeKey</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>组合键示意图：<img src="https://raw.githubusercontent.com/zhaobiao666/material-library/main/blog/picutre/fabric-compositeHistoryKey.png" alt=""></p>
+<ul>
+<li>namespace : 命名空间，命名空间是读写集的属性，用于通道之间的数据隔离的。</li>
+<li>compositeKeySep: 仅仅用于组合键中键之间连接（fabric 使用 <code>0x00</code> 作为连接符）。</li>
+<li>Key: 将 KV 键值对写入到账本中的 K</li>
+<li>block: 交易所在的区块号</li>
+<li>ID: 交易的 ID 编号（fabric 会为每一个交易生成一个交易 ID （txid））</li>
+</ul>
 </li>
 </ul>
-<h4 id="补充"><a href="#补充" class="headerlink" title="补充"></a>补充</h4><p>题目中假定已经存在两个链表 <code>l1</code> 与 <code>l2</code>，实际在测试用例时，是需要自己构造这两个单向链表的，下面则给出构造单向链表的方法：</p>
-<h5 id="构造链表："><a href="#构造链表：" class="headerlink" title="构造链表："></a>构造链表：</h5><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">CreateNodeList</span><span class="params">(slice []<span class="keyword">int</span>)</span> <span class="title">ListNode</span></span> &#123;</span><br><span class="line">	<span class="keyword">var</span> listNode ListNode</span><br><span class="line">	length := <span class="built_in">len</span>(slice)</span><br><span class="line">        <span class="comment">// 游标指针</span></span><br><span class="line">	cursor := &amp;listNode</span><br><span class="line">        <span class="comment">// 构造到第 length-1 个 Listnode,保证 Next 为列表中的最后一个节点  </span></span><br><span class="line">	<span class="keyword">for</span> index, value := <span class="keyword">range</span> slice &#123;</span><br><span class="line">		<span class="keyword">if</span> index == length - <span class="number">1</span>&#123;</span><br><span class="line">			<span class="keyword">break</span></span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">var</span> nextNode *ListNode</span><br><span class="line">		cursor.Val = value</span><br><span class="line">		nextNode = &amp;ListNode&#123;</span><br><span class="line">			Val: slice[index+<span class="number">1</span>],</span><br><span class="line">			Next: <span class="literal">nil</span>,</span><br><span class="line">		&#125;</span><br><span class="line">		cursor.Next = nextNode</span><br><span class="line">		cursor = nextNode</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> listNode</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h5 id="遍历链表："><a href="#遍历链表：" class="headerlink" title="遍历链表："></a>遍历链表：</h5><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">PrintList</span><span class="params">(node *ListNode)</span></span>  &#123;</span><br><span class="line">	<span class="keyword">var</span> cursor *ListNode</span><br><span class="line">	cursor = node</span><br><span class="line">	<span class="keyword">for</span> &#123;</span><br><span class="line">		<span class="keyword">if</span> cursor.Next != <span class="literal">nil</span> &#123;</span><br><span class="line">			fmt.Println(*cursor)</span><br><span class="line">		&#125;<span class="keyword">else</span> &#123;</span><br><span class="line">			fmt.Println(*cursor)</span><br><span class="line">			<span class="keyword">break</span></span><br><span class="line">		&#125;</span><br><span class="line">		cursor = cursor.Next</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h5 id="用例："><a href="#用例：" class="headerlink" title="用例："></a>用例：</h5><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">main</span><span class="params">()</span></span>  &#123;</span><br><span class="line">	<span class="comment">// 测试用例的数组，并将数组转化成链表</span></span><br><span class="line">	arryA:= []<span class="keyword">int</span>&#123;<span class="number">2</span>, <span class="number">4</span>, <span class="number">3</span>, <span class="number">5</span>, <span class="number">6</span>&#125;</span><br><span class="line">	arryB:= []<span class="keyword">int</span>&#123;<span class="number">4</span>, <span class="number">9</span>, <span class="number">3</span>, <span class="number">1</span>, <span class="number">4</span>&#125;</span><br><span class="line">    </span><br><span class="line">	listNodeA := CreateNodeList(arryA)</span><br><span class="line">	PrintList(&amp;listNodeA)</span><br><span class="line">    </span><br><span class="line">	listNodeB := CreateNodeList(arryB)</span><br><span class="line">	PrintList(&amp;listNodeB)</span><br><span class="line"></span><br><span class="line">	listNodeSum := addTwoNumbers(&amp;listNodeA, &amp;listNodeB)</span><br><span class="line">	PrintList(listNodeSum)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="世界状态数据库（world-state-DB）："><a href="#世界状态数据库（world-state-DB）：" class="headerlink" title="世界状态数据库（world state DB）："></a>世界状态数据库（world state DB）：</h4><p><strong>功能：世界状态数据库用于记录交易对象最终状态的数据库，如果把历史状态数据库当做你的交易流水，那么世界状态数据库就类似于银行卡的余额。</strong></p>
+<ul>
+<li>支持 levelDB 和 couchDB</li>
+</ul>
+<h4 id="私有数据库（private-DB）："><a href="#私有数据库（private-DB）：" class="headerlink" title="私有数据库（private DB）："></a>私有数据库（private DB）：</h4><p><strong>功能：私用数据库用于保存隐私交易数据</strong></p>
+<ul>
+<li>levelDB</li>
+<li>隐私的交易数据不会直接存放到账本(ledger)中，但是隐私交易数据的 <code>key</code> 和 <code>value 的 hash</code> 会存到账本中。</li>
+<li>隐私交易数据背书通过后，会通过 <code>gossip</code> 协议将隐私交易数据发送给被授权的其他 peer 节点。</li>
+</ul>
+<h4 id="区块索引数据库（Index-DB）"><a href="#区块索引数据库（Index-DB）" class="headerlink" title="区块索引数据库（Index DB）"></a>区块索引数据库（Index DB）</h4><p><strong>功能：区块索引数据库存储具体的<code>某个区块</code>和<code>某个交易</code>在<a href="#bolckfile"><code>区块数据文件</code></a>中的位置</strong></p>
+<ul>
+<li>每当区块数据文件中存储一个区块，Index DB 都会为这个区块建立一批索引。整</li>
+<li>fabric 网络中只有一个 Index DB（即多通道共用一个 Index DB）</li>
+<li>数据库默认位置：/var/hyperledger/production/ledgersData/chains/index</li>
+</ul>
+<h4 id="idstore-数据库"><a href="#idstore-数据库" class="headerlink" title="idstore 数据库"></a>idstore 数据库</h4><p><strong>功能：存储不同账本的 <code>ledgerID</code> 的键值对及其<code>创世区块</code></strong></p>
+<ul>
+<li>默认使用路径：/var/hyperledger/production/ledgersData/ledgerProvider/</li>
+<li>接口： ledgerIDExists，getAllLedgerIds</li>
+<li>idStore库中特殊key ：“underConstructionLedgerKey” value:ledgerID<br>(有待考证！！！！)</li>
+</ul>
+<h4 id="补充："><a href="#补充：" class="headerlink" title="补充："></a>补充：</h4><h5 id="区块数据文件："><a href="#区块数据文件：" class="headerlink" title="区块数据文件："></a><div id="bolckfile">区块数据文件：</div></h5><p><strong>功能：存储区块长度、区块头、每天交易的长度以及交易数据</strong></p>
+<ul>
+<li>默认存储路径：/var/hyperledger/production/ledgersData/chains/chains/mychannel</li>
+<li>图解：<img src="https://github.com/zhaobiao666/material-library/blob/main/blog/picutre/fabric-blockfile.png?raw=true" alt=""></li>
+</ul>
 
       
     </div>
@@ -418,7 +460,7 @@
     
     <li class="post-copyright-link hidden-xs">
       <strong>本文链接：</strong>
-      <a href="http://zhaobiao666.github.io/leetcode/twoPlus/" title="两数相加（含单向链表构建、检索）" target="_blank" rel="external">http://zhaobiao666.github.io/leetcode/twoPlus/</a>
+      <a href="http://zhaobiao666.github.io/blockchain/fabric/fabric-database-principle/" title="fabric 的数据库原理" target="_blank" rel="external">http://zhaobiao666.github.io/blockchain/fabric/fabric-database-principle/</a>
     </li>
     
     <li class="post-copyright-license">
@@ -464,13 +506,9 @@
   
   <ul class="pager pull-left">
     
-    <li class="prev">
-      <a href="/blockchain/fabric/fabric-database-principle/" title="fabric 的数据库原理"><i class="icon icon-angle-left" aria-hidden="true"></i><span>&nbsp;&nbsp;上一篇</span></a>
-    </li>
-    
     
     <li class="next">
-      <a href="/blockchain/fabric/fabric-deploy-single-machine/" title="fabric 一键部署&amp;手动单机部署"><span>下一篇&nbsp;&nbsp;</span><i class="icon icon-angle-right" aria-hidden="true"></i></a>
+      <a href="/leetcode/twoPlus/" title="两数相加（含单向链表构建、检索）"><span>下一篇&nbsp;&nbsp;</span><i class="icon icon-angle-right" aria-hidden="true"></i></a>
     </li>
     
     
