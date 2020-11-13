@@ -18,17 +18,17 @@
   
   
   <title>fabric 的数据库原理 | 极地东风</title>
-  <meta name="description" content="数据库的必要性： fabric 除了使用账本（区块）存储交易数据以外，还会使用有几个 nosql 数据库，用来共同维护 fabric的交易数据。我们知道 orderer 节点将 client 来发的交易进行排序、切块打包后通过 grpc 协议，发送给 peer 的 leader 节点, leader 节点再将接收到的区块通过 gossip 协议分发给组织内其他的 peer 节点。这样每个 peer">
+  <meta name="description" content="数据库的必要性： fabric 除了使用账本（区块）存储交易数据以外，还会使用有几个 nosql 数据库，用来共同维护 fabric的交易数据。我们知道 orderer 节点将 client 来发的交易进行排序、切块后通过 grpc 协议，发送给 peer 的 leader 节点, leader 节点再将接收到的区块通过 gossip 协议分发给组织内其他的 peer 节点。这样每个 peer 节">
 <meta property="og:type" content="article">
 <meta property="og:title" content="fabric 的数据库原理">
 <meta property="og:url" content="http://zhaobiao666.github.io/blockchain/fabric/fabric-database-principle/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="数据库的必要性： fabric 除了使用账本（区块）存储交易数据以外，还会使用有几个 nosql 数据库，用来共同维护 fabric的交易数据。我们知道 orderer 节点将 client 来发的交易进行排序、切块打包后通过 grpc 协议，发送给 peer 的 leader 节点, leader 节点再将接收到的区块通过 gossip 协议分发给组织内其他的 peer 节点。这样每个 peer">
+<meta property="og:description" content="数据库的必要性： fabric 除了使用账本（区块）存储交易数据以外，还会使用有几个 nosql 数据库，用来共同维护 fabric的交易数据。我们知道 orderer 节点将 client 来发的交易进行排序、切块后通过 grpc 协议，发送给 peer 的 leader 节点, leader 节点再将接收到的区块通过 gossip 协议分发给组织内其他的 peer 节点。这样每个 peer 节">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://raw.githubusercontent.com/zhaobiao666/material-library/main/blog/picutre/fabric-compositeHistoryKey.png">
 <meta property="og:image" content="https://github.com/zhaobiao666/material-library/blob/main/blog/picutre/fabric-blockfile.png?raw=true">
 <meta property="article:published_time" content="2020-11-12T13:38:29.000Z">
-<meta property="article:modified_time" content="2020-11-13T05:06:15.702Z">
+<meta property="article:modified_time" content="2020-11-13T05:47:20.902Z">
 <meta property="article:author" content="极地东风">
 <meta property="article:tag" content="blockchain">
 <meta property="article:tag" content="fabric">
@@ -405,12 +405,12 @@
     <div class="article-entry marked-body" itemprop="articleBody">
       
         <h3 id="数据库的必要性："><a href="#数据库的必要性：" class="headerlink" title="数据库的必要性："></a>数据库的必要性：</h3><ul>
-<li>fabric 除了使用账本（区块）存储交易数据以外，还会使用有几个 nosql 数据库，用来共同维护 fabric的交易数据。我们知道 <code>orderer</code> 节点将 <code>client</code> 来发的交易进行<strong>排序</strong>、<strong>切块</strong>打包后通过 <code>grpc</code> 协议，发送给 peer 的 <code>leader</code> 节点, leader 节点再将接收到的区块通过 <code>gossip</code> 协议分发给组织内其他的 peer 节点。这样每个 peer 节点都会拥有同样的区块文件。虽然这个区块文件记录了所有了的交易数据，但是有个致命的缺陷 —— 很难检索某个交易对象的历史交易记录，且很难查某个交易对象的当前状态，甚至有时候还可能需要存放一些私有数据。<br>  因此，fabric 使用多个 nosql 来记录交易对象的索引、交易区块的索引、交易对象的当前值以及特定的私有数据，用于提高 fabric 的交易效率和 fabric 本身账本的维护。</li>
+<li>fabric 除了使用账本（区块）存储交易数据以外，还会使用有几个 nosql 数据库，用来共同维护 fabric的交易数据。我们知道 <code>orderer</code> 节点将 <code>client</code> 来发的交易进行<strong>排序</strong>、<strong>切块</strong>后通过 <code>grpc</code> 协议，发送给 peer 的 <code>leader</code> 节点, leader 节点再将接收到的区块通过 <code>gossip</code> 协议分发给组织内其他的 peer 节点。这样每个 peer 节点都会拥有同样的区块文件。虽然这个区块文件记录了所有了的交易数据，但是有个致命的缺陷 —— 很难检索某个交易对象的历史交易记录，且很难查某个交易对象的当前状态，甚至有时候还可能需要存放一些私有数据。<br>  因此，fabric 使用多个 nosql 来记录交易对象的索引、交易区块的索引、交易对象的当前值以及特定的私有数据，用于提高 fabric 的交易效率和 fabric 本身账本的维护。</li>
 </ul>
 <hr>
 <h3 id="账本的分类："><a href="#账本的分类：" class="headerlink" title="账本的分类："></a>账本的分类：</h3><h4 id="历史数据库-history-DB-："><a href="#历史数据库-history-DB-：" class="headerlink" title="历史数据库(history DB)："></a>历史数据库(history DB)：</h4><p><strong>功能：用于存储所有 <code>有效交易</code> 的关键信息的数据库，通过历史状态数据能查询到每一笔有效交易是在哪个区块中，以及对应的交易ID是多少</strong></p>
 <ul>
-<li><p>历史状态数据库使用 levelDB 存储，并且只存储有效记录的 key（这里的key指的是交易中的key），而<code>不存储 value</code></p>
+<li><p>历史状态数据库使用 levelDB 存储，并且只存储有效记录的 key（这里的key指的是交易中的key），而<strong>不存储交易的 value</strong></p>
 </li>
 <li><p>使用组合键的方式进行存储到数据库中，构成组合键的源码为：</p>
   <figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// CompositeKeySep is a nil byte used as a separator between different components of a composite key</span></span><br><span class="line"><span class="keyword">var</span> CompositeKeySep = []<span class="keyword">byte</span>&#123;<span class="number">0x00</span>&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//ConstructCompositeHistoryKey builds the History Key of namespace~key~blocknum~trannum</span></span><br><span class="line"><span class="comment">// using an order preserving encoding so that history query results are ordered by height</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">ConstructCompositeHistoryKey</span><span class="params">(ns <span class="keyword">string</span>, key <span class="keyword">string</span>, blocknum <span class="keyword">uint64</span>, trannum <span class="keyword">uint64</span>)</span> []<span class="title">byte</span></span> &#123;</span><br><span class="line">    <span class="keyword">var</span> compositeKey []<span class="keyword">byte</span></span><br><span class="line">    compositeKey = <span class="built_in">append</span>(compositeKey, []<span class="keyword">byte</span>(ns)...)</span><br><span class="line">    compositeKey = <span class="built_in">append</span>(compositeKey, CompositeKeySep...)</span><br><span class="line">    compositeKey = <span class="built_in">append</span>(compositeKey, []<span class="keyword">byte</span>(key)...)</span><br><span class="line">    compositeKey = <span class="built_in">append</span>(compositeKey, CompositeKeySep...)</span><br><span class="line">    compositeKey = <span class="built_in">append</span>(compositeKey, util.EncodeOrderPreservingVarUint64(blocknum)...)</span><br><span class="line">    compositeKey = <span class="built_in">append</span>(compositeKey, util.EncodeOrderPreservingVarUint64(trannum)...)</span><br><span class="line">    <span class="keyword">return</span> compositeKey</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
@@ -419,7 +419,7 @@
 <ul>
 <li>namespace : 命名空间，命名空间是读写集的属性，用于通道之间的数据隔离的。</li>
 <li>compositeKeySep: 仅仅用于组合键中键之间连接（fabric 使用 <code>0x00</code> 作为连接符）。</li>
-<li>Key: 将 KV 键值对写入到账本中的 K</li>
+<li>Key: 将 KV 键值对写入到账本中的 Key</li>
 <li>block: 交易所在的区块号</li>
 <li>ID: 交易的 ID 编号（fabric 会为每一个交易生成一个交易 ID （txid））</li>
 </ul>
@@ -435,7 +435,7 @@
 <li>隐私的交易数据不会直接存放到账本(ledger)中，但是隐私交易数据的 <code>key</code> 和 <code>value 的 hash</code> 会存到账本中。</li>
 <li>隐私交易数据背书通过后，会通过 <code>gossip</code> 协议将隐私交易数据发送给被授权的其他 peer 节点。</li>
 </ul>
-<h4 id="区块索引数据库（Index-DB）："><a href="#区块索引数据库（Index-DB）：" class="headerlink" title="区块索引数据库（Index DB）："></a>区块索引数据库（Index DB）：</h4><p><strong>功能：区块索引数据库用于存储具体的<code>某个区块</code>和<code>某个交易</code>在<a href="#bolckfile"><code>区块数据文件</code></a>中的位置</strong></p>
+<h4 id="区块索引数据库（Index-DB）："><a href="#区块索引数据库（Index-DB）：" class="headerlink" title="区块索引数据库（Index DB）："></a>区块索引数据库（Index DB）：</h4><p><strong>功能：区块索引数据库用于存储具体的<code>某个区块</code>和<code>某个交易</code>在<a href="#bolckfile"><em><code>区块数据文件</code></em></a>中的位置</strong></p>
 <ul>
 <li>每当区块数据文件中存储一个区块，Index DB 都会为这个区块建立一批索引。</li>
 <li>fabric 网络中只有一个 Index DB（即多通道共用一个 Index DB）</li>
