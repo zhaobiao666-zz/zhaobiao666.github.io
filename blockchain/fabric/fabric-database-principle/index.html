@@ -28,7 +28,7 @@
 <meta property="og:image" content="https://raw.githubusercontent.com/zhaobiao666/material-library/main/blog/picutre/fabric-compositeHistoryKey.png">
 <meta property="og:image" content="https://github.com/zhaobiao666/material-library/blob/main/blog/picutre/fabric-blockfile.png?raw=true">
 <meta property="article:published_time" content="2020-11-12T13:38:29.000Z">
-<meta property="article:modified_time" content="2020-11-13T02:24:13.402Z">
+<meta property="article:modified_time" content="2020-11-13T02:26:57.680Z">
 <meta property="article:author" content="极地东风">
 <meta property="article:tag" content="blockchain">
 <meta property="article:tag" content="fabric">
@@ -357,7 +357,7 @@
   <div class="slimContent">
     <nav id="toc" class="article-toc">
       <h3 class="toc-title">文章目录</h3>
-      <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#账本的必要性："><span class="toc-number">1.</span> <span class="toc-text">账本的必要性：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#账本的分类："><span class="toc-number">2.</span> <span class="toc-text">账本的分类：</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#历史数据库-history-DB"><span class="toc-number">2.1.</span> <span class="toc-text">历史数据库(history DB):</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#世界状态数据库（world-state-DB）："><span class="toc-number">2.2.</span> <span class="toc-text">世界状态数据库（world state DB）：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#私有数据库（private-DB）："><span class="toc-number">2.3.</span> <span class="toc-text">私有数据库（private DB）：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#区块索引数据库（Index-DB）"><span class="toc-number">2.4.</span> <span class="toc-text">区块索引数据库（Index DB）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#idstore-数据库"><span class="toc-number">2.5.</span> <span class="toc-text">idstore 数据库</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#补充："><span class="toc-number">2.6.</span> <span class="toc-text">补充：</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#区块数据文件："><span class="toc-number">2.6.1.</span> <span class="toc-text">区块数据文件：</span></a></li></ol></li></ol></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#账本的必要性："><span class="toc-number">1.</span> <span class="toc-text">账本的必要性：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#账本的分类："><span class="toc-number">2.</span> <span class="toc-text">账本的分类：</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#历史数据库-history-DB"><span class="toc-number">2.1.</span> <span class="toc-text">历史数据库(history DB):</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#世界状态数据库（world-state-DB）："><span class="toc-number">2.2.</span> <span class="toc-text">世界状态数据库（world state DB）：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#私有数据库（private-DB）："><span class="toc-number">2.3.</span> <span class="toc-text">私有数据库（private DB）：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#区块索引数据库（Index-DB）："><span class="toc-number">2.4.</span> <span class="toc-text">区块索引数据库（Index DB）：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#idstore-数据库："><span class="toc-number">2.5.</span> <span class="toc-text">idstore 数据库：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#补充："><span class="toc-number">2.6.</span> <span class="toc-text">补充：</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#区块数据文件："><span class="toc-number">2.6.1.</span> <span class="toc-text">区块数据文件：</span></a></li></ol></li></ol></li></ol>
     </nav>
   </div>
 </aside>
@@ -433,13 +433,13 @@
 <li>隐私的交易数据不会直接存放到账本(ledger)中，但是隐私交易数据的 <code>key</code> 和 <code>value 的 hash</code> 会存到账本中。</li>
 <li>隐私交易数据背书通过后，会通过 <code>gossip</code> 协议将隐私交易数据发送给被授权的其他 peer 节点。</li>
 </ul>
-<h4 id="区块索引数据库（Index-DB）"><a href="#区块索引数据库（Index-DB）" class="headerlink" title="区块索引数据库（Index DB）"></a>区块索引数据库（Index DB）</h4><p><strong>功能：区块索引数据库用于存储具体的<code>某个区块</code>和<code>某个交易</code>在<a href="#bolckfile"><code>区块数据文件</code></a>中的位置</strong></p>
+<h4 id="区块索引数据库（Index-DB）："><a href="#区块索引数据库（Index-DB）：" class="headerlink" title="区块索引数据库（Index DB）："></a>区块索引数据库（Index DB）：</h4><p><strong>功能：区块索引数据库用于存储具体的<code>某个区块</code>和<code>某个交易</code>在<a href="#bolckfile"><code>区块数据文件</code></a>中的位置</strong></p>
 <ul>
 <li>每当区块数据文件中存储一个区块，Index DB 都会为这个区块建立一批索引。整</li>
 <li>fabric 网络中只有一个 Index DB（即多通道共用一个 Index DB）</li>
 <li>数据库默认位置：/var/hyperledger/production/ledgersData/chains/index</li>
 </ul>
-<h4 id="idstore-数据库"><a href="#idstore-数据库" class="headerlink" title="idstore 数据库"></a>idstore 数据库</h4><p><strong>功能：idstore 数据库用于存储不同账本的 <code>ledgerID</code> 的键值对及其<code>创世区块</code></strong></p>
+<h4 id="idstore-数据库："><a href="#idstore-数据库：" class="headerlink" title="idstore 数据库："></a>idstore 数据库：</h4><p><strong>功能：idstore 数据库用于存储不同账本的 <code>ledgerID</code> 的键值对及其<code>创世区块</code></strong></p>
 <ul>
 <li>默认使用路径：/var/hyperledger/production/ledgersData/ledgerProvider/</li>
 <li><code>ledgerID</code> 的值其实就是 <code>channelID</code></li>
