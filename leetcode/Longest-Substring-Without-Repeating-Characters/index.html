@@ -17,16 +17,16 @@
   <meta http-equiv="window-target" content="_top" />
   
   
-  <title>无重复字符的最长子串 | 极地东风</title>
-  <meta name="description" content="无重复字符的最长子串难度: 中等 问题描述：给定一个字符串，请你找出其中不含有重复字符的 最长子串 的长度。 示例 ： 12输入: &quot;abcabcbb&quot;输出: 3  &#x2F;&#x2F;无重复字符的最长子串是 &quot;abc&quot; 链接：原题链接 解法暴力求解思路：使用 start, length 记录当前子串的起始位置和和子串长度，使用 longest 记录当前">
+  <title>leetcode - 无重复字符的最长子串 | 极地东风</title>
+  <meta name="description" content="问题：无重复字符的最长子串难度: 中等 描述：给定一个字符串，请你找出其中不含有重复字符的 最长子串 的长度。 示例 ： 12输入: &quot;abcabcbb&quot;输出: 3  &#x2F;&#x2F;无重复字符的最长子串是 &quot;abc&quot; 链接：原题链接 解法暴力求解思路：使用 start, length 记录当前子串的起始位置和和子串长度，使用 longest 记录当">
 <meta property="og:type" content="article">
-<meta property="og:title" content="无重复字符的最长子串">
+<meta property="og:title" content="leetcode - 无重复字符的最长子串">
 <meta property="og:url" content="http://zhaobiao666.github.io/leetcode/Longest-Substring-Without-Repeating-Characters/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="无重复字符的最长子串难度: 中等 问题描述：给定一个字符串，请你找出其中不含有重复字符的 最长子串 的长度。 示例 ： 12输入: &quot;abcabcbb&quot;输出: 3  &#x2F;&#x2F;无重复字符的最长子串是 &quot;abc&quot; 链接：原题链接 解法暴力求解思路：使用 start, length 记录当前子串的起始位置和和子串长度，使用 longest 记录当前">
+<meta property="og:description" content="问题：无重复字符的最长子串难度: 中等 描述：给定一个字符串，请你找出其中不含有重复字符的 最长子串 的长度。 示例 ： 12输入: &quot;abcabcbb&quot;输出: 3  &#x2F;&#x2F;无重复字符的最长子串是 &quot;abc&quot; 链接：原题链接 解法暴力求解思路：使用 start, length 记录当前子串的起始位置和和子串长度，使用 longest 记录当">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2020-11-17T03:04:45.000Z">
-<meta property="article:modified_time" content="2020-11-17T04:19:18.926Z">
+<meta property="article:modified_time" content="2020-11-17T04:23:05.209Z">
 <meta property="article:author" content="极地东风">
 <meta property="article:tag" content="leetcode">
 <meta name="twitter:card" content="summary">
@@ -269,7 +269,7 @@
                 <a class="category-link" href="/categories/leetcode/">leetcode</a><i class="icon icon-angle-right"></i><a class="category-link" href="/categories/leetcode/substring/">substring</a>
               </p>
               <p class="item-title">
-                <a href="/leetcode/Longest-Substring-Without-Repeating-Characters/" class="title">无重复字符的最长子串</a>
+                <a href="/leetcode/Longest-Substring-Without-Repeating-Characters/" class="title">leetcode - 无重复字符的最长子串</a>
               </p>
               <p class="item-date">
                 <time datetime="2020-11-17T03:04:45.000Z" itemprop="datePublished">2020-11-17</time>
@@ -299,7 +299,7 @@
                 <a class="category-link" href="/categories/leetcode/">leetcode</a>
               </p>
               <p class="item-title">
-                <a href="/leetcode/twoPlus/" class="title">两数相加（含单向链表构建、检索）</a>
+                <a href="/leetcode/twoPlus/" class="title">leetcode - 两数相加（含单向链表构建、检索）</a>
               </p>
               <p class="item-date">
                 <time datetime="2020-11-12T03:34:09.000Z" itemprop="datePublished">2020-11-12</time>
@@ -352,7 +352,7 @@
   <div class="slimContent">
     <nav id="toc" class="article-toc">
       <h3 class="toc-title">文章目录</h3>
-      <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#无重复字符的最长子串"><span class="toc-number">1.</span> <span class="toc-text">无重复字符的最长子串</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#解法"><span class="toc-number">2.</span> <span class="toc-text">解法</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#暴力求解"><span class="toc-number">2.1.</span> <span class="toc-text">暴力求解</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#使用-map"><span class="toc-number">2.2.</span> <span class="toc-text">使用 map</span></a></li></ol></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#问题：无重复字符的最长子串"><span class="toc-number">1.</span> <span class="toc-text">问题：无重复字符的最长子串</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#解法"><span class="toc-number">2.</span> <span class="toc-text">解法</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#暴力求解"><span class="toc-number">2.1.</span> <span class="toc-text">暴力求解</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#使用-map"><span class="toc-number">2.2.</span> <span class="toc-text">使用 map</span></a></li></ol></li></ol>
     </nav>
   </div>
 </aside>
@@ -366,7 +366,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      无重复字符的最长子串
+      leetcode - 无重复字符的最长子串
     </h1>
   
 
@@ -399,8 +399,8 @@
     </div>
     <div class="article-entry marked-body" itemprop="articleBody">
       
-        <h4 id="无重复字符的最长子串"><a href="#无重复字符的最长子串" class="headerlink" title="无重复字符的最长子串"></a>无重复字符的最长子串</h4><p>难度: 中等</p>
-<p>问题描述：<br>给定一个字符串，请你找出其中不含有重复字符的 <code>最长子串</code> 的长度。</p>
+        <h4 id="问题：无重复字符的最长子串"><a href="#问题：无重复字符的最长子串" class="headerlink" title="问题：无重复字符的最长子串"></a>问题：无重复字符的最长子串</h4><p>难度: 中等</p>
+<p>描述：给定一个字符串，请你找出其中不含有重复字符的 <code>最长子串</code> 的长度。</p>
 <p>示例 ：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">输入: &quot;abcabcbb&quot;</span><br><span class="line">输出: 3  &#x2F;&#x2F;无重复字符的最长子串是 &quot;abc&quot;</span><br></pre></td></tr></table></figure>
 <p>链接：<a href="https://leetcode-cn.com/problems/longest-substring-without-repeating-characters" target="_blank" rel="noopener">原题链接</a></p>
@@ -423,7 +423,7 @@
     
     <li class="post-copyright-link hidden-xs">
       <strong>本文链接：</strong>
-      <a href="http://zhaobiao666.github.io/leetcode/Longest-Substring-Without-Repeating-Characters/" title="无重复字符的最长子串" target="_blank" rel="external">http://zhaobiao666.github.io/leetcode/Longest-Substring-Without-Repeating-Characters/</a>
+      <a href="http://zhaobiao666.github.io/leetcode/Longest-Substring-Without-Repeating-Characters/" title="leetcode - 无重复字符的最长子串" target="_blank" rel="external">http://zhaobiao666.github.io/leetcode/Longest-Substring-Without-Repeating-Characters/</a>
     </li>
     
     <li class="post-copyright-license">
