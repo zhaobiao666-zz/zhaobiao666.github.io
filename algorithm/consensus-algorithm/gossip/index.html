@@ -25,23 +25,23 @@
 <meta property="og:site_name" content="Hexo">
 <meta property="og:description" content="Gossip 原理简介  Gossip，中文为流言蜚语的意思, Gossip protocol 也叫流言算法，此协议的作用和其名字表示的意思相同。Bitcoin 使用了 gossip 算法来传播交易和区块信息  Gossip protocol 最早是在 1987 年发表在 ACM 上的论文 《Epidemic Algorithms for Replicated Database Maintenan">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="http://zhaobiao666.github.io/.io//gossip-workflow01.jpg">
-<meta property="og:image" content="http://zhaobiao666.github.io/.io//gossip-complex-analyse-1.jpg">
-<meta property="og:image" content="http://zhaobiao666.github.io/.io//gossip-comlpex-analyse-2.jpg">
-<meta property="og:image" content="http://zhaobiao666.github.io/.io//gossip-si.png">
-<meta property="og:image" content="http://zhaobiao666.github.io/.io//gossip-sis.png">
-<meta property="og:image" content="http://zhaobiao666.github.io/.io//gossip-sir-1.png">
-<meta property="og:image" content="http://zhaobiao666.github.io/.io//gossip-sir-2.png">
-<meta property="og:image" content="http://zhaobiao666.github.io/.io//gossip-SIRS.png">
-<meta property="og:image" content="http://zhaobiao666.github.io/.io//gossip-SEIR.png">
-<meta property="og:image" content="http://zhaobiao666.github.io/.io//gossip-SEIRS.png">
+<meta property="og:image" content="http://zhaobiao666.github.io/algorithm/consensus-algorithm/gossip/gossip-workflow01.jpg">
+<meta property="og:image" content="http://zhaobiao666.github.io/algorithm/consensus-algorithm/gossip/gossip-complex-analyse-1.jpg">
+<meta property="og:image" content="http://zhaobiao666.github.io/algorithm/consensus-algorithm/gossip/gossip-comlpex-analyse-2.jpg">
+<meta property="og:image" content="http://zhaobiao666.github.io/algorithm/consensus-algorithm/gossip/gossip-si.png">
+<meta property="og:image" content="http://zhaobiao666.github.io/algorithm/consensus-algorithm/gossip/gossip-sis.png">
+<meta property="og:image" content="http://zhaobiao666.github.io/algorithm/consensus-algorithm/gossip/gossip-sir-1.png">
+<meta property="og:image" content="http://zhaobiao666.github.io/algorithm/consensus-algorithm/gossip/gossip-sir-2.png">
+<meta property="og:image" content="http://zhaobiao666.github.io/algorithm/consensus-algorithm/gossip/gossip-SIRS.png">
+<meta property="og:image" content="http://zhaobiao666.github.io/algorithm/consensus-algorithm/gossip/gossip-SEIR.png">
+<meta property="og:image" content="http://zhaobiao666.github.io/algorithm/consensus-algorithm/gossip/gossip-SEIRS.png">
 <meta property="article:published_time" content="2020-11-17T06:32:04.000Z">
 <meta property="article:modified_time" content="2020-11-18T06:16:07.663Z">
 <meta property="article:author" content="极地东风">
 <meta property="article:tag" content="gossip">
 <meta property="article:tag" content="consensus">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://zhaobiao666.github.io/.io//gossip-workflow01.jpg">
+<meta name="twitter:image" content="http://zhaobiao666.github.io/algorithm/consensus-algorithm/gossip/gossip-workflow01.jpg">
   <!-- Canonical links -->
   <link rel="canonical" href="http://zhaobiao666.github.io/algorithm/consensus-algorithm/gossip/index.html">
   
@@ -414,7 +414,7 @@
         <h3 id="Gossip-原理简介"><a href="#Gossip-原理简介" class="headerlink" title="Gossip 原理简介"></a>Gossip 原理简介</h3><ul>
 <li><input checked disabled type="checkbox"> Gossip，中文为流言蜚语的意思, Gossip protocol 也叫流言算法，此协议的作用和其名字表示的意思相同。Bitcoin 使用了 gossip 算法来传播交易和区块信息</li>
 <li><input checked disabled type="checkbox"> Gossip protocol 最早是在 1987 年发表在 ACM 上的论文 《Epidemic Algorithms for Replicated Database Maintenance》中被提出。主要用在分布式数据库系统中各个副本节点同步数据之用，这种场景的一个最大特点就是组成的网络的节点都是对等节点，是非结构化网络，这区别于用于结构化网络中的 DHT 算法 Kadmelia。</li>
-<li><input checked disabled type="checkbox"> Gossip 的执行过程如下动图所示：<br><img src="/.io//gossip-workflow01.jpg" alt></li>
+<li><input checked disabled type="checkbox"> Gossip 的执行过程如下动图所示：<br><img src="/algorithm/consensus-algorithm/gossip/gossip-workflow01.jpg" alt></li>
 </ul>
 <h4 id="Gossip-分类"><a href="#Gossip-分类" class="headerlink" title="Gossip 分类"></a>Gossip 分类</h4><h5 id="Anti-Entropy（反熵）："><a href="#Anti-Entropy（反熵）：" class="headerlink" title="Anti-Entropy（反熵）："></a>Anti-Entropy（反熵）：</h5><ul>
 <li><p>Anti-Entropy 以固定的概率传播<code>所有</code>的数据</p>
@@ -448,8 +448,8 @@
 </blockquote>
 <h4 id="Gossip-复杂度分析"><a href="#Gossip-复杂度分析" class="headerlink" title="Gossip 复杂度分析"></a>Gossip 复杂度分析</h4><p>对于一个节点数为 N 的网络来说，假设每个 Gossip 周期，新感染的节点都能再感染至少一个新节点，那么 Gossip 协议退化成一个二叉树查找，经过 LogN 个周期之后，感染全网，<code>时间复杂度是 O(LogN)</code>。由于每个周期，每个节点都会至少发出一次消息，因此，<code>消息复杂度是 O(N^2)</code>（消息数量 = N * N） 。注意，这是 Gossip 理论上最优的收敛速度，但是在实际情况中，最优的收敛速度是很难达到的。</p>
 <h4 id="节点数据同步概率计算"><a href="#节点数据同步概率计算" class="headerlink" title="节点数据同步概率计算"></a>节点数据同步概率计算</h4><p>假设某个节点在第 i 个周期被感染的概率为 pi，第 i+1 个周期被感染的概率为 pi+1 ，</p>
-<h5 id="Pull"><a href="#Pull" class="headerlink" title="Pull:"></a>Pull:</h5><p><img src="/.io//gossip-complex-analyse-1.jpg" alt></p>
-<h5 id="Push"><a href="#Push" class="headerlink" title="Push:"></a>Push:</h5><p><img src="/.io//gossip-comlpex-analyse-2.jpg" alt></p>
+<h5 id="Pull"><a href="#Pull" class="headerlink" title="Pull:"></a>Pull:</h5><p><img src="/algorithm/consensus-algorithm/gossip/gossip-complex-analyse-1.jpg" alt></p>
+<h5 id="Push"><a href="#Push" class="headerlink" title="Push:"></a>Push:</h5><p><img src="/algorithm/consensus-algorithm/gossip/gossip-comlpex-analyse-2.jpg" alt></p>
 <blockquote>
 <p>显然 Pull 的收敛速度大于 Push ，而每个节点在每个周期被感染的概率都是固定的 p (0&lt;p&lt;1)，因此 Gossip 算法是基于 p 的平方收敛，也称为<code>概率收敛</code>，这在众多的一致性算法中是非常独特的。</p>
 </blockquote>
@@ -474,24 +474,24 @@
 <hr>
 <h3 id="补充：-SI、SIS、SIR、SIRS、SEIR、SRIRS-模型简介"><a href="#补充：-SI、SIS、SIR、SIRS、SEIR、SRIRS-模型简介" class="headerlink" title="补充： SI、SIS、SIR、SIRS、SEIR、SRIRS 模型简介"></a>补充： SI、SIS、SIR、SIRS、SEIR、SRIRS 模型简介</h3><p>这四个模型是传染病动力学仓室模型里最基本的四个,其共同特征是研究群体里至少包括两类基本人群:即易感者 S 与染病者 I。这两类人群也是所有仓室流行病模型里都必须包括的。<br>包含 R 的模型将非染病者细分为两类,即真正的 S 类和不参与或不影响疾病传染过程的 R 类,后者往往表示对疾病具有免疫力或被治愈的群体。</p>
 <h4 id="SI-模型"><a href="#SI-模型" class="headerlink" title="SI 模型"></a>SI 模型</h4><p>SI 是传染动力学中最简单的模型，首先把人群分为2种: <code>易感者</code>(Susceptibles,表示健康的人群,人数用 S 表示) 和 <code>感染者</code>(The Infected,人数用 I 来表示)</p>
-<h5 id="模型特征"><a href="#模型特征" class="headerlink" title="模型特征"></a>模型特征</h5><p>假设：<br>1、在疾病传播期间总人数N不变，N=S+I<br>2、每个病人每天接触人数为定值<br>模型特征如下：<br><img src="/.io//gossip-si.png" alt></p>
+<h5 id="模型特征"><a href="#模型特征" class="headerlink" title="模型特征"></a>模型特征</h5><p>假设：<br>1、在疾病传播期间总人数N不变，N=S+I<br>2、每个病人每天接触人数为定值<br>模型特征如下：<br><img src="/algorithm/consensus-algorithm/gossip/gossip-si.png" alt></p>
 <h4 id="SIS-模型"><a href="#SIS-模型" class="headerlink" title="SIS 模型"></a>SIS 模型</h4><p>在 SI 模型基础上加入康复的概率, 但是会存在重复感染</p>
-<h5 id="模型特征-1"><a href="#模型特征-1" class="headerlink" title="模型特征"></a>模型特征</h5><p>模型特如下所示：<br><img src="/.io//gossip-sis.png" alt></p>
+<h5 id="模型特征-1"><a href="#模型特征-1" class="headerlink" title="模型特征"></a>模型特征</h5><p>模型特如下所示：<br><img src="/algorithm/consensus-algorithm/gossip/gossip-sis.png" alt></p>
 <h4 id="SIR-模型"><a href="#SIR-模型" class="headerlink" title="SIR 模型"></a>SIR 模型</h4><p>SIR 中的 R 为 Removal(移除，即：康复者)，本模型旨在研究 S、I、R 三者之间的关系。<br>开始阶段，所有人均为易感者。当一部分人接触到病毒后，变成了感染者。感染者治疗痊愈后，从感染者中移除，变为康复者，并且拥有<code>永久免疫</code>能力。</p>
-<p>三者变化关系如下：<br><img src="/.io//gossip-sir-1.png" alt></p>
+<p>三者变化关系如下：<br><img src="/algorithm/consensus-algorithm/gossip/gossip-sir-1.png" alt></p>
 <h5 id="模型特征-2"><a href="#模型特征-2" class="headerlink" title="模型特征"></a>模型特征</h5><p>该模型的前提假设条件：</p>
 <ul>
 <li>一段时间内总人数 N 是不变的，也就是不考虑新生以及自然死亡的人数</li>
 <li>从 S 到 I 的变化速度 α、从 I 到 R 的变化速度 β 也是保持不变的</li>
 <li>移除者不再被感染</li>
 </ul>
-<p>模型特征如下：<br><img src="/.io//gossip-sir-2.png" alt></p>
+<p>模型特征如下：<br><img src="/algorithm/consensus-algorithm/gossip/gossip-sir-2.png" alt></p>
 <h4 id="SIRS-模型"><a href="#SIRS-模型" class="headerlink" title="SIRS 模型"></a>SIRS 模型</h4><p>与SIR不同在于：康复者的免疫力是暂时的，康复者会转化为易感者</p>
-<h5 id="模型特征-3"><a href="#模型特征-3" class="headerlink" title="模型特征"></a>模型特征</h5><p>模型特征如下：<br><img src="/.io//gossip-SIRS.png" alt></p>
+<h5 id="模型特征-3"><a href="#模型特征-3" class="headerlink" title="模型特征"></a>模型特征</h5><p>模型特征如下：<br><img src="/algorithm/consensus-algorithm/gossip/gossip-SIRS.png" alt></p>
 <h4 id="SEIR-模型"><a href="#SEIR-模型" class="headerlink" title="SEIR 模型"></a>SEIR 模型</h4><p>在其他模型的基础上，加入传染病潜伏期的存在，康复者</p>
-<h5 id="模型特征如下："><a href="#模型特征如下：" class="headerlink" title="模型特征如下："></a>模型特征如下：</h5><p><img src="/.io//gossip-SEIR.png" alt></p>
+<h5 id="模型特征如下："><a href="#模型特征如下：" class="headerlink" title="模型特征如下："></a>模型特征如下：</h5><p><img src="/algorithm/consensus-algorithm/gossip/gossip-SEIR.png" alt></p>
 <h4 id="SEIRS-模型"><a href="#SEIRS-模型" class="headerlink" title="SEIRS 模型"></a>SEIRS 模型</h4><p>与 SEIR 不同的在于：加入传染病潜伏期的存在，并且免疫力为暂时的，康复者会转化为易感者</p>
-<h5 id="模型特征如下：-1"><a href="#模型特征如下：-1" class="headerlink" title="模型特征如下："></a>模型特征如下：</h5><p><img src="/.io//gossip-SEIRS.png" alt></p>
+<h5 id="模型特征如下：-1"><a href="#模型特征如下：-1" class="headerlink" title="模型特征如下："></a>模型特征如下：</h5><p><img src="/algorithm/consensus-algorithm/gossip/gossip-SEIRS.png" alt></p>
 <p>PS: 后续会对 gossip 的具体实现部分进行补充！<br>内容参考列表：<br>[1] <a href="https://zhuanlan.zhihu.com/p/41228196" target="_blank" rel="noopener">https://zhuanlan.zhihu.com/p/41228196</a><br>[2] <a href="https://blog.csdn.net/weixin_43289424/article/details/104214637" target="_blank" rel="noopener">https://blog.csdn.net/weixin_43289424/article/details/104214637</a></p>
 
       
