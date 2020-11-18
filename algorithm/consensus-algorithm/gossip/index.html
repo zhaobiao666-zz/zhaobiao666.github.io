@@ -36,7 +36,7 @@
 <meta property="og:image" content="http://zhaobiao666.github.io/algorithm/consensus-algorithm/gossip/gossip-SEIR.png">
 <meta property="og:image" content="http://zhaobiao666.github.io/algorithm/consensus-algorithm/gossip/gossip-SEIRS.png">
 <meta property="article:published_time" content="2020-11-17T06:32:04.000Z">
-<meta property="article:modified_time" content="2020-11-18T06:16:07.663Z">
+<meta property="article:modified_time" content="2020-11-18T06:48:59.587Z">
 <meta property="article:author" content="极地东风">
 <meta property="article:tag" content="gossip">
 <meta property="article:tag" content="consensus">
@@ -472,7 +472,7 @@
 </li>
 </ul>
 <hr>
-<h3 id="补充：-SI、SIS、SIR、SIRS、SEIR、SRIRS-模型简介"><a href="#补充：-SI、SIS、SIR、SIRS、SEIR、SRIRS-模型简介" class="headerlink" title="补充： SI、SIS、SIR、SIRS、SEIR、SRIRS 模型简介"></a>补充： SI、SIS、SIR、SIRS、SEIR、SRIRS 模型简介</h3><p>这四个模型是传染病动力学仓室模型里最基本的四个,其共同特征是研究群体里至少包括两类基本人群:即易感者 S 与染病者 I。这两类人群也是所有仓室流行病模型里都必须包括的。<br>包含 R 的模型将非染病者细分为两类,即真正的 S 类和不参与或不影响疾病传染过程的 R 类,后者往往表示对疾病具有免疫力或被治愈的群体。</p>
+<h3 id="补充：-SI、SIS、SIR、SIRS、SEIR、SRIRS-模型简介"><a href="#补充：-SI、SIS、SIR、SIRS、SEIR、SRIRS-模型简介" class="headerlink" title="补充： SI、SIS、SIR、SIRS、SEIR、SRIRS 模型简介"></a>补充： SI、SIS、SIR、SIRS、SEIR、SRIRS 模型简介</h3><p>上述6种模型是传染病动力学仓室模型中最基本的6种模型,其共同特征是研究群体里至少包括两类基本人群:即易感者 S 与染病者 I。这两类人群也是所有仓室流行病模型里都必须包括的，下面会对上述模型做相应的解释。</p>
 <h4 id="SI-模型"><a href="#SI-模型" class="headerlink" title="SI 模型"></a>SI 模型</h4><p>SI 是传染动力学中最简单的模型，首先把人群分为2种: <code>易感者</code>(Susceptibles,表示健康的人群,人数用 S 表示) 和 <code>感染者</code>(The Infected,人数用 I 来表示)</p>
 <h5 id="模型特征"><a href="#模型特征" class="headerlink" title="模型特征"></a>模型特征</h5><p>假设：<br>1、在疾病传播期间总人数N不变，N=S+I<br>2、每个病人每天接触人数为定值<br>模型特征如下：<br><img src="/algorithm/consensus-algorithm/gossip/gossip-si.png" alt></p>
 <h4 id="SIS-模型"><a href="#SIS-模型" class="headerlink" title="SIS 模型"></a>SIS 模型</h4><p>在 SI 模型基础上加入康复的概率, 但是会存在重复感染</p>
