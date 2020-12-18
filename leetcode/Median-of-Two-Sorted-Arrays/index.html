@@ -17,20 +17,21 @@
   <meta http-equiv="window-target" content="_top" />
   
   
-  <title>友情链接 | 极地东风</title>
-  <meta name="description" content="block chain; hyperledger fabric; algorithm; leetcode">
-<meta property="og:type" content="website">
-<meta property="og:title" content="友情链接">
-<meta property="og:url" content="http://zhaobiao666.github.io/links/index.html">
+  <title>两个正序数组中的中位数 | 极地东风</title>
+  <meta name="description" content="两个正序数组中的中位数问题描述：给定两个大小为 m 和 n 的正序（从小到大）数组 nums1 和 nums2。请你找出并返回这两个正序数组的中位数。 示例 1： 123输入：nums1 &#x3D; [1,3], nums2 &#x3D; [2]输出：2.00000解释：合并数组 &#x3D; [1,2,3] ，中位数 2 示例 2： 123输入：nums1 &#x3D; [1,2], nums">
+<meta property="og:type" content="article">
+<meta property="og:title" content="两个正序数组中的中位数">
+<meta property="og:url" content="http://zhaobiao666.github.io/leetcode/Median-of-Two-Sorted-Arrays/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="block chain; hyperledger fabric; algorithm; leetcode">
+<meta property="og:description" content="两个正序数组中的中位数问题描述：给定两个大小为 m 和 n 的正序（从小到大）数组 nums1 和 nums2。请你找出并返回这两个正序数组的中位数。 示例 1： 123输入：nums1 &#x3D; [1,3], nums2 &#x3D; [2]输出：2.00000解释：合并数组 &#x3D; [1,2,3] ，中位数 2 示例 2： 123输入：nums1 &#x3D; [1,2], nums">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2020-06-20T16:32:16.904Z">
-<meta property="article:modified_time" content="2020-06-15T15:52:50.169Z">
+<meta property="article:published_time" content="2020-12-18T07:58:08.000Z">
+<meta property="article:modified_time" content="2020-12-18T08:22:07.709Z">
 <meta property="article:author" content="极地东风">
+<meta property="article:tag" content="leetcode,median">
 <meta name="twitter:card" content="summary">
   <!-- Canonical links -->
-  <link rel="canonical" href="http://zhaobiao666.github.io/links/index.html">
+  <link rel="canonical" href="http://zhaobiao666.github.io/leetcode/Median-of-Two-Sorted-Arrays/index.html">
   
     <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
   
@@ -49,7 +50,7 @@
 <meta name="generator" content="Hexo 4.2.1"></head>
 
 
-<body class="main-center theme-black no-sidebar" itemscope itemtype="http://schema.org/WebPage">
+<body class="main-center theme-black" itemscope itemtype="http://schema.org/WebPage">
   <header class="header" itemscope itemtype="http://schema.org/WPHeader">
   <div class="slimContent">
     <div class="navbar-header">
@@ -346,47 +347,202 @@
 </aside>
 
   
-  <main class="main" role="main">
-  <article class="article article-links article-type-list" itemscope="">
-  <header class="article-header">
-    <h1 itemprop="title">友情链接</h1>
-    <p class="text-muted">
-      欢迎交换链接，可在当前页面留言
-    </p>
-  </header>
-  <div class="article-body">
-    <div class="row">
+  
+<aside class="sidebar sidebar-toc collapse" id="collapseToc" itemscope itemtype="http://schema.org/WPSideBar">
+  <div class="slimContent">
+    <nav id="toc" class="article-toc">
+      <h3 class="toc-title">文章目录</h3>
+      <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#两个正序数组中的中位数"><span class="toc-number">1.</span> <span class="toc-text">两个正序数组中的中位数</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#解法"><span class="toc-number">2.</span> <span class="toc-text">解法</span></a></li></ol>
+    </nav>
+  </div>
+</aside>
+
+<main class="main" role="main">
+  <div class="content">
+  <article id="post-leetcode/Median-of-Two-Sorted-Arrays" class="article article-type-post" itemscope itemtype="http://schema.org/BlogPosting">
+    
+    <div class="article-header">
       
         
-          <div class="col-sm-6 col-md-4">
-            <div class="panel panel-default hover-shadow hover-grow">
-              <figure class="media media-middle">
-                <div class="media-left pr-no">
-                  <a href="http://example.com" target="_blank" class="img-burn thumb-md media-middle">
-                    <img src="http://example.com/avatar.png" class="w-full" alt="">
-                  </a>
-                </div>
-                <div class="media-body p-0x">
-                  <h4 class="media-heading"><a href="http://example.com" target="_blank"><span class="text-dark">Name</span></a></h4>
-                  <div class="text-muted">
-                    这是一个描述
-                  </div>
-                </div>
-              </figure>
-            </div>
-          </div>
-          
-    </div>
-  </div>
-</article>
-
   
+    <h1 class="article-title" itemprop="name">
+      两个正序数组中的中位数
+    </h1>
+  
+
+      
+      <div class="article-meta">
+        <span class="article-date">
+    <i class="icon icon-calendar-check"></i>
+	<a href="/leetcode/Median-of-Two-Sorted-Arrays/" class="article-date">
+	  <time datetime="2020-12-18T07:58:08.000Z" itemprop="datePublished">2020-12-18</time>
+	</a>
+</span>
+        
+  <span class="article-category">
+    <i class="icon icon-folder"></i>
+    <a class="article-category-link" href="/categories/leetcode/">leetcode</a>
+  </span>
+
+        
+  <span class="article-tag">
+    <i class="icon icon-tags"></i>
+	<a class="article-tag-link" href="/tags/leetcode-median/" rel="tag">leetcode,median</a>
+  </span>
+
+
+        
+
+        <span class="post-comment"><i class="icon icon-comment"></i> <a href="/leetcode/Median-of-Two-Sorted-Arrays/#comments" class="article-comment-link">评论</a></span>
+        
+      </div>
+    </div>
+    <div class="article-entry marked-body" itemprop="articleBody">
+      
+        <h4 id="两个正序数组中的中位数"><a href="#两个正序数组中的中位数" class="headerlink" title="两个正序数组中的中位数"></a>两个正序数组中的中位数</h4><p>问题描述：<br>给定两个大小为 m 和 n 的正序（从小到大）数组 nums1 和 nums2。请你找出并返回这两个正序数组的中位数。</p>
+<p>示例 1：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">输入：nums1 &#x3D; [1,3], nums2 &#x3D; [2]</span><br><span class="line">输出：2.00000</span><br><span class="line">解释：合并数组 &#x3D; [1,2,3] ，中位数 2</span><br></pre></td></tr></table></figure>
+<p>示例 2：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">输入：nums1 &#x3D; [1,2], nums2 &#x3D; [3,4]</span><br><span class="line">输出：2.50000</span><br><span class="line">解释：合并数组 &#x3D; [1,2,3,4] ，中位数 (2 + 3) &#x2F; 2 &#x3D; 2.5</span><br></pre></td></tr></table></figure>
+
+
+<p>链接：<a href="https://leetcode-cn.com/problems/median-of-two-sorted-arrays" target="_blank" rel="noopener">原题链接</a></p>
+<h4 id="解法"><a href="#解法" class="headerlink" title="解法"></a>解法</h4><ul>
+<li>思路：维护两个索引，分别指向这两个有序数组的初始位置，比较这两个索引所指向的值哪个较小，较小的索引往后移1位。如此迭代，直到两个索引之和为：(lan(a)+lan(b)+1)/2<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">findMedianSortedArrays</span><span class="params">(nums1 []<span class="keyword">int</span>, nums2 []<span class="keyword">int</span>)</span> <span class="title">float64</span></span> &#123;</span><br><span class="line">	lenA := <span class="built_in">len</span>(nums1)</span><br><span class="line">	lenB := <span class="built_in">len</span>(nums2)</span><br><span class="line">	tmpMid0, tmpMid1, tmpMid2 :=<span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>  <span class="comment">// 奇数时，使用 tmpMid1 表示中间值；偶数时使用(tmpMid1+tmpMid2)/2 来保存中间值</span></span><br><span class="line">	count := <span class="number">0</span></span><br><span class="line">	oddFlag := <span class="literal">true</span>  <span class="comment">// 是否为基数</span></span><br><span class="line">	median := <span class="number">0</span>  	 <span class="comment">// 全量数组的中位数的索引值</span></span><br><span class="line"></span><br><span class="line">	<span class="comment">// 计算中位数的索引值</span></span><br><span class="line">	<span class="keyword">if</span> (lenA + lenB)%<span class="number">2</span> == <span class="number">0</span> &#123;</span><br><span class="line">		oddFlag = <span class="literal">false</span></span><br><span class="line">		median = (lenA + lenB)/<span class="number">2</span></span><br><span class="line">	&#125;<span class="keyword">else</span> &#123;</span><br><span class="line">		median = (lenA + lenB + <span class="number">1</span>)/<span class="number">2</span></span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">var</span> indexA, indexB = <span class="number">0</span>, <span class="number">0</span></span><br><span class="line">	<span class="keyword">for</span>&#123;</span><br><span class="line"></span><br><span class="line">		<span class="keyword">if</span> count &lt;= median&#123;</span><br><span class="line">			tmpMid1	=  tmpMid0</span><br><span class="line">		&#125;<span class="keyword">else</span> &#123;</span><br><span class="line">			tmpMid2 = tmpMid0</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		<span class="comment">// 遍历到中间值，更具奇偶来计算中间值</span></span><br><span class="line">		<span class="keyword">if</span> count == median + <span class="number">1</span> &#123;</span><br><span class="line">			<span class="keyword">if</span> oddFlag &#123;</span><br><span class="line">				<span class="keyword">return</span> <span class="keyword">float64</span>(tmpMid1)</span><br><span class="line">			&#125;<span class="keyword">else</span> &#123;</span><br><span class="line">				<span class="comment">// 偶数，需要获取下一个值，再做均值</span></span><br><span class="line">				<span class="keyword">return</span> <span class="keyword">float64</span>(tmpMid1 + tmpMid2)/<span class="number">2</span></span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		count++</span><br><span class="line">		<span class="comment">// 数组没有越界或者数组不为空</span></span><br><span class="line">		<span class="keyword">if</span> indexA &lt; lenA &amp;&amp; indexB &lt; lenB &#123;</span><br><span class="line">			<span class="keyword">if</span> nums1[indexA] &lt;= nums2[indexB] &#123;</span><br><span class="line">				tmpMid0 = nums1[indexA]</span><br><span class="line">				indexA++</span><br><span class="line">				<span class="keyword">continue</span></span><br><span class="line">			&#125;</span><br><span class="line">			<span class="keyword">if</span> nums1[indexA] &gt; nums2[indexB]&#123;</span><br><span class="line">				tmpMid0 = nums2[indexB]</span><br><span class="line">				indexB++</span><br><span class="line">				<span class="keyword">continue</span></span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		<span class="comment">// 只剩 A 了（B 遍历结束）</span></span><br><span class="line">		<span class="keyword">if</span> indexA &lt; lenA &amp;&amp; indexB &gt;= lenB &#123;</span><br><span class="line">			tmpMid0 = nums1[indexA]</span><br><span class="line">			indexA++</span><br><span class="line">			<span class="keyword">continue</span></span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		<span class="comment">// 只剩 B 了（A 遍历结束）</span></span><br><span class="line">		<span class="keyword">if</span> indexA &gt;= lenA &amp;&amp; indexB &lt; lenB &#123;</span><br><span class="line">			tmpMid0 = nums2[indexB]</span><br><span class="line">			indexB++</span><br><span class="line">			<span class="keyword">continue</span></span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>时间复杂度：O(M+N)<br>空间复杂度：O(1)</p>
+</blockquote>
+</li>
+</ul>
+
+      
+    </div>
+    <div class="article-footer">
+      <blockquote class="mt-2x">
+  <ul class="post-copyright list-unstyled">
+    
+    <li class="post-copyright-link hidden-xs">
+      <strong>本文链接：</strong>
+      <a href="http://zhaobiao666.github.io/leetcode/Median-of-Two-Sorted-Arrays/" title="两个正序数组中的中位数" target="_blank" rel="external">http://zhaobiao666.github.io/leetcode/Median-of-Two-Sorted-Arrays/</a>
+    </li>
+    
+    <li class="post-copyright-license">
+      <strong>版权声明： </strong> 本博客所有文章除特别声明外，均采用 <a href="http://creativecommons.org/licenses/by/4.0/deed.zh" target="_blank" rel="external">CC BY 4.0 CN协议</a> 许可协议。转载请注明出处！
+    </li>
+  </ul>
+</blockquote>
+
+
+<div class="panel panel-default panel-badger">
+  <div class="panel-body">
+    <figure class="media">
+      <div class="media-left">
+        <a href="https://github.com/zhaobiao666" target="_blank" class="img-burn thumb-sm visible-lg">
+          <img src="/images/avatar.jpg" class="img-rounded w-full" alt="">
+        </a>
+      </div>
+      <div class="media-body">
+        <h3 class="media-heading"><a href="https://github.com/zhaobiao666" target="_blank"><span class="text-dark">极地东风</span><small class="ml-1x">Block Chain</small></a></h3>
+        <div>Hyperledger Fabric Developer</div>
+      </div>
+    </figure>
+  </div>
+</div>
+
+
+    </div>
+  </article>
+  
+    
   <section id="comments">
   	
            
     
   </section>
 
+
+  
+</div>
+
+  <nav class="bar bar-footer clearfix" data-stick-bottom>
+  <div class="bar-inner">
+  
+  <ul class="pager pull-left">
+    
+    
+    <li class="next">
+      <a href="/blockchain/fabric/gossip-in-fabric/" title="gossip 协议在 fabric 中的实现原理"><span>下一篇&nbsp;&nbsp;</span><i class="icon icon-angle-right" aria-hidden="true"></i></a>
+    </li>
+    
+    
+    <li class="toggle-toc">
+      <a class="toggle-btn collapsed" data-toggle="collapse" href="#collapseToc" aria-expanded="false" title="文章目录" role="button">
+        <span>[&nbsp;</span><span>文章目录</span>
+        <i class="text-collapsed icon icon-anchor"></i>
+        <i class="text-in icon icon-close"></i>
+        <span>]</span>
+      </a>
+    </li>
+    
+  </ul>
+  
+  
+  <!-- Button trigger modal -->
+  <button type="button" class="btn btn-fancy btn-donate pop-onhover bg-gradient-warning" data-toggle="modal" data-target="#donateModal"><span>赏</span></button>
+  <!-- <div class="wave-icon wave-icon-danger btn-donate" data-toggle="modal" data-target="#donateModal">
+    <div class="wave-circle"><span class="icon"><i class="icon icon-bill"></i></span></div>
+  </div> -->
+  
+  
+  <div class="bar-right">
+    
+    <div class="share-component" data-sites="weibo,qq,wechat,facebook,twitter" data-mobile-sites="weibo,qq,qzone"></div>
+    
+  </div>
+  </div>
+</nav>
+  
+<!-- Modal -->
+<div class="modal modal-center modal-small modal-xs-full fade" id="donateModal" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content donate">
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      <div class="modal-body">
+        <div class="donate-box">
+          <div class="donate-head">
+            <p>感谢您的支持，我会继续努力的!</p>
+          </div>
+          <div class="tab-content">
+            <div role="tabpanel" class="tab-pane fade active in" id="alipay">
+              <div class="donate-payimg">
+                <img src="/images/donate/alipayimg.png" alt="扫码支持" title="扫一扫" />
+              </div>
+              <p class="text-muted mv">扫码打赏，你说多少就多少</p>
+              <p class="text-grey">打开支付宝扫一扫，即可进行扫码打赏哦</p>
+            </div>
+            <div role="tabpanel" class="tab-pane fade" id="wechatpay">
+              <div class="donate-payimg">
+                <img src="/images/donate/wechatpayimg.png" alt="扫码支持" title="扫一扫" />
+              </div>
+              <p class="text-muted mv">扫码打赏，你说多少就多少</p>
+              <p class="text-grey">打开微信扫一扫，即可进行扫码打赏哦</p>
+            </div>
+          </div>
+          <div class="donate-footer">
+            <ul class="nav nav-tabs nav-justified" role="tablist">
+              <li role="presentation" class="active">
+                <a href="#alipay" id="alipay-tab" role="tab" data-toggle="tab" aria-controls="alipay" aria-expanded="true"><i class="icon icon-alipay"></i> 支付宝</a>
+              </li>
+              <li role="presentation" class="">
+                <a href="#wechatpay" role="tab" id="wechatpay-tab" data-toggle="tab" aria-controls="wechatpay" aria-expanded="false"><i class="icon icon-wepay"></i> 微信支付</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 
 
 
@@ -448,6 +604,10 @@ window.jQuery || document.write('<script src="js/jquery.min.js"><\/script>')
 
 
 
+
+
+
+   
 
 
 
