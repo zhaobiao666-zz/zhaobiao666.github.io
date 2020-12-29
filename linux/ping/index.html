@@ -17,18 +17,22 @@
   <meta http-equiv="window-target" content="_top" />
   
   
-  <title>标签: gossip | 极地东风</title>
-  <meta name="description" content="block chain; hyperledger fabric; algorithm; leetcode">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Hexo">
-<meta property="og:url" content="http://zhaobiao666.github.io/tags/gossip/index.html">
+  <title>ping 不通的问题 | 极地东风</title>
+  <meta name="description" content="ping 不通的问题ping 不通主要从以下几个方面进行排查：  DNS 是否配置 防火墙是否开启状态 网卡是否配置正确 路由是否配置正确 是否禁用了 ping  接下来，将对上述四点进行排查 DNS 是否配置 首先 ping 一下公网的 url（例如：ping www.baidu.com），判断是都能否 ping 通，若能ping 通说明 DNS 应该没问题 查看 &#x2F;etc&#x2F;resolv.con">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ping 不通的问题">
+<meta property="og:url" content="http://zhaobiao666.github.io/linux/ping/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="block chain; hyperledger fabric; algorithm; leetcode">
+<meta property="og:description" content="ping 不通的问题ping 不通主要从以下几个方面进行排查：  DNS 是否配置 防火墙是否开启状态 网卡是否配置正确 路由是否配置正确 是否禁用了 ping  接下来，将对上述四点进行排查 DNS 是否配置 首先 ping 一下公网的 url（例如：ping www.baidu.com），判断是都能否 ping 通，若能ping 通说明 DNS 应该没问题 查看 &#x2F;etc&#x2F;resolv.con">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://zhaobiao666.github.io/linux/ping/netcard-config.jpg">
+<meta property="article:published_time" content="2020-12-29T07:12:04.000Z">
+<meta property="article:modified_time" content="2020-12-29T07:26:43.562Z">
 <meta property="article:author" content="极地东风">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://zhaobiao666.github.io/linux/ping/netcard-config.jpg">
   <!-- Canonical links -->
-  <link rel="canonical" href="http://zhaobiao666.github.io/tags/gossip/index.html">
+  <link rel="canonical" href="http://zhaobiao666.github.io/linux/ping/index.html">
   
     <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
   
@@ -344,98 +348,226 @@
 </aside>
 
   
-  <main class="main" role="main">
-  <article class="content article article-tags post-type-list" itemscope="">
-    <header class="article-header">
-      <h1 itemprop="name" class="hidden-xs">标签: gossip</h1>
-      <p class="text-muted hidden-xs">共 2 篇文章</p>
-      <nav role="navigation" id="nav-main" class="okayNav">
-        <ul>
-          <li><a href="/tags">All</a></li>
-          
-          <li><a href="/tags/Hexo/">Hexo</a></li>
-          
-          <li><a href="/tags/leetcode/">leetcode</a></li>
-          
-          <li><a href="/tags/data-structure/">data-structure</a></li>
-          
-          <li><a href="/tags/linked-list/">linked-list</a></li>
-          
-          <li><a href="/tags/gossip/">gossip</a></li>
-          
-          <li><a href="/tags/consensus/">consensus</a></li>
-          
-          <li><a href="/tags/blockchain/">blockchain</a></li>
-          
-          <li><a href="/tags/fabric/">fabric</a></li>
-          
-          <li><a href="/tags/database/">database</a></li>
-          
-          <li><a href="/tags/chaincode/">chaincode</a></li>
-          
-          <li><a href="/tags/leetcode-median/">leetcode,median</a></li>
-          
-        </ul>
-      </nav>
-    </header>
-    <!-- /header -->
-    <div class="article-body">
-      <div class="row">
+  
+<aside class="sidebar sidebar-toc collapse" id="collapseToc" itemscope itemtype="http://schema.org/WPSideBar">
+  <div class="slimContent">
+    <nav id="toc" class="article-toc">
+      <h3 class="toc-title">文章目录</h3>
+      <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#ping-不通的问题"><span class="toc-number">1.</span> <span class="toc-text">ping 不通的问题</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#DNS-是否配置"><span class="toc-number">1.1.</span> <span class="toc-text">DNS 是否配置</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#防火墙是否开启状态"><span class="toc-number">1.2.</span> <span class="toc-text">防火墙是否开启状态</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#网卡是否配置正确"><span class="toc-number">1.3.</span> <span class="toc-text">网卡是否配置正确</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#路由是否配置正确"><span class="toc-number">1.4.</span> <span class="toc-text">路由是否配置正确</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#查看是否禁用了-ping-服务"><span class="toc-number">1.5.</span> <span class="toc-text">查看是否禁用了 ping 服务</span></a></li></ol></li></ol>
+    </nav>
+  </div>
+</aside>
+
+<main class="main" role="main">
+  <div class="content">
+  <article id="post-linux/ping" class="article article-type-post" itemscope itemtype="http://schema.org/BlogPosting">
+    
+    <div class="article-header">
+      
         
-<div class="col-md-6">
-    
-<article class="panel panel-default hover-shadow hover-grow" itemscope itemtype="http://schema.org/BlogPosting">
-  <div class="panel-body">
-     <div class="article-meta">
-       <time datetime="2020-11-17T06:40:06.000Z" itemprop="datePublished">2020-11-17</time>
-     </div>
-     <h3 class="article-title" itemprop="name">
-       <a class="article-link" href="/blockchain/fabric/gossip-in-fabric/">gossip 协议在 fabric 中的实现原理</a>
-     </h3>
-   </div>
-   
-   <div class="panel-footer">
-     
-      <a href="/tags/gossip/" class="label label-default mb">gossip</a>
-     
-     
-   </div>
-   
-</article>
+  
+    <h1 class="article-title" itemprop="name">
+      ping 不通的问题
+    </h1>
+  
 
+      
+      <div class="article-meta">
+        <span class="article-date">
+    <i class="icon icon-calendar-check"></i>
+	<a href="/linux/ping/" class="article-date">
+	  <time datetime="2020-12-29T07:12:04.000Z" itemprop="datePublished">2020-12-29</time>
+	</a>
+</span>
+        
+  <span class="article-category">
+    <i class="icon icon-folder"></i>
+    <a class="article-category-link" href="/categories/linux/">linux</a>►<a class="article-category-link" href="/categories/linux/network/">network</a>
+  </span>
 
-</div>
+        
 
-<div class="col-md-6">
-    
-<article class="panel panel-default hover-shadow hover-grow" itemscope itemtype="http://schema.org/BlogPosting">
-  <div class="panel-body">
-     <div class="article-meta">
-       <time datetime="2020-11-17T06:32:04.000Z" itemprop="datePublished">2020-11-17</time>
-     </div>
-     <h3 class="article-title" itemprop="name">
-       <a class="article-link" href="/algorithm/consensus-algorithm/gossip/">Gossip 算法</a>
-     </h3>
-   </div>
-   
-   <div class="panel-footer">
-     
-      <a href="/tags/gossip/" class="label label-default mb">gossip</a>
-     
-      <a href="/tags/consensus/" class="label label-default mb">consensus</a>
-     
-     
-   </div>
-   
-</article>
+        
 
-
-</div>
-
+        <span class="post-comment"><i class="icon icon-comment"></i> <a href="/linux/ping/#comments" class="article-comment-link">评论</a></span>
+        
       </div>
     </div>
+    <div class="article-entry marked-body" itemprop="articleBody">
+      
+        <h3 id="ping-不通的问题"><a href="#ping-不通的问题" class="headerlink" title="ping 不通的问题"></a>ping 不通的问题</h3><p>ping 不通主要从以下几个方面进行排查：</p>
+<ol>
+<li>DNS 是否配置</li>
+<li>防火墙是否开启状态</li>
+<li>网卡是否配置正确</li>
+<li>路由是否配置正确</li>
+<li>是否禁用了 ping</li>
+</ol>
+<p>接下来，将对上述四点进行排查</p>
+<h4 id="DNS-是否配置"><a href="#DNS-是否配置" class="headerlink" title="DNS 是否配置"></a>DNS 是否配置</h4><ul>
+<li>首先 ping 一下公网的 url（例如：ping <a href="http://www.baidu.com），判断是都能否" target="_blank" rel="noopener">www.baidu.com），判断是都能否</a> ping 通，若能ping 通说明 DNS 应该没问题</li>
+<li>查看 /etc/resolv.conf, 文件中的 <code>nameserer</code> 即为 DNS 服务器地址，若配置类似于 “8.8.8.8、114.114.114.114”这种地址, 则说明 DNS 没有问题   </li>
+</ul>
+<h4 id="防火墙是否开启状态"><a href="#防火墙是否开启状态" class="headerlink" title="防火墙是否开启状态"></a>防火墙是否开启状态</h4><ul>
+<li>使用 <code>systemctl status firewalld</code> 查看防火墙状态，若处于开启状态，则关闭防火墙。如下为防火墙相关的操作命令：<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">启动：  </span><br><span class="line">systemctl start firewalld</span><br><span class="line">查状态：</span><br><span class="line">systemctl status firewalld </span><br><span class="line">停止：  </span><br><span class="line">systemctl disable firewalld</span><br><span class="line">禁用：  </span><br><span class="line">systemctl stop firewalld</span><br><span class="line">在开机时启用防火墙：</span><br><span class="line">systemctl enable firewalld.service</span><br><span class="line">在开机时禁用防火墙：</span><br><span class="line">systemctl disable firewalld.service</span><br><span class="line">查看是否开机启动：</span><br><span class="line">systemctl is-enabled firewalld.service</span><br><span class="line">查看已启动的服务列表：</span><br><span class="line">systemctl list-unit-files|grep enabled</span><br><span class="line">查看启动失败的服务列表：</span><br><span class="line">systemctl --failed</span><br></pre></td></tr></table></figure>
+如果开启防火墙之后还是不行，则查看网卡配置</li>
+</ul>
+<h4 id="网卡是否配置正确"><a href="#网卡是否配置正确" class="headerlink" title="网卡是否配置正确"></a>网卡是否配置正确</h4><ul>
+<li>进入 <code>/etc/sysconfig/network-scripts/</code>，此文件夹下以 <code>ifcfg-</code> 开头文件即网卡配置文件，找到以太网的配置文件，并且查看 ip 地址是和网关处于同一网段，示例图如下：<br><img src="/linux/ping/netcard-config.jpg" alt><br>若配置符合上述要求，但是仍然无法 ping 通网络，再进行路由配置的检查</li>
+</ul>
+<h4 id="路由是否配置正确"><a href="#路由是否配置正确" class="headerlink" title="路由是否配置正确"></a>路由是否配置正确</h4><ul>
+<li>查看路由表<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> route -n</span></span><br><span class="line">Kernel IP routing table</span><br><span class="line">Destination     Gateway         Genmask         Flags Metric Ref    Use Iface</span><br><span class="line">0.0.0.0         10.18.13.254    0.0.0.0         UG    100    0        0 ens192</span><br><span class="line">10.18.13.0      0.0.0.0         255.255.255.0   U     0      0        0 br-0f6782a6360a</span><br><span class="line">10.18.13.0      0.0.0.0         255.255.255.0   U     100    0        0 ens192</span><br><span class="line">10.42.0.0       0.0.0.0         255.255.0.0     U     0      0        0 docker0</span><br><span class="line">169.254.169.250 0.0.0.0         255.255.255.255 UH    0      0        0 docker0</span><br><span class="line">172.17.0.0      0.0.0.0         255.255.0.0     U     0      0        0 docker0</span><br><span class="line">192.168.122.0   0.0.0.0         255.255.255.0   U     0      0        0 virbr0</span><br></pre></td></tr></table></figure></li>
+<li>删除异常路由<br>由于我是 ping 10.18.13 网段出现失败，所以删除 10.18.13 网段的路由<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">route del -net 10.18.13.0 netmask 255.255.255.0</span><br></pre></td></tr></table></figure>
+本人在这一步，解决了 ping 不通的问题</li>
+</ul>
+<h4 id="查看是否禁用了-ping-服务"><a href="#查看是否禁用了-ping-服务" class="headerlink" title="查看是否禁用了 ping 服务"></a>查看是否禁用了 ping 服务</h4><ul>
+<li>ping 操作临时配置检查<br>查看 <code>/proc/sys/net/ipv4/icmp_echo_ignore_all</code> 文件内的值，将文件内的值改为 <code>0</code><blockquote>
+<p><code>0</code>: 表示允许临时使用 ping 操作<br><code>1</code>: 表示禁止使用</p>
+</blockquote>
+</li>
+</ul>
+<ul>
+<li><p>ping 操作永久配置设置<br>/etc/sysctl.conf 中增加一行</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">// 0表示允许，1表示禁止(同上)</span><br><span class="line">net.ipv4.icmp_echo_ignore_all=0</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>生效ping 服务</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sysctl -p</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<p><em>补充：对于 ping 不通的问题，基本是因为上述几种情况（对于翻墙问题，需要搭梯子，这里不做讨论），其中路由与防火墙属于最常见的原因。</em></p>
+
+      
+    </div>
+    <div class="article-footer">
+      <blockquote class="mt-2x">
+  <ul class="post-copyright list-unstyled">
+    
+    <li class="post-copyright-link hidden-xs">
+      <strong>本文链接：</strong>
+      <a href="http://zhaobiao666.github.io/linux/ping/" title="ping 不通的问题" target="_blank" rel="external">http://zhaobiao666.github.io/linux/ping/</a>
+    </li>
+    
+    <li class="post-copyright-license">
+      <strong>版权声明： </strong> 本博客所有文章除特别声明外，均采用 <a href="http://creativecommons.org/licenses/by/4.0/deed.zh" target="_blank" rel="external">CC BY 4.0 CN协议</a> 许可协议。转载请注明出处！
+    </li>
+  </ul>
+</blockquote>
+
+
+<div class="panel panel-default panel-badger">
+  <div class="panel-body">
+    <figure class="media">
+      <div class="media-left">
+        <a href="https://github.com/zhaobiao666" target="_blank" class="img-burn thumb-sm visible-lg">
+          <img src="/images/avatar.jpg" class="img-rounded w-full" alt="">
+        </a>
+      </div>
+      <div class="media-body">
+        <h3 class="media-heading"><a href="https://github.com/zhaobiao666" target="_blank"><span class="text-dark">极地东风</span><small class="ml-1x">Block Chain</small></a></h3>
+        <div>Hyperledger Fabric Developer</div>
+      </div>
+    </figure>
+  </div>
+</div>
+
+
+    </div>
   </article>
-   
+  
+    
+  <section id="comments">
+  	
+           
+    
+  </section>
+
+
+  
+</div>
+
+  <nav class="bar bar-footer clearfix" data-stick-bottom>
+  <div class="bar-inner">
+  
+  <ul class="pager pull-left">
+    
+    
+    <li class="next">
+      <a href="/leetcode/Median-of-Two-Sorted-Arrays/" title="两个正序数组中的中位数"><span>下一篇&nbsp;&nbsp;</span><i class="icon icon-angle-right" aria-hidden="true"></i></a>
+    </li>
+    
+    
+    <li class="toggle-toc">
+      <a class="toggle-btn collapsed" data-toggle="collapse" href="#collapseToc" aria-expanded="false" title="文章目录" role="button">
+        <span>[&nbsp;</span><span>文章目录</span>
+        <i class="text-collapsed icon icon-anchor"></i>
+        <i class="text-in icon icon-close"></i>
+        <span>]</span>
+      </a>
+    </li>
+    
+  </ul>
+  
+  
+  <!-- Button trigger modal -->
+  <button type="button" class="btn btn-fancy btn-donate pop-onhover bg-gradient-warning" data-toggle="modal" data-target="#donateModal"><span>赏</span></button>
+  <!-- <div class="wave-icon wave-icon-danger btn-donate" data-toggle="modal" data-target="#donateModal">
+    <div class="wave-circle"><span class="icon"><i class="icon icon-bill"></i></span></div>
+  </div> -->
+  
+  
+  <div class="bar-right">
+    
+    <div class="share-component" data-sites="weibo,qq,wechat,facebook,twitter" data-mobile-sites="weibo,qq,qzone"></div>
+    
+  </div>
+  </div>
+</nav>
+  
+<!-- Modal -->
+<div class="modal modal-center modal-small modal-xs-full fade" id="donateModal" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content donate">
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      <div class="modal-body">
+        <div class="donate-box">
+          <div class="donate-head">
+            <p>感谢您的支持，我会继续努力的!</p>
+          </div>
+          <div class="tab-content">
+            <div role="tabpanel" class="tab-pane fade active in" id="alipay">
+              <div class="donate-payimg">
+                <img src="/images/donate/alipayimg.png" alt="扫码支持" title="扫一扫" />
+              </div>
+              <p class="text-muted mv">扫码打赏，你说多少就多少</p>
+              <p class="text-grey">打开支付宝扫一扫，即可进行扫码打赏哦</p>
+            </div>
+            <div role="tabpanel" class="tab-pane fade" id="wechatpay">
+              <div class="donate-payimg">
+                <img src="/images/donate/wechatpayimg.png" alt="扫码支持" title="扫一扫" />
+              </div>
+              <p class="text-muted mv">扫码打赏，你说多少就多少</p>
+              <p class="text-grey">打开微信扫一扫，即可进行扫码打赏哦</p>
+            </div>
+          </div>
+          <div class="donate-footer">
+            <ul class="nav nav-tabs nav-justified" role="tablist">
+              <li role="presentation" class="active">
+                <a href="#alipay" id="alipay-tab" role="tab" data-toggle="tab" aria-controls="alipay" aria-expanded="true"><i class="icon icon-alipay"></i> 支付宝</a>
+              </li>
+              <li role="presentation" class="">
+                <a href="#wechatpay" role="tab" id="wechatpay-tab" data-toggle="tab" aria-controls="wechatpay" aria-expanded="false"><i class="icon icon-wepay"></i> 微信支付</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
 </main>
 
   <footer class="footer" itemscope itemtype="http://schema.org/WPFooter">
@@ -496,6 +628,31 @@ window.jQuery || document.write('<script src="js/jquery.min.js"><\/script>')
 
 
 
+
+   
+
+
+
+
+   
+    
+  <!-- <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css"> -->
+  <script src="//cdn.jsdelivr.net/npm/gitalk@1.4.0/dist/gitalk.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/blueimp-md5@2.10.0/js/md5.min.js"></script>
+  <script type="text/javascript">
+  var gitalk = new Gitalk({
+    clientID: 'f302dff65be530be2ffb',
+    clientSecret: 'f7c287c3058a8b0714dcd249cd7993343fec135a',
+    repo: 'zhaobiao666.github.io',
+    owner: 'zhaobiao666',
+    admin: ['zhaobiao666'],
+    id: md5(location.pathname),
+    distractionFreeMode: true
+  })
+  gitalk.render('comments')
+  </script>
+
+      
 
 
 
