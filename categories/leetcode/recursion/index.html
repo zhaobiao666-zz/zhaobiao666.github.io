@@ -17,21 +17,18 @@
   <meta http-equiv="window-target" content="_top" />
   
   
-  <title>leetcode - 无重复字符的最长子串 | 极地东风</title>
-  <meta name="description" content="问题：无重复字符的最长子串难度: 中等 描述：给定一个字符串，请你找出其中不含有重复字符的 最长子串 的长度。 示例 ： 12输入: &quot;abcabcbb&quot;输出: 3  &#x2F;&#x2F;无重复字符的最长子串是 &quot;abc&quot; 链接：原题链接 解法解法一：暴力求解思路：使用 start, length 记录当前子串的起始位置和和子串长度，使用 longest">
-<meta property="og:type" content="article">
-<meta property="og:title" content="leetcode - 无重复字符的最长子串">
-<meta property="og:url" content="http://zhaobiao666.github.io/leetcode/Longest-Substring-Without-Repeating-Characters/index.html">
+  <title>分类: recursion | 极地东风</title>
+  <meta name="description" content="block chain; hyperledger fabric; algorithm; leetcode">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Hexo">
+<meta property="og:url" content="http://zhaobiao666.github.io/categories/leetcode/recursion/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="问题：无重复字符的最长子串难度: 中等 描述：给定一个字符串，请你找出其中不含有重复字符的 最长子串 的长度。 示例 ： 12输入: &quot;abcabcbb&quot;输出: 3  &#x2F;&#x2F;无重复字符的最长子串是 &quot;abc&quot; 链接：原题链接 解法解法一：暴力求解思路：使用 start, length 记录当前子串的起始位置和和子串长度，使用 longest">
+<meta property="og:description" content="block chain; hyperledger fabric; algorithm; leetcode">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2020-11-17T03:04:45.000Z">
-<meta property="article:modified_time" content="2020-11-17T04:30:27.225Z">
 <meta property="article:author" content="极地东风">
-<meta property="article:tag" content="leetcode">
 <meta name="twitter:card" content="summary">
   <!-- Canonical links -->
-  <link rel="canonical" href="http://zhaobiao666.github.io/leetcode/Longest-Substring-Without-Repeating-Characters/index.html">
+  <link rel="canonical" href="http://zhaobiao666.github.io/categories/leetcode/recursion/index.html">
   
     <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
   
@@ -347,209 +344,73 @@
 </aside>
 
   
-  
-<aside class="sidebar sidebar-toc collapse" id="collapseToc" itemscope itemtype="http://schema.org/WPSideBar">
-  <div class="slimContent">
-    <nav id="toc" class="article-toc">
-      <h3 class="toc-title">文章目录</h3>
-      <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#问题：无重复字符的最长子串"><span class="toc-number">1.</span> <span class="toc-text">问题：无重复字符的最长子串</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#解法"><span class="toc-number">2.</span> <span class="toc-text">解法</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#解法一：暴力求解"><span class="toc-number">2.1.</span> <span class="toc-text">解法一：暴力求解</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#解法二：使用-map"><span class="toc-number">2.2.</span> <span class="toc-text">解法二：使用 map</span></a></li></ol></li></ol>
-    </nav>
-  </div>
-</aside>
-
-<main class="main" role="main">
-  <div class="content">
-  <article id="post-leetcode/Longest-Substring-Without-Repeating-Characters" class="article article-type-post" itemscope itemtype="http://schema.org/BlogPosting">
-    
-    <div class="article-header">
-      
-        
-  
-    <h1 class="article-title" itemprop="name">
-      leetcode - 无重复字符的最长子串
-    </h1>
-  
-
-      
-      <div class="article-meta">
-        <span class="article-date">
-    <i class="icon icon-calendar-check"></i>
-	<a href="/leetcode/Longest-Substring-Without-Repeating-Characters/" class="article-date">
-	  <time datetime="2020-11-17T03:04:45.000Z" itemprop="datePublished">2020-11-17</time>
-	</a>
-</span>
-        
-  <span class="article-category">
-    <i class="icon icon-folder"></i>
-    <a class="article-category-link" href="/categories/leetcode/">leetcode</a>►<a class="article-category-link" href="/categories/leetcode/substring/">substring</a>
-  </span>
-
-        
-  <span class="article-tag">
-    <i class="icon icon-tags"></i>
-	<a class="article-tag-link" href="/tags/leetcode/" rel="tag">leetcode</a>
-  </span>
-
-
-        
-
-        <span class="post-comment"><i class="icon icon-comment"></i> <a href="/leetcode/Longest-Substring-Without-Repeating-Characters/#comments" class="article-comment-link">评论</a></span>
-        
-      </div>
+  <main class="main" role="main">
+  <article class="content article article-categories article-type-list" itemscope="">
+    <header class="article-header">
+      <h1 itemprop="name" class="hidden-xs">分类: recursion</h1>
+      <p class="hidden-xs">共 1 篇文章</p>
+      <nav role="navigation" id="nav-main" class="okayNav">
+        <ul>
+          <li><a href="/categories">All</a></li>
+          
+          <li><a href="/categories/博客/">博客</a></li>
+          
+          <li><a href="/categories/leetcode/">leetcode</a></li>
+          
+          <li><a href="/categories/leetcode/substring/">substring</a></li>
+          
+          <li><a href="/categories/algorithm/">algorithm</a></li>
+          
+          <li><a href="/categories/blockchain/">blockchain</a></li>
+          
+          <li><a href="/categories/algorithm/data-structure/">data-structure</a></li>
+          
+          <li><a href="/categories/algorithm/consensus-algorithm/">consensus-algorithm</a></li>
+          
+          <li><a href="/categories/blockchain/fabric/">fabric</a></li>
+          
+          <li><a href="/categories/linux/">linux</a></li>
+          
+          <li><a href="/categories/linux/network/">network</a></li>
+          
+          <li><a href="/categories/leetcode/recursion/">recursion</a></li>
+          
+          <li><a href="/categories/leetcode/two-pointers/">two-pointers</a></li>
+          
+        </ul>
+      </nav>
+    </header>
+    <!-- /header -->
+    <div class="article-body">
+      <div class="panel panel-default b-no">
+    <div class="panel-heading" role="tab">
+        <h4 class="panel-title">
+            <a data-toggle="collapse" href="#collapserecursion" aria-expanded="true">
+              <i class="icon icon-folder text-active"></i><i class="icon icon-folder-open text"></i>
+              recursion
+            </a>
+            <small class="text-muted">(Total 1 articles)</small>
+        </h4>
     </div>
-    <div class="article-entry marked-body" itemprop="articleBody">
-      
-        <h4 id="问题：无重复字符的最长子串"><a href="#问题：无重复字符的最长子串" class="headerlink" title="问题：无重复字符的最长子串"></a>问题：无重复字符的最长子串</h4><p>难度: 中等</p>
-<p>描述：给定一个字符串，请你找出其中不含有重复字符的 <code>最长子串</code> 的长度。</p>
-<p>示例 ：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">输入: &quot;abcabcbb&quot;</span><br><span class="line">输出: 3  &#x2F;&#x2F;无重复字符的最长子串是 &quot;abc&quot;</span><br></pre></td></tr></table></figure>
-<p>链接：<a href="https://leetcode-cn.com/problems/longest-substring-without-repeating-characters" target="_blank" rel="noopener">原题链接</a></p>
-<h4 id="解法"><a href="#解法" class="headerlink" title="解法"></a>解法</h4><h5 id="解法一：暴力求解"><a href="#解法一：暴力求解" class="headerlink" title="解法一：暴力求解"></a>解法一：暴力求解</h5><p>思路：使用 <code>start</code>, <code>length</code> 记录当前子串的<code>起始位置</code>和和<code>子串长度</code>，使用 <code>longest</code> 记录当前的<code>最长子串</code>长度。如果遇到相同的字符，变更搜索起始位置（即 <code>start = i +1</code>）</p>
-<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">lengthOfLongestSubstring</span><span class="params">(s <span class="keyword">string</span>)</span> <span class="title">int</span></span> &#123;</span><br><span class="line">	<span class="keyword">if</span> <span class="built_in">len</span>(s) == <span class="number">0</span> &#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="number">0</span></span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="comment">// 如果出现相同的字符，且不是同一个元素，则修改起始的搜索位置，同时比较当前的子串的长度与 longest 的大小</span></span><br><span class="line">	<span class="keyword">var</span> start, length,longest = <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span></span><br><span class="line">	<span class="keyword">for</span> sIndex, sValue := <span class="keyword">range</span> s &#123;</span><br><span class="line">		<span class="keyword">for</span> i := start; i &lt;= sIndex; i++ &#123;</span><br><span class="line">			length = i - start + <span class="number">1</span></span><br><span class="line">			<span class="keyword">if</span> <span class="keyword">string</span>(s[i]) == <span class="keyword">string</span>(sValue) &amp;&amp; i != sIndex &#123;</span><br><span class="line">				start = i +<span class="number">1</span></span><br><span class="line">				<span class="keyword">if</span> length &gt; longest &#123;</span><br><span class="line">					longest = length</span><br><span class="line">				&#125;</span><br><span class="line">			&#125;<span class="keyword">else</span> &#123;</span><br><span class="line">				<span class="keyword">if</span> length &gt; longest &#123;</span><br><span class="line">					longest = length</span><br><span class="line">				&#125;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> longest</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>时间复杂度：O(N^2)<br>空间复杂度：O(N)</p>
-</blockquote>
-<h5 id="解法二：使用-map"><a href="#解法二：使用-map" class="headerlink" title="解法二：使用 map"></a>解法二：使用 map</h5><p>思路：使用 map (其中 key 存放元素，value 存放 key 在 s 中最后出现的位置)。遍历 s 过程中，如果遇到相同元素，通过判断他们索引的差值，来更新 longest</p>
-<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">lengthOfLongestSubstring1</span><span class="params">(s <span class="keyword">string</span>)</span> <span class="title">int</span></span> &#123;</span><br><span class="line">	<span class="keyword">if</span> <span class="built_in">len</span>(s) == <span class="number">0</span> &#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="number">0</span></span><br><span class="line">	&#125;</span><br><span class="line">	<span class="comment">//记录元素的最后出现位置</span></span><br><span class="line">	itemLastIndex := <span class="built_in">make</span>(<span class="keyword">map</span>[<span class="keyword">rune</span>]<span class="keyword">int</span>)</span><br><span class="line">	start := <span class="number">0</span></span><br><span class="line">	maxLen := <span class="number">0</span></span><br><span class="line">	<span class="keyword">for</span> index, item := <span class="keyword">range</span> []<span class="keyword">rune</span>(s) &#123;</span><br><span class="line">		<span class="keyword">if</span> lastIndex, ok := itemLastIndex[item]; ok &amp;&amp; lastIndex &gt;= start &#123;</span><br><span class="line">			<span class="comment">//获取元素上一次出现的位置</span></span><br><span class="line">			start = lastIndex + <span class="number">1</span></span><br><span class="line">		&#125;</span><br><span class="line">		<span class="comment">//本次出现位置-上次出现位置</span></span><br><span class="line">		<span class="keyword">if</span> index-start+<span class="number">1</span> &gt; maxLen &#123;</span><br><span class="line">			maxLen = index - start + <span class="number">1</span></span><br><span class="line">		&#125;</span><br><span class="line">		itemLastIndex[item] = index</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> maxLen</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>时间复杂度：O(N)<br>空间复杂度：O(N)</p>
-</blockquote>
+    <div id="collapserecursion" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingrecursion">
+        <div class="panel-body">
+            <div class="collection">
+              
+                
+<a href="/leetcode/Letter-Combinations-of-a-Phone-Number/" class="collection-item" target="_blank" itemprop="url">
+  <time datetime="2021-01-26T04:59:25.000Z" itemprop="datePublished">2021-01-26</time>
+  <span>&nbsp;&nbsp;&nbsp;</span> 电话号码组合
+</a>
 
-      
+
+              
+            </div>
+        </div>
     </div>
-    <div class="article-footer">
-      <blockquote class="mt-2x">
-  <ul class="post-copyright list-unstyled">
-    
-    <li class="post-copyright-link hidden-xs">
-      <strong>本文链接：</strong>
-      <a href="http://zhaobiao666.github.io/leetcode/Longest-Substring-Without-Repeating-Characters/" title="leetcode - 无重复字符的最长子串" target="_blank" rel="external">http://zhaobiao666.github.io/leetcode/Longest-Substring-Without-Repeating-Characters/</a>
-    </li>
-    
-    <li class="post-copyright-license">
-      <strong>版权声明： </strong> 本博客所有文章除特别声明外，均采用 <a href="http://creativecommons.org/licenses/by/4.0/deed.zh" target="_blank" rel="external">CC BY 4.0 CN协议</a> 许可协议。转载请注明出处！
-    </li>
-  </ul>
-</blockquote>
-
-
-<div class="panel panel-default panel-badger">
-  <div class="panel-body">
-    <figure class="media">
-      <div class="media-left">
-        <a href="https://github.com/zhaobiao666" target="_blank" class="img-burn thumb-sm visible-lg">
-          <img src="/images/avatar.jpg" class="img-rounded w-full" alt="">
-        </a>
-      </div>
-      <div class="media-body">
-        <h3 class="media-heading"><a href="https://github.com/zhaobiao666" target="_blank"><span class="text-dark">极地东风</span><small class="ml-1x">Block Chain</small></a></h3>
-        <div>Hyperledger Fabric Developer</div>
-      </div>
-    </figure>
-  </div>
 </div>
-
-
     </div>
   </article>
-  
-    
-  <section id="comments">
-  	
-           
-    
-  </section>
-
-
-  
-</div>
-
-  <nav class="bar bar-footer clearfix" data-stick-bottom>
-  <div class="bar-inner">
-  
-  <ul class="pager pull-left">
-    
-    <li class="prev">
-      <a href="/algorithm/consensus-algorithm/gossip/" title="Gossip 算法"><i class="icon icon-angle-left" aria-hidden="true"></i><span>&nbsp;&nbsp;上一篇</span></a>
-    </li>
-    
-    
-    <li class="next">
-      <a href="/blockchain/fabric/fabric-database-principle/" title="fabric 的数据库原理"><span>下一篇&nbsp;&nbsp;</span><i class="icon icon-angle-right" aria-hidden="true"></i></a>
-    </li>
-    
-    
-    <li class="toggle-toc">
-      <a class="toggle-btn collapsed" data-toggle="collapse" href="#collapseToc" aria-expanded="false" title="文章目录" role="button">
-        <span>[&nbsp;</span><span>文章目录</span>
-        <i class="text-collapsed icon icon-anchor"></i>
-        <i class="text-in icon icon-close"></i>
-        <span>]</span>
-      </a>
-    </li>
-    
-  </ul>
-  
-  
-  <!-- Button trigger modal -->
-  <button type="button" class="btn btn-fancy btn-donate pop-onhover bg-gradient-warning" data-toggle="modal" data-target="#donateModal"><span>赏</span></button>
-  <!-- <div class="wave-icon wave-icon-danger btn-donate" data-toggle="modal" data-target="#donateModal">
-    <div class="wave-circle"><span class="icon"><i class="icon icon-bill"></i></span></div>
-  </div> -->
-  
-  
-  <div class="bar-right">
-    
-    <div class="share-component" data-sites="weibo,qq,wechat,facebook,twitter" data-mobile-sites="weibo,qq,qzone"></div>
-    
-  </div>
-  </div>
-</nav>
-  
-<!-- Modal -->
-<div class="modal modal-center modal-small modal-xs-full fade" id="donateModal" tabindex="-1" role="dialog">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content donate">
-      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-      <div class="modal-body">
-        <div class="donate-box">
-          <div class="donate-head">
-            <p>感谢您的支持，我会继续努力的!</p>
-          </div>
-          <div class="tab-content">
-            <div role="tabpanel" class="tab-pane fade active in" id="alipay">
-              <div class="donate-payimg">
-                <img src="/images/donate/alipayimg.png" alt="扫码支持" title="扫一扫" />
-              </div>
-              <p class="text-muted mv">扫码打赏，你说多少就多少</p>
-              <p class="text-grey">打开支付宝扫一扫，即可进行扫码打赏哦</p>
-            </div>
-            <div role="tabpanel" class="tab-pane fade" id="wechatpay">
-              <div class="donate-payimg">
-                <img src="/images/donate/wechatpayimg.png" alt="扫码支持" title="扫一扫" />
-              </div>
-              <p class="text-muted mv">扫码打赏，你说多少就多少</p>
-              <p class="text-grey">打开微信扫一扫，即可进行扫码打赏哦</p>
-            </div>
-          </div>
-          <div class="donate-footer">
-            <ul class="nav nav-tabs nav-justified" role="tablist">
-              <li role="presentation" class="active">
-                <a href="#alipay" id="alipay-tab" role="tab" data-toggle="tab" aria-controls="alipay" aria-expanded="true"><i class="icon icon-alipay"></i> 支付宝</a>
-              </li>
-              <li role="presentation" class="">
-                <a href="#wechatpay" role="tab" id="wechatpay-tab" data-toggle="tab" aria-controls="wechatpay" aria-expanded="false"><i class="icon icon-wepay"></i> 微信支付</a>
-              </li>
-            </ul>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-
-
-
+   
 </main>
 
   <footer class="footer" itemscope itemtype="http://schema.org/WPFooter">
@@ -610,31 +471,6 @@ window.jQuery || document.write('<script src="js/jquery.min.js"><\/script>')
 
 
 
-
-   
-
-
-
-
-   
-    
-  <!-- <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css"> -->
-  <script src="//cdn.jsdelivr.net/npm/gitalk@1.4.0/dist/gitalk.min.js"></script>
-  <script src="//cdn.jsdelivr.net/npm/blueimp-md5@2.10.0/js/md5.min.js"></script>
-  <script type="text/javascript">
-  var gitalk = new Gitalk({
-    clientID: 'f302dff65be530be2ffb',
-    clientSecret: 'f7c287c3058a8b0714dcd249cd7993343fec135a',
-    repo: 'zhaobiao666.github.io',
-    owner: 'zhaobiao666',
-    admin: ['zhaobiao666'],
-    id: md5(location.pathname),
-    distractionFreeMode: true
-  })
-  gitalk.render('comments')
-  </script>
-
-      
 
 
 

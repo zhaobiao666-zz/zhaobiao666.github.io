@@ -17,26 +17,23 @@
   <meta http-equiv="window-target" content="_top" />
   
   
-  <title>fabric 的数据库原理 | 极地东风</title>
-  <meta name="description" content="数据库的必要性： fabric 除了使用账本（区块）存储交易数据以外，还会使用有几个 nosql 数据库，用来共同维护 fabric的交易数据。我们知道 orderer 节点将 client 来发的交易进行排序、切块后通过 grpc 协议，发送给 peer 的 leader 节点, leader 节点再将接收到的区块通过 gossip 协议分发给组织内其他的 peer 节点。这样每个 peer 节">
+  <title>电话号码组合 | 极地东风</title>
+  <meta name="description" content="电话号码组合难度：中等问题描述：给定一个仅包含数字 2-9 的字符串，返回所有它能表示的字母组合。给出数字到字母的映射如下（与电话按键相同）。【注意 1 不对应任何字母】 号码键盘图如下所示： 示例 ： 12输入：&quot;23&quot;输出：[&quot;ad&quot;, &quot;ae&quot;, &quot;af&quot;, &quot;bd&quot;, &quot;be&amp;qu">
 <meta property="og:type" content="article">
-<meta property="og:title" content="fabric 的数据库原理">
-<meta property="og:url" content="http://zhaobiao666.github.io/blockchain/fabric/fabric-database-principle/index.html">
+<meta property="og:title" content="电话号码组合">
+<meta property="og:url" content="http://zhaobiao666.github.io/leetcode/Letter-Combinations-of-a-Phone-Number/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="数据库的必要性： fabric 除了使用账本（区块）存储交易数据以外，还会使用有几个 nosql 数据库，用来共同维护 fabric的交易数据。我们知道 orderer 节点将 client 来发的交易进行排序、切块后通过 grpc 协议，发送给 peer 的 leader 节点, leader 节点再将接收到的区块通过 gossip 协议分发给组织内其他的 peer 节点。这样每个 peer 节">
+<meta property="og:description" content="电话号码组合难度：中等问题描述：给定一个仅包含数字 2-9 的字符串，返回所有它能表示的字母组合。给出数字到字母的映射如下（与电话按键相同）。【注意 1 不对应任何字母】 号码键盘图如下所示： 示例 ： 12输入：&quot;23&quot;输出：[&quot;ad&quot;, &quot;ae&quot;, &quot;af&quot;, &quot;bd&quot;, &quot;be&amp;qu">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://raw.githubusercontent.com/zhaobiao666/material-library/main/blog/picutre/fabric-compositeHistoryKey.png">
-<meta property="og:image" content="https://github.com/zhaobiao666/material-library/blob/main/blog/picutre/fabric-blockfile.png?raw=true">
-<meta property="article:published_time" content="2020-11-12T13:38:29.000Z">
-<meta property="article:modified_time" content="2020-11-13T05:47:20.902Z">
+<meta property="og:image" content="https://upload.wikimedia.org/wikipedia/commons/thumb/7/73/Telephone-keypad2.svg/200px-Telephone-keypad2.svg.png">
+<meta property="article:published_time" content="2021-01-26T04:59:25.000Z">
+<meta property="article:modified_time" content="2021-01-26T05:12:37.770Z">
 <meta property="article:author" content="极地东风">
-<meta property="article:tag" content="blockchain">
-<meta property="article:tag" content="fabric">
-<meta property="article:tag" content="database">
+<meta property="article:tag" content="recursion">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://raw.githubusercontent.com/zhaobiao666/material-library/main/blog/picutre/fabric-compositeHistoryKey.png">
+<meta name="twitter:image" content="https://upload.wikimedia.org/wikipedia/commons/thumb/7/73/Telephone-keypad2.svg/200px-Telephone-keypad2.svg.png">
   <!-- Canonical links -->
-  <link rel="canonical" href="http://zhaobiao666.github.io/blockchain/fabric/fabric-database-principle/index.html">
+  <link rel="canonical" href="http://zhaobiao666.github.io/leetcode/Letter-Combinations-of-a-Phone-Number/index.html">
   
     <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
   
@@ -357,21 +354,21 @@
   <div class="slimContent">
     <nav id="toc" class="article-toc">
       <h3 class="toc-title">文章目录</h3>
-      <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#数据库的必要性："><span class="toc-number">1.</span> <span class="toc-text">数据库的必要性：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#账本的分类："><span class="toc-number">2.</span> <span class="toc-text">账本的分类：</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#历史数据库-history-DB-："><span class="toc-number">2.1.</span> <span class="toc-text">历史数据库(history DB)：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#世界状态数据库（world-state-DB）："><span class="toc-number">2.2.</span> <span class="toc-text">世界状态数据库（world state DB）：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#私有数据库（private-DB）："><span class="toc-number">2.3.</span> <span class="toc-text">私有数据库（private DB）：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#区块索引数据库（Index-DB）："><span class="toc-number">2.4.</span> <span class="toc-text">区块索引数据库（Index DB）：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#idstore-数据库："><span class="toc-number">2.5.</span> <span class="toc-text">idstore 数据库：</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#补充："><span class="toc-number">2.6.</span> <span class="toc-text">补充：</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#区块数据文件："><span class="toc-number">2.6.1.</span> <span class="toc-text">区块数据文件：</span></a></li></ol></li></ol></li></ol>
+      <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#电话号码组合"><span class="toc-number">1.</span> <span class="toc-text">电话号码组合</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#解法"><span class="toc-number">2.</span> <span class="toc-text">解法</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#解法1：穷举法"><span class="toc-number">2.1.</span> <span class="toc-text">解法1：穷举法</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#解法2：递归法"><span class="toc-number">2.2.</span> <span class="toc-text">解法2：递归法</span></a></li></ol></li></ol>
     </nav>
   </div>
 </aside>
 
 <main class="main" role="main">
   <div class="content">
-  <article id="post-blockchain/fabric/fabric-database-principle" class="article article-type-post" itemscope itemtype="http://schema.org/BlogPosting">
+  <article id="post-leetcode/Letter-Combinations-of-a-Phone-Number" class="article article-type-post" itemscope itemtype="http://schema.org/BlogPosting">
     
     <div class="article-header">
       
         
   
     <h1 class="article-title" itemprop="name">
-      fabric 的数据库原理
+      电话号码组合
     </h1>
   
 
@@ -379,78 +376,51 @@
       <div class="article-meta">
         <span class="article-date">
     <i class="icon icon-calendar-check"></i>
-	<a href="/blockchain/fabric/fabric-database-principle/" class="article-date">
-	  <time datetime="2020-11-12T13:38:29.000Z" itemprop="datePublished">2020-11-12</time>
+	<a href="/leetcode/Letter-Combinations-of-a-Phone-Number/" class="article-date">
+	  <time datetime="2021-01-26T04:59:25.000Z" itemprop="datePublished">2021-01-26</time>
 	</a>
 </span>
         
   <span class="article-category">
     <i class="icon icon-folder"></i>
-    <a class="article-category-link" href="/categories/blockchain/">blockchain</a>►<a class="article-category-link" href="/categories/blockchain/fabric/">fabric</a>
+    <a class="article-category-link" href="/categories/leetcode/">leetcode</a>►<a class="article-category-link" href="/categories/leetcode/recursion/">recursion</a>
   </span>
 
         
   <span class="article-tag">
     <i class="icon icon-tags"></i>
-	<a class="article-tag-link" href="/tags/blockchain/" rel="tag">blockchain</a>, <a class="article-tag-link" href="/tags/database/" rel="tag">database</a>, <a class="article-tag-link" href="/tags/fabric/" rel="tag">fabric</a>
+	<a class="article-tag-link" href="/tags/recursion/" rel="tag">recursion</a>
   </span>
 
 
         
 
-        <span class="post-comment"><i class="icon icon-comment"></i> <a href="/blockchain/fabric/fabric-database-principle/#comments" class="article-comment-link">评论</a></span>
+        <span class="post-comment"><i class="icon icon-comment"></i> <a href="/leetcode/Letter-Combinations-of-a-Phone-Number/#comments" class="article-comment-link">评论</a></span>
         
       </div>
     </div>
     <div class="article-entry marked-body" itemprop="articleBody">
       
-        <h3 id="数据库的必要性："><a href="#数据库的必要性：" class="headerlink" title="数据库的必要性："></a>数据库的必要性：</h3><ul>
-<li>fabric 除了使用账本（区块）存储交易数据以外，还会使用有几个 nosql 数据库，用来共同维护 fabric的交易数据。我们知道 <code>orderer</code> 节点将 <code>client</code> 来发的交易进行<strong>排序</strong>、<strong>切块</strong>后通过 <code>grpc</code> 协议，发送给 peer 的 <code>leader</code> 节点, leader 节点再将接收到的区块通过 <code>gossip</code> 协议分发给组织内其他的 peer 节点。这样每个 peer 节点都会拥有同样的区块文件。虽然这个区块文件记录了所有了的交易数据，但是有个致命的缺陷 —— 很难检索某个交易对象的历史交易记录，且很难查某个交易对象的当前状态，甚至有时候还可能需要存放一些私有数据。<br>  因此，fabric 使用多个 nosql 来记录交易对象的索引、交易区块的索引、交易对象的当前值以及特定的私有数据，用于提高 fabric 的交易效率和 fabric 本身账本的维护。</li>
-</ul>
-<hr>
-<h3 id="账本的分类："><a href="#账本的分类：" class="headerlink" title="账本的分类："></a>账本的分类：</h3><h4 id="历史数据库-history-DB-："><a href="#历史数据库-history-DB-：" class="headerlink" title="历史数据库(history DB)："></a>历史数据库(history DB)：</h4><p><strong>功能：用于存储所有 <code>有效交易</code> 的关键信息的数据库，通过历史状态数据能查询到每一笔有效交易是在哪个区块中，以及对应的交易ID是多少</strong></p>
-<ul>
-<li><p>历史状态数据库使用 levelDB 存储，并且只存储有效记录的 key（这里的key指的是交易中的key），而<strong>不存储交易的 value</strong></p>
-</li>
-<li><p>使用组合键的方式进行存储到数据库中，构成组合键的源码为：</p>
-  <figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// CompositeKeySep is a nil byte used as a separator between different components of a composite key</span></span><br><span class="line"><span class="keyword">var</span> CompositeKeySep = []<span class="keyword">byte</span>&#123;<span class="number">0x00</span>&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//ConstructCompositeHistoryKey builds the History Key of namespace~key~blocknum~trannum</span></span><br><span class="line"><span class="comment">// using an order preserving encoding so that history query results are ordered by height</span></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">ConstructCompositeHistoryKey</span><span class="params">(ns <span class="keyword">string</span>, key <span class="keyword">string</span>, blocknum <span class="keyword">uint64</span>, trannum <span class="keyword">uint64</span>)</span> []<span class="title">byte</span></span> &#123;</span><br><span class="line">    <span class="keyword">var</span> compositeKey []<span class="keyword">byte</span></span><br><span class="line">    compositeKey = <span class="built_in">append</span>(compositeKey, []<span class="keyword">byte</span>(ns)...)</span><br><span class="line">    compositeKey = <span class="built_in">append</span>(compositeKey, CompositeKeySep...)</span><br><span class="line">    compositeKey = <span class="built_in">append</span>(compositeKey, []<span class="keyword">byte</span>(key)...)</span><br><span class="line">    compositeKey = <span class="built_in">append</span>(compositeKey, CompositeKeySep...)</span><br><span class="line">    compositeKey = <span class="built_in">append</span>(compositeKey, util.EncodeOrderPreservingVarUint64(blocknum)...)</span><br><span class="line">    compositeKey = <span class="built_in">append</span>(compositeKey, util.EncodeOrderPreservingVarUint64(trannum)...)</span><br><span class="line">    <span class="keyword">return</span> compositeKey</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>组合键示意图：<img src="https://raw.githubusercontent.com/zhaobiao666/material-library/main/blog/picutre/fabric-compositeHistoryKey.png" alt></p>
-<ul>
-<li>namespace : 命名空间，命名空间是读写集的属性，用于通道之间的数据隔离的。</li>
-<li>compositeKeySep: 仅仅用于组合键中键之间连接（fabric 使用 <code>0x00</code> 作为连接符）。</li>
-<li>Key: 将 KV 键值对写入到账本中的 Key</li>
-<li>block: 交易所在的区块号</li>
-<li>ID: 交易的 ID 编号（fabric 会为每一个交易生成一个交易 ID （txid））</li>
-</ul>
+        <h4 id="电话号码组合"><a href="#电话号码组合" class="headerlink" title="电话号码组合"></a>电话号码组合</h4><p>难度：中等<br>问题描述：<br>给定一个仅包含数字 2-9 的字符串，返回所有它能表示的字母组合。给出数字到字母的映射如下（与电话按键相同）。【注意 1 不对应任何字母】</p>
+<p>号码键盘图如下所示：<br><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/73/Telephone-keypad2.svg/200px-Telephone-keypad2.svg.png" alt="img"></p>
+<p>示例 ：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">输入：&quot;23&quot;</span><br><span class="line">输出：[&quot;ad&quot;, &quot;ae&quot;, &quot;af&quot;, &quot;bd&quot;, &quot;be&quot;, &quot;bf&quot;, &quot;cd&quot;, &quot;ce&quot;, &quot;cf&quot;].</span><br></pre></td></tr></table></figure>
+<p>链接：<a href="https://leetcode-cn.com/problems/letter-combinations-of-a-phone-number/" target="_blank" rel="noopener">原题链接</a></p>
+<h4 id="解法"><a href="#解法" class="headerlink" title="解法"></a>解法</h4><h5 id="解法1：穷举法"><a href="#解法1：穷举法" class="headerlink" title="解法1：穷举法"></a>解法1：穷举法</h5><ul>
+<li>思路：<br>对于 N 位输入，<code>总组合</code> = <code>前 N-1 位的组合</code> * <code>第 N 位可能的值</code>（即: 前 N-1 的组合中的每一个元素均和第 N 位元素相结合，便是 N 位输入的所有组合，以此类推。）</li>
+<li>代码：<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">letterCombinations</span><span class="params">(digits <span class="keyword">string</span>)</span> []<span class="title">string</span></span> &#123;</span><br><span class="line">	<span class="comment">// 用字典把手机号码和字母对应起来</span></span><br><span class="line">	lettersMap := <span class="keyword">map</span>[<span class="keyword">string</span>][]<span class="keyword">string</span>&#123;</span><br><span class="line">		<span class="string">"2"</span>:&#123;<span class="string">"a"</span>, <span class="string">"b"</span>, <span class="string">"c"</span>&#125;,      <span class="comment">// 2</span></span><br><span class="line">		<span class="string">"3"</span>:&#123;<span class="string">"d"</span>, <span class="string">"e"</span>, <span class="string">"f"</span>&#125;,      <span class="comment">// 3</span></span><br><span class="line">		<span class="string">"4"</span>:&#123;<span class="string">"g"</span>, <span class="string">"h"</span>, <span class="string">"i"</span>&#125;,      <span class="comment">// 4</span></span><br><span class="line">		<span class="string">"5"</span>:&#123;<span class="string">"j"</span>, <span class="string">"k"</span>, <span class="string">"l"</span>&#125;,      <span class="comment">// 5</span></span><br><span class="line">		<span class="string">"6"</span>:&#123;<span class="string">"m"</span>, <span class="string">"n"</span>, <span class="string">"o"</span>&#125;,      <span class="comment">// 6</span></span><br><span class="line">		<span class="string">"7"</span>:&#123;<span class="string">"p"</span>, <span class="string">"q"</span>, <span class="string">"r"</span>, <span class="string">"s"</span>&#125;, <span class="comment">// 7</span></span><br><span class="line">		<span class="string">"8"</span>:&#123;<span class="string">"t"</span>, <span class="string">"u"</span>, <span class="string">"v"</span>&#125;,      <span class="comment">// 8</span></span><br><span class="line">		<span class="string">"9"</span>:&#123;<span class="string">"w"</span>, <span class="string">"x"</span>, <span class="string">"y"</span>, <span class="string">"z"</span>&#125;, <span class="comment">// 9</span></span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="comment">// 输入的长度</span></span><br><span class="line">	lengthDigits := <span class="built_in">len</span>(digits)</span><br><span class="line">	<span class="comment">// 用于存所有组合的切片</span></span><br><span class="line">	<span class="keyword">var</span> combinationsList []<span class="keyword">string</span></span><br><span class="line"></span><br><span class="line">	<span class="comment">// 如果输入为空，直接返回。若不为空，先填充第一个元素的组合</span></span><br><span class="line">	<span class="keyword">if</span> <span class="built_in">len</span>(digits) ==<span class="number">0</span> &#123;</span><br><span class="line">		<span class="keyword">return</span> []<span class="keyword">string</span>&#123;&#125;</span><br><span class="line">	&#125;<span class="keyword">else</span> &#123;</span><br><span class="line">		<span class="keyword">for</span> _, v := <span class="keyword">range</span> lettersMap[<span class="keyword">string</span>(digits[<span class="number">0</span>])] &#123;</span><br><span class="line">		combinationsList = <span class="built_in">append</span>(combinationsList, v)</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="comment">// 穷举出剩下的所有元素的所有组合</span></span><br><span class="line">	<span class="keyword">for</span> i := <span class="number">1</span>; i &lt; lengthDigits; i++ &#123;</span><br><span class="line">		<span class="comment">// 遍历 combinationsList 的每个元素, 并将 lettersMap[string(digits[i])] 字母挨个加入其元素尾部</span></span><br><span class="line">		lenList := <span class="built_in">len</span>(combinationsList)</span><br><span class="line">		<span class="keyword">for</span> _, v1 := <span class="keyword">range</span>  combinationsList &#123;</span><br><span class="line">			<span class="keyword">var</span> list []<span class="keyword">string</span></span><br><span class="line">			<span class="keyword">for</span> _, v2 := <span class="keyword">range</span> lettersMap[<span class="keyword">string</span>(digits[i])] &#123;</span><br><span class="line">				list = <span class="built_in">append</span>(list, v1 + v2)</span><br><span class="line">			&#125;</span><br><span class="line">			<span class="comment">// 前 i 个输入的组合全部在 combinationsList 的尾部</span></span><br><span class="line">			combinationsList = <span class="built_in">append</span>(combinationsList, list...)</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="comment">// combinationsList 前 lenList 个元素表示的是前 i-1 的所有组合，因此需要将前 lenList 个元素删除</span></span><br><span class="line">		combinationsList =  combinationsList[lenList:]</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> combinationsList</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>时间复杂度：O((n+m)(3^n)(4^m)), 其中 n 是输入中对应字母为3的个数，m 是输入中对应字母为4的个数<br>空间复杂度：O((3^n)(4^m))</p>
+</blockquote>
 </li>
 </ul>
-<h4 id="世界状态数据库（world-state-DB）："><a href="#世界状态数据库（world-state-DB）：" class="headerlink" title="世界状态数据库（world state DB）："></a>世界状态数据库（world state DB）：</h4><p><strong>功能：世界状态数据库用于记录交易对象最终状态的数据库，如果把历史状态数据库当做你的交易流水，那么世界状态数据库就类似于银行卡的余额。</strong></p>
-<ul>
-<li>支持 levelDB 和 couchDB</li>
-</ul>
-<h4 id="私有数据库（private-DB）："><a href="#私有数据库（private-DB）：" class="headerlink" title="私有数据库（private DB）："></a>私有数据库（private DB）：</h4><p><strong>功能：私用数据库用于保存隐私交易数据</strong></p>
-<ul>
-<li>levelDB</li>
-<li>隐私的交易数据不会直接存放到账本(ledger)中，但是隐私交易数据的 <code>key</code> 和 <code>value 的 hash</code> 会存到账本中。</li>
-<li>隐私交易数据背书通过后，会通过 <code>gossip</code> 协议将隐私交易数据发送给被授权的其他 peer 节点。</li>
-</ul>
-<h4 id="区块索引数据库（Index-DB）："><a href="#区块索引数据库（Index-DB）：" class="headerlink" title="区块索引数据库（Index DB）："></a>区块索引数据库（Index DB）：</h4><p><strong>功能：区块索引数据库用于存储具体的<code>某个区块</code>和<code>某个交易</code>在<a href="#bolckfile"><em><code>区块数据文件</code></em></a>中的位置</strong></p>
-<ul>
-<li>每当区块数据文件中存储一个区块，Index DB 都会为这个区块建立一批索引。</li>
-<li>fabric 网络中只有一个 Index DB（即多通道共用一个 Index DB）</li>
-<li>数据库默认位置：/var/hyperledger/production/ledgersData/chains/index</li>
-</ul>
-<h4 id="idstore-数据库："><a href="#idstore-数据库：" class="headerlink" title="idstore 数据库："></a>idstore 数据库：</h4><p><strong>功能：idstore 数据库用于存储不同账本的 <code>ledgerID</code> 的键值对及其<code>创世区块</code></strong></p>
-<ul>
-<li>默认使用路径：/var/hyperledger/production/ledgersData/ledgerProvider/</li>
-<li><code>ledgerID</code> 的值其实就是 <code>channelID</code></li>
-<li>其中有一对关键的键值对用来存储账本ID，其 key 为 <code>underConstructionLedgerKey</code>, value 为 <code>ledgerID</code>,这个是用于当 peer <code>加入通道</code>的时候或者<code>账本数据恢复</code>的时候的数据恢复标志位。</li>
-</ul>
-<h4 id="补充："><a href="#补充：" class="headerlink" title="补充："></a>补充：</h4><h5 id="区块数据文件："><a href="#区块数据文件：" class="headerlink" title="区块数据文件："></a><div id="bolckfile">区块数据文件：</div></h5><p><strong>功能：区块数据文件用于存储区块长度、区块头、每天交易的长度以及交易数据</strong></p>
-<ul>
-<li>默认存储路径：/var/hyperledger/production/ledgersData/chains/chains/mychannel</li>
-<li>图解：<img src="https://github.com/zhaobiao666/material-library/blob/main/blog/picutre/fabric-blockfile.png?raw=true" alt></li>
+<h5 id="解法2：递归法"><a href="#解法2：递归法" class="headerlink" title="解法2：递归法"></a>解法2：递归法</h5><ul>
+<li>思路：对于解法一的思路，递归法的实现</li>
+<li>代码：<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">letterCombinationsWithRecursion</span><span class="params">(digits <span class="keyword">string</span>)</span> []<span class="title">string</span></span> &#123;</span><br><span class="line">	<span class="keyword">var</span> lettersMap = <span class="keyword">map</span>[<span class="keyword">string</span>][]<span class="keyword">string</span>&#123;</span><br><span class="line">		<span class="string">"2"</span>:&#123;<span class="string">"a"</span>, <span class="string">"b"</span>, <span class="string">"c"</span>&#125;,      <span class="comment">// 2</span></span><br><span class="line">		<span class="string">"3"</span>:&#123;<span class="string">"d"</span>, <span class="string">"e"</span>, <span class="string">"f"</span>&#125;,      <span class="comment">// 3</span></span><br><span class="line">		<span class="string">"4"</span>:&#123;<span class="string">"g"</span>, <span class="string">"h"</span>, <span class="string">"i"</span>&#125;,      <span class="comment">// 4</span></span><br><span class="line">		<span class="string">"5"</span>:&#123;<span class="string">"j"</span>, <span class="string">"k"</span>, <span class="string">"l"</span>&#125;,      <span class="comment">// 5</span></span><br><span class="line">		<span class="string">"6"</span>:&#123;<span class="string">"m"</span>, <span class="string">"n"</span>, <span class="string">"o"</span>&#125;,      <span class="comment">// 6</span></span><br><span class="line">		<span class="string">"7"</span>:&#123;<span class="string">"p"</span>, <span class="string">"q"</span>, <span class="string">"r"</span>, <span class="string">"s"</span>&#125;, <span class="comment">// 7</span></span><br><span class="line">		<span class="string">"8"</span>:&#123;<span class="string">"t"</span>, <span class="string">"u"</span>, <span class="string">"v"</span>&#125;,      <span class="comment">// 8</span></span><br><span class="line">		<span class="string">"9"</span>:&#123;<span class="string">"w"</span>, <span class="string">"x"</span>, <span class="string">"y"</span>, <span class="string">"z"</span>&#125;, <span class="comment">// 9</span></span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">var</span> combinationsList []<span class="keyword">string</span></span><br><span class="line"></span><br><span class="line">	<span class="keyword">if</span> <span class="built_in">len</span>(digits) == <span class="number">0</span> &#123;</span><br><span class="line">		<span class="keyword">return</span> []<span class="keyword">string</span>&#123;&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	recursion(digits, <span class="number">0</span>, <span class="string">""</span>, lettersMap, &amp;combinationsList)</span><br><span class="line">	<span class="keyword">return</span> combinationsList</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">recursion</span><span class="params">(digits <span class="keyword">string</span>, index <span class="keyword">int</span>, combination <span class="keyword">string</span>, lettersMap  <span class="keyword">map</span>[<span class="keyword">string</span>][]<span class="keyword">string</span>, combinationsList *[]<span class="keyword">string</span>)</span></span>  &#123;</span><br><span class="line">	<span class="keyword">if</span> index == <span class="built_in">len</span>(digits)&#123;</span><br><span class="line">		*combinationsList = <span class="built_in">append</span>(*combinationsList, combination)</span><br><span class="line">	&#125;<span class="keyword">else</span> &#123;</span><br><span class="line">		letters := lettersMap[<span class="keyword">string</span>(digits[index])]</span><br><span class="line">		length := <span class="built_in">len</span>(letters)</span><br><span class="line">		<span class="keyword">for</span> i := <span class="number">0</span>; i &lt; length; i++ &#123;</span><br><span class="line">			recursion(digits, index+<span class="number">1</span>, combination + letters[i], lettersMap, combinationsList)</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>时间复杂度：O((3^m)(4^n))， 其中 n 是输入中对应字母为3的个数，m 是输入中对应字母为4的个数<br>空间复杂度：O(m+n)</p>
+</blockquote>
+</li>
 </ul>
 
       
@@ -461,7 +431,7 @@
     
     <li class="post-copyright-link hidden-xs">
       <strong>本文链接：</strong>
-      <a href="http://zhaobiao666.github.io/blockchain/fabric/fabric-database-principle/" title="fabric 的数据库原理" target="_blank" rel="external">http://zhaobiao666.github.io/blockchain/fabric/fabric-database-principle/</a>
+      <a href="http://zhaobiao666.github.io/leetcode/Letter-Combinations-of-a-Phone-Number/" title="电话号码组合" target="_blank" rel="external">http://zhaobiao666.github.io/leetcode/Letter-Combinations-of-a-Phone-Number/</a>
     </li>
     
     <li class="post-copyright-license">
@@ -508,12 +478,12 @@
   <ul class="pager pull-left">
     
     <li class="prev">
-      <a href="/leetcode/Longest-Substring-Without-Repeating-Characters/" title="leetcode - 无重复字符的最长子串"><i class="icon icon-angle-left" aria-hidden="true"></i><span>&nbsp;&nbsp;上一篇</span></a>
+      <a href="/leetcode/Container-With-Most-Water/" title="盛最多的水的容器"><i class="icon icon-angle-left" aria-hidden="true"></i><span>&nbsp;&nbsp;上一篇</span></a>
     </li>
     
     
     <li class="next">
-      <a href="/leetcode/twoPlus/" title="leetcode - 两数相加（含单向链表构建、检索）"><span>下一篇&nbsp;&nbsp;</span><i class="icon icon-angle-right" aria-hidden="true"></i></a>
+      <a href="/leetcode/Longest-Palindromic-Substring/" title="寻找最长回文串"><span>下一篇&nbsp;&nbsp;</span><i class="icon icon-angle-right" aria-hidden="true"></i></a>
     </li>
     
     
