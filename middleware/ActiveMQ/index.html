@@ -1,0 +1,803 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+  <meta charset="utf-8">
+  
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="Cache-Control" content="no-transform" />
+  <meta http-equiv="Cache-Control" content="no-siteapp" />
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="format-detection" content="telephone=no,email=no,adress=no">
+  <!-- Color theme for statusbar -->
+  <meta name="theme-color" content="#000000" />
+  <!-- 强制页面在当前窗口以独立页面显示,防止别人在框架里调用页面 -->
+  <meta http-equiv="window-target" content="_top" />
+  
+  
+  <title>ActiveMQ 的安装&amp;简单使用&amp;参数详解（Golang版） | 极地东风</title>
+  <meta name="description" content="ActiveMQ 简介ActiveMQ 是一种消息中间件，更精确地说，是基于 Java 消息服务（JMS, Java Message Service）API 接口协议的一种消息队列(MQ, message queue)的具体实现。ActiveMQ 是 Apache 基金会下一个开源的、支持多协议的（STOMP、 AMQP、MQTT、 OpenWire 、REST、WS），由 Java 实现的消息中">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ActiveMQ 的安装&amp;简单使用&amp;参数详解（Golang版）">
+<meta property="og:url" content="http://zhaobiao666.github.io/middleware/ActiveMQ/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="ActiveMQ 简介ActiveMQ 是一种消息中间件，更精确地说，是基于 Java 消息服务（JMS, Java Message Service）API 接口协议的一种消息队列(MQ, message queue)的具体实现。ActiveMQ 是 Apache 基金会下一个开源的、支持多协议的（STOMP、 AMQP、MQTT、 OpenWire 、REST、WS），由 Java 实现的消息中">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://zhaobiao666.github.io/middleware/ActiveMQ/queue.jpg">
+<meta property="og:image" content="http://zhaobiao666.github.io/middleware/ActiveMQ/topic.jpg">
+<meta property="og:image" content="http://zhaobiao666.github.io/middleware/ActiveMQ/activemqhome.jpg">
+<meta property="og:image" content="http://zhaobiao666.github.io/middleware/ActiveMQ/mqHome.jpg">
+<meta property="og:image" content="http://zhaobiao666.github.io/middleware/ActiveMQ/conf.jpg">
+<meta property="article:published_time" content="2021-03-01T02:17:45.000Z">
+<meta property="article:modified_time" content="2021-03-01T03:25:13.890Z">
+<meta property="article:author" content="极地东风">
+<meta property="article:tag" content="middleware,ActiveMQ">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://zhaobiao666.github.io/middleware/ActiveMQ/queue.jpg">
+  <!-- Canonical links -->
+  <link rel="canonical" href="http://zhaobiao666.github.io/middleware/ActiveMQ/index.html">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png" type="image/x-icon">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+  
+  
+  
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1.4.0/dist/gitalk.min.css">
+  
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+
+<body class="main-center theme-black" itemscope itemtype="http://schema.org/WebPage">
+  <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+  <div class="slimContent">
+    <div class="navbar-header">
+      
+      
+      <div class="profile-block text-center">
+        <a id="avatar" href="https://github.com/zhaobiao666" target="_blank">
+          <img class="img-circle img-rotate" src="/images/avatar.jpg" width="200" height="200">
+        </a>
+        <h2 id="name" class="hidden-xs hidden-sm">极地东风</h2>
+        <h3 id="title" class="hidden-xs hidden-sm hidden-md">Block Chain</h3>
+        <small id="location" class="text-muted hidden-xs hidden-sm"><i class="icon icon-map-marker"></i> Hangzhou, China</small>
+      </div>
+      
+      <div class="search" id="search-form-wrap">
+
+    <form class="search-form sidebar-form">
+        <div class="input-group">
+            <input type="text" class="search-form-input form-control" placeholder="搜索" />
+            <span class="input-group-btn">
+                <button type="submit" class="search-form-submit btn btn-flat" onclick="return false;"><i class="icon icon-search"></i></button>
+            </span>
+        </div>
+    </form>
+    <div class="ins-search">
+  <div class="ins-search-mask"></div>
+  <div class="ins-search-container">
+    <div class="ins-input-wrapper">
+      <input type="text" class="ins-search-input" placeholder="想要查找什么..." x-webkit-speech />
+      <button type="button" class="close ins-close ins-selectable" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+    </div>
+    <div class="ins-section-wrapper">
+      <div class="ins-section-container"></div>
+    </div>
+  </div>
+</div>
+
+
+</div>
+      <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target="#main-navbar" aria-controls="main-navbar" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+    </div>
+    <nav id="main-navbar" class="collapse navbar-collapse" itemscope itemtype="http://schema.org/SiteNavigationElement" role="navigation">
+      <ul class="nav navbar-nav main-nav ">
+        
+        
+        <li class="menu-item menu-item-home">
+          <a href="/.">
+            
+            <i class="icon icon-home-fill"></i>
+            
+            <span class="menu-title">首页</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives">
+            
+            <i class="icon icon-archives-fill"></i>
+            
+            <span class="menu-title">归档</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories">
+            
+            <i class="icon icon-folder"></i>
+            
+            <span class="menu-title">分类</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags">
+            
+            <i class="icon icon-tags"></i>
+            
+            <span class="menu-title">标签</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-repository">
+          <a href="/repository">
+            
+            <i class="icon icon-project"></i>
+            
+            <span class="menu-title">项目</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-books">
+          <a href="/books">
+            
+            <i class="icon icon-book-fill"></i>
+            
+            <span class="menu-title">书单</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-links">
+          <a href="/links">
+            
+            <i class="icon icon-friendship"></i>
+            
+            <span class="menu-title">友链</span>
+          </a>
+        </li>
+        
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about">
+            
+            <i class="icon icon-cup-fill"></i>
+            
+            <span class="menu-title">关于</span>
+          </a>
+        </li>
+        
+      </ul>
+      
+	
+    <ul class="social-links">
+    	
+        <li><a href="https://github.com/zhaobiao666" target="_blank" title="Github" data-toggle=tooltip data-placement=top><i class="icon icon-github"></i></a></li>
+        
+        <li><a href="http://weibo.com/zhaobiao666" target="_blank" title="Weibo" data-toggle=tooltip data-placement=top><i class="icon icon-weibo"></i></a></li>
+        
+        <li><a href="https://twitter.com/zhaobiao666" target="_blank" title="Twitter" data-toggle=tooltip data-placement=top><i class="icon icon-twitter"></i></a></li>
+        
+        <li><a href="https://www.behance.net/zhaobiao666" target="_blank" title="Behance" data-toggle=tooltip data-placement=top><i class="icon icon-behance"></i></a></li>
+        
+        <li><a href="/atom.xml" target="_blank" title="Rss" data-toggle=tooltip data-placement=top><i class="icon icon-rss"></i></a></li>
+        
+    </ul>
+
+    </nav>
+  </div>
+</header>
+
+  
+    <aside class="sidebar" itemscope itemtype="http://schema.org/WPSideBar">
+  <div class="slimContent">
+    
+      <div class="widget">
+    <h3 class="widget-title">公告</h3>
+    <div class="widget-body">
+        <div id="board">
+            <div class="content">
+                <p>欢迎进行技术交流与分享经验，谢谢~</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">分类</h3>
+    <div class="widget-body">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/algorithm/">algorithm</a><span class="category-list-count">2</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/algorithm/consensus-algorithm/">consensus-algorithm</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/algorithm/data-structure/">data-structure</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/blockchain/">blockchain</a><span class="category-list-count">4</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/blockchain/fabric/">fabric</a><span class="category-list-count">4</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/leetcode/">leetcode</a><span class="category-list-count">8</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/leetcode/recursion/">recursion</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/leetcode/substring/">substring</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/leetcode/two-pointers/">two-pointers</a><span class="category-list-count">2</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/linux/">linux</a><span class="category-list-count">1</span><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/linux/network/">network</a><span class="category-list-count">1</span></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%8D%9A%E5%AE%A2/">博客</a><span class="category-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">标签</h3>
+    <div class="widget-body">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hexo/" rel="tag">Hexo</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/blockchain/" rel="tag">blockchain</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/chaincode/" rel="tag">chaincode</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/consensus/" rel="tag">consensus</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/data-structure/" rel="tag">data-structure</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/database/" rel="tag">database</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/fabric/" rel="tag">fabric</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/gossip/" rel="tag">gossip</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/leetcode/" rel="tag">leetcode</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/leetcode-median/" rel="tag">leetcode,median</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/linked-list/" rel="tag">linked-list</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/middleware-ActiveMQ/" rel="tag">middleware,ActiveMQ</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/recursion/" rel="tag">recursion</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/two-pointers/" rel="tag">two-pointers</a><span class="tag-list-count">2</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">标签云</h3>
+    <div class="widget-body tagcloud">
+      <a href="/tags/Hexo/" style="font-size: 13px;">Hexo</a> <a href="/tags/blockchain/" style="font-size: 14px;">blockchain</a> <a href="/tags/chaincode/" style="font-size: 13px;">chaincode</a> <a href="/tags/consensus/" style="font-size: 13px;">consensus</a> <a href="/tags/data-structure/" style="font-size: 13px;">data-structure</a> <a href="/tags/database/" style="font-size: 13px;">database</a> <a href="/tags/fabric/" style="font-size: 14px;">fabric</a> <a href="/tags/gossip/" style="font-size: 13.5px;">gossip</a> <a href="/tags/leetcode/" style="font-size: 13.5px;">leetcode</a> <a href="/tags/leetcode-median/" style="font-size: 13px;">leetcode,median</a> <a href="/tags/linked-list/" style="font-size: 13px;">linked-list</a> <a href="/tags/middleware-ActiveMQ/" style="font-size: 13px;">middleware,ActiveMQ</a> <a href="/tags/recursion/" style="font-size: 13px;">recursion</a> <a href="/tags/two-pointers/" style="font-size: 13.5px;">two-pointers</a>
+    </div>
+  </div>
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">归档</h3>
+    <div class="widget-body">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/03/">三月 2021</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/01/">一月 2021</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/12/">十二月 2020</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/11/">十一月 2020</a><span class="archive-list-count">10</span></li></ul>
+    </div>
+  </div>
+
+
+    
+      
+  <div class="widget">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget-body">
+      <ul class="recent-post-list list-unstyled no-thumbnail">
+        
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                
+              </p>
+              <p class="item-title">
+                <a href="/middleware/ActiveMQ/" class="title">ActiveMQ 的安装&amp;简单使用&amp;参数详解（Golang版）</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2021-03-01T02:17:45.000Z" itemprop="datePublished">2021-03-01</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/leetcode/">leetcode</a><i class="icon icon-angle-right"></i><a class="category-link" href="/categories/leetcode/two-pointers/">two-pointers</a>
+              </p>
+              <p class="item-title">
+                <a href="/leetcode/3Sum/" class="title">三数之合</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2021-01-26T08:15:56.000Z" itemprop="datePublished">2021-01-26</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/leetcode/">leetcode</a><i class="icon icon-angle-right"></i><a class="category-link" href="/categories/leetcode/two-pointers/">two-pointers</a>
+              </p>
+              <p class="item-title">
+                <a href="/leetcode/Container-With-Most-Water/" class="title">盛最多的水的容器</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2021-01-26T07:25:03.000Z" itemprop="datePublished">2021-01-26</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/leetcode/">leetcode</a><i class="icon icon-angle-right"></i><a class="category-link" href="/categories/leetcode/recursion/">recursion</a>
+              </p>
+              <p class="item-title">
+                <a href="/leetcode/Letter-Combinations-of-a-Phone-Number/" class="title">电话号码组合</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2021-01-26T04:59:25.000Z" itemprop="datePublished">2021-01-26</time>
+              </p>
+            </div>
+          </li>
+          
+          <li>
+            
+            <div class="item-inner">
+              <p class="item-category">
+                <a class="category-link" href="/categories/leetcode/">leetcode</a><i class="icon icon-angle-right"></i><a class="category-link" href="/categories/leetcode/substring/">substring</a>
+              </p>
+              <p class="item-title">
+                <a href="/leetcode/Longest-Palindromic-Substring/" class="title">寻找最长回文串</a>
+              </p>
+              <p class="item-date">
+                <time datetime="2021-01-13T03:29:00.000Z" itemprop="datePublished">2021-01-13</time>
+              </p>
+            </div>
+          </li>
+          
+      </ul>
+    </div>
+  </div>
+  
+
+    
+  </div>
+</aside>
+
+  
+  
+<aside class="sidebar sidebar-toc collapse" id="collapseToc" itemscope itemtype="http://schema.org/WPSideBar">
+  <div class="slimContent">
+    <nav id="toc" class="article-toc">
+      <h3 class="toc-title">文章目录</h3>
+      <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#ActiveMQ-简介"><span class="toc-number">1.</span> <span class="toc-text">ActiveMQ 简介</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ActiveMQ-使用步骤"><span class="toc-number">2.</span> <span class="toc-text">ActiveMQ 使用步骤</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ActiveMQ-安装与启动"><span class="toc-number">3.</span> <span class="toc-text">ActiveMQ 安装与启动</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Linux-下安装"><span class="toc-number">3.1.</span> <span class="toc-text">Linux 下安装</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Mac-安装"><span class="toc-number">3.2.</span> <span class="toc-text">Mac 安装</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#ActiveMQ-启动与关闭"><span class="toc-number">3.3.</span> <span class="toc-text">ActiveMQ 启动与关闭</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#创建-queue-amp-topic-消息类型的对象"><span class="toc-number">4.</span> <span class="toc-text">创建 queue &amp; topic 消息类型的对象</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#连接-ActiveMQ-amp-生产-消费-消息（Golang-版本）"><span class="toc-number">5.</span> <span class="toc-text">连接 ActiveMQ &amp; 生产&#x2F;消费 消息（Golang 版本）</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#代码示例"><span class="toc-number">5.1.</span> <span class="toc-text">代码示例</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#效果图："><span class="toc-number">5.2.</span> <span class="toc-text">效果图：</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ActiveMQ-相关参数配置"><span class="toc-number">6.</span> <span class="toc-text">ActiveMQ 相关参数配置</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#activemq-xml-相关核心参数解释"><span class="toc-number">6.1.</span> <span class="toc-text">activemq.xml 相关核心参数解释</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#destinationPolicy（消息目的地策略）"><span class="toc-number">6.1.1.</span> <span class="toc-text">destinationPolicy（消息目的地策略）</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#1-dispatchPolicy（转发策略）"><span class="toc-number">6.1.1.1.</span> <span class="toc-text">1. dispatchPolicy（转发策略）</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#2-SubscriptionRecoveryPolicy（恢复-回溯策略）"><span class="toc-number">6.1.1.2.</span> <span class="toc-text">2. SubscriptionRecoveryPolicy（恢复&#x2F;回溯策略）</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#3-DeadLetterStrategy-死信策略"><span class="toc-number">6.1.1.3.</span> <span class="toc-text">3. DeadLetterStrategy(死信策略)</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#4-PendingMessageLimitStrategy：消息限制策略（面向慢消费者）"><span class="toc-number">6.1.1.4.</span> <span class="toc-text">4. PendingMessageLimitStrategy：消息限制策略（面向慢消费者）</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#5-SlowConsumerStrategy：慢速消费者策略"><span class="toc-number">6.1.1.5.</span> <span class="toc-text">5. SlowConsumerStrategy：慢速消费者策略</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#6-MessageEvictionStrategy：消息剔除策略（面向慢消费者）"><span class="toc-number">6.1.1.6.</span> <span class="toc-text">6. MessageEvictionStrategy：消息剔除策略（面向慢消费者）</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#7-PendingQueueStoragePolicy：待消费消息策略（面向慢消费者）"><span class="toc-number">6.1.1.7.</span> <span class="toc-text">7. PendingQueueStoragePolicy：待消费消息策略（面向慢消费者）</span></a></li></ol></li><li class="toc-item toc-level-5"><a class="toc-link" href="#systemUsage（存储配置）"><span class="toc-number">6.1.2.</span> <span class="toc-text">systemUsage（存储配置）</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#主备配置"><span class="toc-number">6.1.3.</span> <span class="toc-text">主备配置</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#1-Master-Slave"><span class="toc-number">6.1.3.1.</span> <span class="toc-text">1. Master&#x2F;Slave</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#2-数据库共享方式"><span class="toc-number">6.1.3.2.</span> <span class="toc-text">2. 数据库共享方式</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#3-文件共享方式"><span class="toc-number">6.1.3.3.</span> <span class="toc-text">3. 文件共享方式</span></a></li></ol></li><li class="toc-item toc-level-5"><a class="toc-link" href="#负载均衡配置"><span class="toc-number">6.1.4.</span> <span class="toc-text">负载均衡配置</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#持久化配置"><span class="toc-number">6.1.5.</span> <span class="toc-text">持久化配置</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link" href="#1-AMQ"><span class="toc-number">6.1.5.1.</span> <span class="toc-text">1. AMQ</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#2-KahaDB"><span class="toc-number">6.1.5.2.</span> <span class="toc-text">2. KahaDB</span></a></li><li class="toc-item toc-level-6"><a class="toc-link" href="#3-JDBC"><span class="toc-number">6.1.5.3.</span> <span class="toc-text">3. JDBC</span></a></li></ol></li></ol></li></ol></li></ol>
+    </nav>
+  </div>
+</aside>
+
+<main class="main" role="main">
+  <div class="content">
+  <article id="post-middleware/ActiveMQ" class="article article-type-post" itemscope itemtype="http://schema.org/BlogPosting">
+    
+    <div class="article-header">
+      
+        
+  
+    <h1 class="article-title" itemprop="name">
+      ActiveMQ 的安装&amp;简单使用&amp;参数详解（Golang版）
+    </h1>
+  
+
+      
+      <div class="article-meta">
+        <span class="article-date">
+    <i class="icon icon-calendar-check"></i>
+	<a href="/middleware/ActiveMQ/" class="article-date">
+	  <time datetime="2021-03-01T02:17:45.000Z" itemprop="datePublished">2021-03-01</time>
+	</a>
+</span>
+        
+        
+  <span class="article-tag">
+    <i class="icon icon-tags"></i>
+	<a class="article-tag-link" href="/tags/middleware-ActiveMQ/" rel="tag">middleware,ActiveMQ</a>
+  </span>
+
+
+        
+
+        <span class="post-comment"><i class="icon icon-comment"></i> <a href="/middleware/ActiveMQ/#comments" class="article-comment-link">评论</a></span>
+        
+      </div>
+    </div>
+    <div class="article-entry marked-body" itemprop="articleBody">
+      
+        <h3 id="ActiveMQ-简介"><a href="#ActiveMQ-简介" class="headerlink" title="ActiveMQ 简介"></a>ActiveMQ 简介</h3><p>ActiveMQ 是一种消息中间件，更精确地说，是基于 Java 消息服务（JMS, Java Message Service）API 接口协议的一种消息队列(MQ, message queue)的具体实现。<br>ActiveMQ 是 Apache 基金会下一个开源的、支持多协议的（<code>STOMP、 AMQP、MQTT、 OpenWire 、REST、WS</code>），由 Java 实现的消息中间件，用于跨平台、跨语言的（<code>C、C++、Java、Python、Go、Js、Ruby、Lua、R 等</code>）的消息传递，有利于降低系统的耦合度。</p>
+<h3 id="ActiveMQ-使用步骤"><a href="#ActiveMQ-使用步骤" class="headerlink" title="ActiveMQ 使用步骤"></a>ActiveMQ 使用步骤</h3><ol>
+<li>安装&amp;启动 ActiveMQ</li>
+<li>创建 queue/topic 类型的消息对象</li>
+<li>使用指定的语言的 SDK，连接 ActiveMQ 服务, 再 <code>生产/消费</code> 指定的 <code>queue/topic</code> </li>
+</ol>
+<p>下面将说明每一步的具体操作步骤 ↓↓↓</p>
+<h3 id="ActiveMQ-安装与启动"><a href="#ActiveMQ-安装与启动" class="headerlink" title="ActiveMQ 安装与启动"></a>ActiveMQ 安装与启动</h3><h4 id="Linux-下安装"><a href="#Linux-下安装" class="headerlink" title="Linux 下安装"></a>Linux 下安装</h4><ul>
+<li>下载地址: <a href="https://activemq.apache.org/components/classic/download/" target="_blank" rel="noopener">点击Apache官方下载</a></li>
+<li>解压:  <code>tar -xvf apache-activemq-X.XX.X</code></li>
+<li>解压后的文件列表：<ul>
+<li>bin：相关可执行程序</li>
+<li>conf：配置文件</li>
+<li>data：存放数据</li>
+<li>docs：用户手册及文档</li>
+<li>examples：相关配置的例子</li>
+<li>lib：jar 包及扩展包</li>
+<li>webapps：web 页面。 </li>
+</ul>
+</li>
+<li>将 apache-activemq-X.XX.X 里的 bin 目录加入到 PATH 中</li>
+</ul>
+<h4 id="Mac-安装"><a href="#Mac-安装" class="headerlink" title="Mac 安装"></a>Mac 安装</h4><ul>
+<li>一键安装命令:  <code>brew install activemq</code></li>
+</ul>
+<h4 id="ActiveMQ-启动与关闭"><a href="#ActiveMQ-启动与关闭" class="headerlink" title="ActiveMQ 启动与关闭"></a>ActiveMQ 启动与关闭</h4><ul>
+<li>启动命令：<ul>
+<li>普通启动： <code>activemq start</code></li>
+<li>带日志启动：<code>activemq start &gt; {LOG_HOME}/{name}.log</code></li>
+</ul>
+</li>
+<li>关闭命令：<code>activemq stop</code></li>
+</ul>
+<h3 id="创建-queue-amp-topic-消息类型的对象"><a href="#创建-queue-amp-topic-消息类型的对象" class="headerlink" title="创建 queue &amp; topic 消息类型的对象"></a>创建 queue &amp; topic 消息类型的对象</h3><blockquote>
+<p>ActiveMQ 有两种消息类型：</p>
+</blockquote>
+<ul>
+<li><code>queue</code></li>
+<li><code>topic</code></li>
+</ul>
+<blockquote>
+<p>两种消息类型区别如下：</p>
+</blockquote>
+<ul>
+<li>queue 中的每个消息，只能被消费一次，消费完即消失；而 topic 中的每个消息，可以被每一个订阅了该 topic 的消费者消费。</li>
+<li>queue 消费者可以消费任何时间段的消息； 而 topic 消费者只能消费订阅后才发布的消息。因此， topic 模式下，需要先启动消费者，再启动生产者。</li>
+</ul>
+<blockquote>
+<p>queue 消息类型生成：</p>
+</blockquote>
+<ul>
+<li>使用 ActiveMQ 自带的 Web 服务进行创建：<br><img src="/middleware/ActiveMQ/queue.jpg" alt="2ae1093bdf78dff2bfe5270d2aaae56d.jpeg"></li>
+</ul>
+<blockquote>
+<p>topic 消息类型生成：</p>
+</blockquote>
+<ul>
+<li>使用 ActiveMQ 自带的 Web 服务进行创建：<br><img src="/middleware/ActiveMQ/topic.jpg" alt="c6a824c7a74224ca326848d8b9ef2fe9.png"></li>
+</ul>
+<p>此时，queue/topic 的消息类型对象已经创建完毕，接下来就可以通过特定语言的 SDK ，向指定的消息对象 <code>生产/消费</code> 消息。</p>
+<h3 id="连接-ActiveMQ-amp-生产-消费-消息（Golang-版本）"><a href="#连接-ActiveMQ-amp-生产-消费-消息（Golang-版本）" class="headerlink" title="连接 ActiveMQ &amp; 生产/消费 消息（Golang 版本）"></a>连接 ActiveMQ &amp; <code>生产/消费</code> 消息（Golang 版本）</h3><h4 id="代码示例"><a href="#代码示例" class="headerlink" title="代码示例"></a>代码示例</h4><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">TestTopic</span><span class="params">(t *testing.T)</span></span>  &#123;</span><br><span class="line">	<span class="comment">//本例是使用 stomp 协议与 ActiveMQ 进行连接，stomp 的默认端口是 61613；</span></span><br><span class="line">	stompConn, err := stomp.Dial(<span class="string">"tcp"</span>, <span class="string">"10.18.23.10:61613"</span>)</span><br><span class="line">	<span class="keyword">defer</span> stompConn.Disconnect()</span><br><span class="line"></span><br><span class="line">	<span class="comment">// 订阅指定的消息对象，并消费对象</span></span><br><span class="line">	<span class="comment">/*</span></span><br><span class="line"><span class="comment">		ActiveMQ 通过订阅对象的前缀名来判断是 queue 类型还是 topic 类型</span></span><br><span class="line"><span class="comment">		例如：</span></span><br><span class="line"><span class="comment">			（1）"/queue/zhaobiao" 则是 queue 类型</span></span><br><span class="line"><span class="comment">			（2）"/topic/zhaobiao" 则是 topic 类型</span></span><br><span class="line"><span class="comment">	*/</span></span><br><span class="line">	destination := <span class="string">"/topic/zhaobiao"</span></span><br><span class="line">	<span class="comment">// 非独占式消费，会使得 Messages Enqueued 增加， Messages Dequeued 也增加</span></span><br><span class="line">	sub, err := stompConn.Subscribe(destination, stomp.AckAuto)</span><br><span class="line">	<span class="comment">// 独占式消费，会使得 Messages Enqueued 增加， 但 Messages Dequeued 不增加</span></span><br><span class="line">	<span class="comment">//sub, err := stompConn.Subscribe(topic, stomp.AckClientIndividual, stomp.SubscribeOpt.Header("activemq.exclusive", "true"))</span></span><br><span class="line">	<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">		fmt.Println(<span class="string">"subscribe topic error: "</span>, err.Error())</span><br><span class="line">		<span class="keyword">return</span></span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">go</span> <span class="function"><span class="keyword">func</span><span class="params">()</span></span> &#123;</span><br><span class="line">		<span class="keyword">for</span> &#123;</span><br><span class="line">			<span class="keyword">select</span> &#123;</span><br><span class="line">			<span class="keyword">case</span> v := &lt;-sub.C:</span><br><span class="line">				fmt.Println(<span class="string">"接收到消息: "</span>, <span class="keyword">string</span>(v.Body))</span><br><span class="line">			<span class="keyword">case</span> &lt;-time.After(time.Second * <span class="number">3</span>):</span><br><span class="line">				fmt.Println(<span class="string">"已经有3秒钟没有收到消息了"</span>)</span><br><span class="line">				<span class="keyword">return</span></span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;()</span><br><span class="line">	time.Sleep(time.Second)</span><br><span class="line"></span><br><span class="line">	<span class="comment">// 生产消息到指定的 消息对象</span></span><br><span class="line">	c := <span class="built_in">make</span>(<span class="keyword">chan</span> <span class="keyword">string</span>)</span><br><span class="line">	<span class="keyword">go</span> <span class="function"><span class="keyword">func</span><span class="params">()</span></span> &#123;</span><br><span class="line">		<span class="keyword">for</span> &#123;</span><br><span class="line">			err := stompConn.Send(destination, <span class="string">"text/plain"</span>, []<span class="keyword">byte</span>(&lt;-c))</span><br><span class="line">			<span class="keyword">if</span> err != <span class="literal">nil</span> &#123;</span><br><span class="line">				fmt.Println(<span class="string">"ActiveMq message send error: "</span> + err.Error())</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;()</span><br><span class="line"></span><br><span class="line">	<span class="keyword">for</span> i := <span class="number">0</span>; i &lt; <span class="number">1000</span>; i++ &#123;</span><br><span class="line">		<span class="comment">//c &lt;- "this is a msg " + strconv.Itoa(i)</span></span><br><span class="line">		c &lt;- <span class="string">"发出第 "</span> + strconv.Itoa(i) + <span class="string">" 个消息"</span></span><br><span class="line">	&#125;</span><br><span class="line">	time.Sleep(time.Second*<span class="number">30</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="效果图："><a href="#效果图：" class="headerlink" title="效果图："></a>效果图：</h4><p><img src="/middleware/ActiveMQ/activemqhome.jpg" alt="7efbddbbc9738bb633b21cb7831c6fd4.jpeg"></p>
+<h3 id="ActiveMQ-相关参数配置"><a href="#ActiveMQ-相关参数配置" class="headerlink" title="ActiveMQ 相关参数配置"></a>ActiveMQ 相关参数配置</h3><blockquote>
+<p>ActiveMQ 的相关配置文件位于 <code>${ActiveMQ_HOME}/conf</code></p>
+</blockquote>
+<p>查看 <strong>ActiveMQ_HOME 位置</strong>： <code>ps -ef |grep mq</code><br><img src="/middleware/ActiveMQ/mqHome.jpg" alt="223d8fee7daa7bd959cdd4f9e35b15c4.jpeg"></p>
+<blockquote>
+<p>配置目录如下所示：</p>
+</blockquote>
+<p><img src="/middleware/ActiveMQ/conf.jpg" alt="0e8597566253c974ccb5ad43f2f90472.jpeg"><br>其中 <code>activemq.xml</code> 是最主要配置文件，下面将对此文件重要参数进行解释。</p>
+<h4 id="activemq-xml-相关核心参数解释"><a href="#activemq-xml-相关核心参数解释" class="headerlink" title="activemq.xml 相关核心参数解释"></a>activemq.xml 相关核心参数解释</h4><h5 id="destinationPolicy（消息目的地策略）"><a href="#destinationPolicy（消息目的地策略）" class="headerlink" title="destinationPolicy（消息目的地策略）"></a>destinationPolicy（消息目的地策略）</h5><p>destinationPolicy 用于定义所有消息的相关策略（分发策略、回复策略、消息限制策略）。<br>destinationPolicy 子标签的包含关系如下：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- 每个具体的策略都被定义在 `policyEntry` 标签里， 被包含在 `destinationPolicy.policyMap.policyEntries` 内 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">destinationPolicy</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">policyMap</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">policyEntries</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">policyEntry</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">dispatchPolicy</span>&gt;</span></span><br><span class="line">                    <span class="comment">&lt;!-- strictOrderDispatchPolicy/ --&gt;</span></span><br><span class="line">                <span class="tag">&lt;/<span class="name">dispatchPolicy</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">subscriptionRecoveryPolicy</span>&gt;</span></span><br><span class="line">                    <span class="comment">&lt;!-- lastImageSubscriptionRecoveryPolicy/ --&gt;</span></span><br><span class="line">                <span class="tag">&lt;/<span class="name">subscriptionRecoveryPolicy</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">pendingMessageLimitStrategy</span>&gt;</span></span><br><span class="line">                    <span class="comment">&lt;!-- constantPendingMessageLimitStrategy limit="1000"/ --&gt;</span></span><br><span class="line">                <span class="tag">&lt;/<span class="name">pendingMessageLimitStrategy</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">policyEntry</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">policyEntries</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">policyMap</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">destinationPolicy</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>策略实例如下：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">destinationPolicy</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">policyMap</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">policyEntries</span>&gt;</span></span><br><span class="line">            <span class="comment">&lt;!-- queue 消息类型的策略定义 --&gt;</span></span><br><span class="line">            <span class="comment">&lt;!-- producerFlowControl = true, 表示“启用监控流量；当消息的内存消耗达到 memoryLimit 时，ActiveMQ 会减慢消息的产生甚至阻塞”；如果为 false, 表示将消息发送到磁盘中，以防止内存溢出 </span></span><br><span class="line"><span class="comment">            --&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">policyEntry</span> <span class="attr">queue</span>=<span class="string">"&gt;"</span> <span class="attr">producerFlowControl</span>=<span class="string">"true"</span> <span class="attr">memoryLimit</span>=<span class="string">"5mb"</span>/&gt;</span></span><br><span class="line">            <span class="comment">&lt;!-- topic 消息类型的策略定义 --&gt;</span></span><br><span class="line">            <span class="comment">&lt;!-- 每个 policyEntry 可以包含多种策略（分发策略、恢复策略等，详见下文） --&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">policyEntry</span> <span class="attr">topic</span>=<span class="string">"&gt;"</span> <span class="attr">producerFlowControl</span>=<span class="string">"true"</span> <span class="attr">memoryLimit</span>=<span class="string">"5mb"</span>&gt;</span></span><br><span class="line">                <span class="comment">&lt;!-- 分发策略 --&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">dispatchPolicy</span>&gt;</span></span><br><span class="line">                    <span class="comment">&lt;!--  每个消费者会以相同的顺序接收消息，但有性能损失 --&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="name">strictOrderDispatchPolicy</span>/&gt;</span></span><br><span class="line">                <span class="tag">&lt;/<span class="name">dispatchPolicy</span>&gt;</span></span><br><span class="line">                <span class="comment">&lt;!-- 恢复策略  --&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">subscriptionRecoveryPolicy</span>&gt;</span></span><br><span class="line">                    <span class="comment">&lt;!-- 只保留最新的一条数据 --&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="name">lastImageSubscriptionRecoveryPolicy</span>/&gt;</span></span><br><span class="line">                <span class="tag">&lt;/<span class="name">subscriptionRecoveryPolicy</span>&gt;</span></span><br><span class="line">                <span class="comment">&lt;!-- 消息限制策略（面向慢消费者） --&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">pendingMessageLimitStrategy</span>&gt;</span></span><br><span class="line">                    <span class="comment">&lt;!-- 若消息保留量超过 limit，将使用 MessageEvictionStrategy 剔除旧的消息 --&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="name">constantPendingMessageLimitStrategy</span> <span class="attr">limit</span>=<span class="string">"1000"</span>/&gt;</span></span><br><span class="line">                <span class="tag">&lt;/<span class="name">pendingMessageLimitStrategy</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">policyEntry</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">policyEntries</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">policyMap</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">destinationPolicy</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>下面，对各个策略进行讲解：</p>
+<h6 id="1-dispatchPolicy（转发策略）"><a href="#1-dispatchPolicy（转发策略）" class="headerlink" title="1. dispatchPolicy（转发策略）"></a>1. dispatchPolicy（转发策略）</h6><p>此策略表明 Broker 将同一个消息发送给不同消费者的顺序，且<strong>只对 Topic 有效</strong>，转发策略常用的有四种子策略:</p>
+<ul>
+<li><code>RoundRobinDispatchPolicy</code>：“轮询”，“订阅者”列表默认按照订阅的先后顺序排列，订阅者拿到消息之后，将会被移动到“订阅者”列表尾部，这也意味着“下一条”消息，将会较晚的转发给它。</li>
+<li><code>StrictOrderDispatchPolicy</code>：按照“订阅者”订阅的时间先后，消息依次发送给每个订阅者。它和 RoundRobin 最大的区别是，没有移动“订阅者”顺序的操作。</li>
+<li><code>PriorityDispatchPolicy</code>： 基于 “property” 权重对 “订阅者” 排序。它要求开发者首先需要对每个订阅者指定priority，默认情况下每个消费者的 property 值都一样的。</li>
+<li><code>SimpleDispatchPolicy</code>： 默认值，按照当前“订阅者”列表的顺序。其中 PriorityDispatchPolicy 是其子类。</li>
+</ul>
+<p>以 <code>RoundRobinDispatchPolicy</code> 为例：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- 通配符 “&gt;” 表示对所有 topic 均有效 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">policyEntry</span> <span class="attr">topic</span>=<span class="string">"&gt;"</span>&gt;</span>                 </span><br><span class="line">  <span class="tag">&lt;<span class="name">dispatchPolicy</span>&gt;</span>    </span><br><span class="line">    <span class="tag">&lt;<span class="name">roundRobinDispatchPolicy</span>/&gt;</span>  </span><br><span class="line">  <span class="tag">&lt;/<span class="name">dispatchPolicy</span>&gt;</span>  </span><br><span class="line"><span class="tag">&lt;/<span class="name">policyEntry</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h6 id="2-SubscriptionRecoveryPolicy（恢复-回溯策略）"><a href="#2-SubscriptionRecoveryPolicy（恢复-回溯策略）" class="headerlink" title="2. SubscriptionRecoveryPolicy（恢复/回溯策略）"></a>2. SubscriptionRecoveryPolicy（恢复/回溯策略）</h6><p>恢复策略只能用于 Topic 消息类型的消费者<br>默认情况下，订阅者只能获取“订阅”开始之后的消息，而<strong>恢复/回溯策略</strong>可以让订阅者可以获取其创建之前的消息。<br>注：该策略所缓存的消息只会发送给 <code>retroactive</code> 类型的消费者，并不会发送给持久订阅者。要想让<strong>恢复/回溯策略</strong>生效，在创建此 Topic 的消费者时，需要设置 <strong><code>retroactive = true</code></strong>, 代码如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">topic = <span class="keyword">new</span> ActiveMQTopic(<span class="string">"TEST.Topic?consumer.retroactive=true"</span>);</span><br><span class="line">consumer = session.createConsumer(topic);</span><br></pre></td></tr></table></figure>
+<p>恢复/回溯策略包括如下几种：</p>
+<ul>
+<li><code>FixedSizedSubscriptionRecoveryPolicy</code>：保存固定内存空间的消息<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">policyEntry</span> <span class="attr">topic</span>=<span class="string">"&gt;"</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">subscriptionRecoveryPolicy</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">fixedSizedSubscriptionRecoveryPolicy</span> <span class="attr">maximumSize</span>=<span class="string">"1024"</span>/&gt;</span></span><br><span class="line">	<span class="tag">&lt;/<span class="name">subscriptionRecoveryPolicy</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">policyEntry</span>&gt;</span></span><br></pre></td></tr></table></figure></li>
+<li><code>FixedCountSubscriptionRecoveryPolicy</code>：保存固定消息数的消息<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">policyEntry</span> <span class="attr">topic</span>=<span class="string">"&gt;"</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">subscriptionRecoveryPolicy</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">fixedCountSubscriptionRecoveryPolicy</span> <span class="attr">maximumSize</span>=<span class="string">"100"</span>/&gt;</span></span><br><span class="line">	<span class="tag">&lt;/<span class="name">subscriptionRecoveryPolicy</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">policyEntry</span>&gt;</span></span><br></pre></td></tr></table></figure></li>
+<li><code>LastImageSubscriptionRecoveryPolicy</code>：保留最新的一条数据<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">policyEntry</span> <span class="attr">topic</span>=<span class="string">"&gt;"</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">subscriptionRecoveryPolicy</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">lastImageSubscriptionRecoveryPolicy</span>/&gt;</span></span><br><span class="line">	<span class="tag">&lt;/<span class="name">subscriptionRecoveryPolicy</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">policyEntry</span>&gt;</span></span><br></pre></td></tr></table></figure></li>
+<li><code>QueryBasedSubscriptionRecoveryPolicy</code>：根据查询机制使用回溯，具体能够“恢复”多少消息，由底层存储机制决定；比如对于非持久化消息，只要内存中还存在，则都可以恢复。<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">policyEntry</span> <span class="attr">topic</span>=<span class="string">"&gt;"</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">subscriptionRecoveryPolicy</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">queryBasedSubscriptionRecoveryPolicy</span> <span class="attr">query</span>=<span class="string">"Color='red' AND Name='tom'"</span>/&gt;</span></span><br><span class="line">	<span class="tag">&lt;/<span class="name">subscriptionRecoveryPolicy</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">policyEntry</span>&gt;</span></span><br></pre></td></tr></table></figure></li>
+<li><code>TimedSubscriptionRecoveryPolicy</code>： 保留指定时间内的消息<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">policyEntry</span> <span class="attr">topic</span>=<span class="string">"&gt;"</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">subscriptionRecoveryPolicy</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">timedSubscriptionRecoveryPolicy</span> <span class="attr">recoverDuration</span>=<span class="string">"60000"</span>/&gt;</span></span><br><span class="line">	<span class="tag">&lt;/<span class="name">subscriptionRecoveryPolicy</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">policyEntry</span>&gt;</span></span><br></pre></td></tr></table></figure></li>
+<li><code>NoSubscriptionRecoveryPolicy</code>：关闭“恢复机制”，默认。<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">policyEntry</span> <span class="attr">topic</span>=<span class="string">"&gt;"</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">subscriptionRecoveryPolicy</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">noSubscriptionRecoveryPolicy</span>/&gt;</span></span><br><span class="line">	<span class="tag">&lt;/<span class="name">subscriptionRecoveryPolicy</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">policyEntry</span>&gt;</span></span><br></pre></td></tr></table></figure></li>
+<li>RetainedMessageSubscriptionRecoveryPolicy: 保留 ActiveMQ.Retain 属性值为 true 的最后1条消息<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">policyEntry</span> <span class="attr">topic</span>=<span class="string">"&gt;"</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">subscriptionRecoveryPolicy</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">retainedMessageSubscriptionRecoveryPolicy</span>/&gt;</span></span><br><span class="line">	<span class="tag">&lt;/<span class="name">subscriptionRecoveryPolicy</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">policyEntry</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h6 id="3-DeadLetterStrategy-死信策略"><a href="#3-DeadLetterStrategy-死信策略" class="headerlink" title="3. DeadLetterStrategy(死信策略)"></a>3. DeadLetterStrategy(死信策略)</h6><p>当 ActiveMQ 多次向客户端发送消息失败后，broker 会将消息放入 <code>死信通道(DeadLetter)</code> 中。如不想抛弃死信队列，默认进入 <code>ACTIVEMQ.DLQ</code> 队列，且不会自动清除。</p>
+<p>死信队列提供了可选的策略有: <code>IndividualDeadLetterStrategy</code>（放入各自的死信通道）、 <code>SharedDeadLetterStrategy</code> (保存在一个共享的队列（默认））：</p>
+<ul>
+<li><code>IndividualDeadLetterStrategy</code>：把死信放入各自的死信通道中，死信通道默认前缀是 <code>ActiveMQ.DLQ.</code>。对于 queue 的死信通道前缀为 <strong>ActiveMQ.DLQ.Queue.</strong>; Topic 的死信前缀为 <strong>ActiveMQ.DLQ.Topic.</strong>。默认情况下，broker 使用Queue 保存死信，可通过配置指定死信类型为 Topic。<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">policyEntry</span> <span class="attr">queue</span>=<span class="string">"order"</span>&gt;</span>  </span><br><span class="line">  <span class="tag">&lt;<span class="name">deadLetterStrategy</span>&gt;</span>  </span><br><span class="line">    <span class="comment">&lt;!-- 从ActiveMQ 5.12开始，deadLetterStrategy 支持 expiration 属性，其值以毫秒为单位 --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">individualDeadLetterStrategy</span>  </span></span><br><span class="line"><span class="tag">      <span class="attr">queuePrefix</span>=<span class="string">"DLQ."</span> <span class="attr">useQueueForQueueMessages</span>=<span class="string">"false"</span> <span class="attr">processExpired</span>=<span class="string">"true"</span> <span class="attr">expiration</span>=<span class="string">"30000"</span> /&gt;</span>  </span><br><span class="line">  <span class="tag">&lt;/<span class="name">deadLetterStrategy</span>&gt;</span>  </span><br><span class="line"><span class="tag">&lt;/<span class="name">policyEntry</span>&gt;</span></span><br></pre></td></tr></table></figure></li>
+<li><code>SharedDeadLetterStrategy</code>：将所有的死信保存在一个共享的队列中，这是 ActiveMQ broker 端默认的策略。共享队列默认为 “ActiveMQ.DLQ”，可以通过 “deadLetterQueue” 属性来设定。<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">deadLetterStrategy</span>&gt;</span>  </span><br><span class="line">    <span class="tag">&lt;<span class="name">sharedDeadLetterStrategy</span> <span class="attr">deadLetterQueue</span>=<span class="string">"DLQ-QUEUE"</span>/&gt;</span>  </span><br><span class="line"> <span class="tag">&lt;/<span class="name">deadLetterStrategy</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<p>注：如果开发者不关心死信，可以使用 AcitveMQ 提供的插件 <code>DiscardingDLQBrokerPlugin</code> 来直接抛弃死信，配置用例如下：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">broker</span>&gt;</span></span><br><span class="line">...</span><br><span class="line">    <span class="comment">&lt;!-- 插件定义在 broker 中 --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">plugins</span>&gt;</span></span><br><span class="line">        <span class="comment">&lt;!-- 丢弃所有死信--&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">discardingDLQBrokerPlugindropAll="true"</span>  <span class="attr">dropTemporaryTopics</span>=<span class="string">"true"</span> <span class="attr">dropTemporaryQueues</span>=<span class="string">"true"</span> /&gt;</span></span><br><span class="line">        <span class="comment">&lt;!-- 丢弃指定死信--&gt;</span></span><br><span class="line">        <span class="comment">&lt;!-- &lt;discardingDLQBrokerPlugindropOnly="MY.EXAMPLE.TOPIC.29 MY.EXAMPLE.QUEUE.87" reportInterval="1000" /&gt;--&gt;</span></span><br><span class="line">        <span class="comment">&lt;!--使用丢弃正则匹配到死信--&gt;</span></span><br><span class="line">        <span class="comment">&lt;!--&lt;discardingDLQBrokerPlugindropOnly="MY.EXAMPLE.TOPIC.[0-9]&#123;3&#125; MY.EXAMPLE.QUEUE.[0-9]&#123;3&#125;" reportInterval="3000"/&gt;--&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">plugins</span>&gt;</span></span><br><span class="line">    ...</span><br><span class="line"> <span class="tag">&lt;/<span class="name">broker</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h6 id="4-PendingMessageLimitStrategy：消息限制策略（面向慢消费者）"><a href="#4-PendingMessageLimitStrategy：消息限制策略（面向慢消费者）" class="headerlink" title="4. PendingMessageLimitStrategy：消息限制策略（面向慢消费者）"></a>4. PendingMessageLimitStrategy：消息限制策略（面向慢消费者）</h6><p>此策略用于防止 Topic 类型消息发生积压时，而设定额定的消息保留量，此策略只对未持久化的 topic 消息类型有效。</p>
+<ul>
+<li>ConstantPendingMessageLimitStrategy：保留固定条数的消息，如果消息量超过 limit，将使用 <code>MessageEvictionStrategy（消息剔除策略）</code>移除消息。<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">policyEntry</span> <span class="attr">topic</span>=<span class="string">"ORDERS.&gt;"</span>&gt;</span>  </span><br><span class="line">    <span class="comment">&lt;!-- lets force old messages to be discarded for slow consumers --&gt;</span>  </span><br><span class="line">    <span class="tag">&lt;<span class="name">pendingMessageLimitStrategy</span>&gt;</span>  </span><br><span class="line">        <span class="tag">&lt;<span class="name">constantPendingMessageLimitStrategy</span> <span class="attr">limit</span>=<span class="string">"50"</span>/&gt;</span>  </span><br><span class="line">    <span class="tag">&lt;/<span class="name">pendingMessageLimitStrategy</span>&gt;</span>  </span><br><span class="line"><span class="tag">&lt;/<span class="name">policyEntry</span>&gt;</span></span><br></pre></td></tr></table></figure></li>
+<li>PrefetchRatePendingMessageLimitStrategy: 保留 prefetchSize 条消息。<br>这种策略在客户端内存里缓存一定数量得消息, 当某个消费者的 prefetch buffer 已经达到上限，那么 broker 不会再向消费者分发消息，直到 broker 收到消费者发出的确认消息后，确认后的消息将会从缓存中去掉。<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">policyEntry</span> <span class="attr">topic</span>=<span class="string">"ORDERS.&gt;"</span>&gt;</span>   </span><br><span class="line">    <span class="tag">&lt;<span class="name">pendingMessageLimitStrategy</span>&gt;</span>  </span><br><span class="line">         <span class="comment">&lt;!-- 若 prefetchSize 为100，则保留2.5 * 100条消息 --&gt;</span> </span><br><span class="line">        <span class="tag">&lt;<span class="name">prefetchRatePendingMessageLimitStrategy</span> <span class="attr">multiplier</span>=<span class="string">"2.5"</span> /&gt;</span>  </span><br><span class="line">    <span class="tag">&lt;/<span class="name">pendingMessageLimitStrategy</span>&gt;</span>  </span><br><span class="line"><span class="tag">&lt;/<span class="name">policyEntry</span>&gt;</span></span><br></pre></td></tr></table></figure>
+prefetchSize 通过创建消费者的时候设置，代码如下：<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// java 版</span></span><br><span class="line">queue = <span class="keyword">new</span> ActiveMQQueue(<span class="string">"TEST.QUEUE?consumer.prefetchSize=10"</span>);</span><br><span class="line">consumer = session.createConsumer(queue)</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h6 id="5-SlowConsumerStrategy：慢速消费者策略"><a href="#5-SlowConsumerStrategy：慢速消费者策略" class="headerlink" title="5. SlowConsumerStrategy：慢速消费者策略"></a>5. SlowConsumerStrategy：慢速消费者策略</h6><p>对于慢消费者，broker 会启动一个后台线程用来检测所有的慢速消费者，并定期的关闭慢消费者。</p>
+<ul>
+<li><code>AbortSlowConsumerStrategy</code>：中断并关闭慢速消费者<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">policyEntry</span> <span class="attr">queue</span>=<span class="string">"&gt;"</span> <span class="attr">producerFlowControl</span>=<span class="string">"true"</span> <span class="attr">memoryLimit</span>=<span class="string">"512mb"</span>&gt;</span>               </span><br><span class="line">  <span class="tag">&lt;<span class="name">slowConsumerStrategy</span>&gt;</span>  </span><br><span class="line">    <span class="comment">&lt;!-- </span></span><br><span class="line"><span class="comment">    abortConnection：是否关闭底层的连接</span></span><br><span class="line"><span class="comment">        （1）false：通过 transport 向 client 发送指令，client 接受后，调用 consumer.close；</span></span><br><span class="line"><span class="comment">        （2）true：底层 transport 链接关闭。如果多个消费者共享同一个连接，那么这些消费者会被迫关闭。 </span></span><br><span class="line"><span class="comment">    maxTimeSinceLastAck： 最后一个ACK 与当前时间间隔的阀值，超过设置的阈值，则中断慢速消费者</span></span><br><span class="line"><span class="comment">    --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">abortSlowConsumerStrategy</span> <span class="attr">abortConnection</span>=<span class="string">"false"</span> <span class="attr">maxTimeSinceLastAck</span>=<span class="string">"30000"</span>/&gt;</span>  </span><br><span class="line">  <span class="tag">&lt;/<span class="name">slowConsumerStrategy</span>&gt;</span>  </span><br><span class="line"><span class="tag">&lt;/<span class="name">policyEntry</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h6 id="6-MessageEvictionStrategy：消息剔除策略（面向慢消费者）"><a href="#6-MessageEvictionStrategy：消息剔除策略（面向慢消费者）" class="headerlink" title="6. MessageEvictionStrategy：消息剔除策略（面向慢消费者）"></a>6. MessageEvictionStrategy：消息剔除策略（面向慢消费者）</h6><p>对于多余的消息，ActiveMQ 提供了以下子策略来移除：</p>
+<ul>
+<li><code>OldestMessageEvictionStrategy</code>：移除旧消息，默认策略</li>
+<li><code>OldestMessageWithLowestPriorityEvictionStrategy</code>：旧数据中权重较低的消息，将会被移除</li>
+<li><code>UniquePropertyMessageEvictionStrategy</code>：移除具有指定 property 的旧消息<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- 结合上文的 pendingMessageLimitStrategy 一起理解 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">policyEntry</span> <span class="attr">topic</span>=<span class="string">"ORDER.WEIGHT.&gt;"</span>&gt;</span>   </span><br><span class="line">    <span class="tag">&lt;<span class="name">pendingMessageLimitStrategy</span>&gt;</span>  </span><br><span class="line">        <span class="tag">&lt;<span class="name">constantPendingMessageLimitStrategy</span> <span class="attr">limit</span>=<span class="string">"1000"</span>/&gt;</span>  </span><br><span class="line">    <span class="tag">&lt;/<span class="name">pendingMessageLimitStrategy</span>&gt;</span> </span><br><span class="line">    <span class="comment">&lt;!-- 对于前缀为 ‘ORDER.WEIGHT.’ 的 topic，最多只保留1000条消息，超出时，将 ORDER 值相同的消息列表中较旧的消息移除（只保留最新的一条消息） --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">messageEvictionStrategy</span>&gt;</span>  </span><br><span class="line">        <span class="tag">&lt;<span class="name">uniquePropertyMessageEvictionStrategy</span> <span class="attr">propertyName</span>=<span class="string">"ORDER"</span> /&gt;</span>  </span><br><span class="line">    <span class="tag">&lt;/<span class="name">messageEvictionStrategy</span>&gt;</span>  </span><br><span class="line"><span class="tag">&lt;/<span class="name">policyEntry</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h6 id="7-PendingQueueStoragePolicy：待消费消息策略（面向慢消费者）"><a href="#7-PendingQueueStoragePolicy：待消费消息策略（面向慢消费者）" class="headerlink" title="7. PendingQueueStoragePolicy：待消费消息策略（面向慢消费者）"></a>7. PendingQueueStoragePolicy：待消费消息策略（面向慢消费者）</h6><p>当通道中存在大量的慢消费者时，此时便会产生大量的Pending Message（待消费消息）。对于这些Pending Message，ActiveMQ提供了几种Cursor来保存。</p>
+<ul>
+<li><code>vmQueueCursor</code>：将待转发消息保存在额外的内存(JVM linkeList)的存储结构中。是“非持久化消息”的默认设置，如果Broker不支持Persistent，它是任何类型消息的默认设置。有OOM风险。</li>
+<li><code>fileQueueCursor</code>：将消息保存到临时文件中。文件存储方式有 broker 的 tempDataStore 属性决定。是“持久化消息”的默认设置。</li>
+<li><code>storeCursor</code>：“综合”设置，对于非持久化消息，将采用vmQueueCursor存储，对于持久化消息采用fileQueueCursor。这是强烈推荐的策略，也是效率最好的策略。<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- 内存限制为512M，如果超过阀值，则转存 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">policyEntry</span> <span class="attr">queue</span>=<span class="string">"&gt;"</span> <span class="attr">producerFlowControl</span>=<span class="string">"true"</span> <span class="attr">memoryLimit</span>=<span class="string">"512mb"</span>&gt;</span>               </span><br><span class="line">	<span class="tag">&lt;<span class="name">pendingQueuePolicy</span>&gt;</span>  </span><br><span class="line">		<span class="tag">&lt;<span class="name">storeCursor</span>&gt;</span></span><br><span class="line">			<span class="tag">&lt;<span class="name">nonPersistent</span>&gt;</span></span><br><span class="line">				<span class="tag">&lt;<span class="name">fileQueueCursor</span>/&gt;</span></span><br><span class="line">			<span class="tag">&lt;/<span class="name">nonPersistent</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;/<span class="name">storeCursor</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;/<span class="name">pendingQueuePolicy</span>&gt;</span>  </span><br><span class="line"><span class="tag">&lt;/<span class="name">policyEntry</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h5 id="systemUsage（存储配置）"><a href="#systemUsage（存储配置）" class="headerlink" title="systemUsage（存储配置）"></a>systemUsage（存储配置）</h5><p>用于设置信息在内存、磁盘中占用的大小</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">systemUsage</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">systemUsage</span>&gt;</span></span><br><span class="line">      <span class="comment">&lt;!-- memoryUsage 表示 MQ 使用的内存，这个值要大于等于 destinationPolicy 中设置的所有队列的内存之和 --&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">memoryUsage</span>&gt;</span></span><br><span class="line">          <span class="tag">&lt;<span class="name">memoryUsage</span> <span class="attr">limit</span>=<span class="string">"20 mb"</span>/&gt;</span></span><br><span class="line">      <span class="tag">&lt;/<span class="name">memoryUsage</span>&gt;</span></span><br><span class="line">      <span class="comment">&lt;!-- storeUsage 表示持久化存储文件的大小 --&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">storeUsage</span>&gt;</span></span><br><span class="line">          <span class="tag">&lt;<span class="name">storeUsage</span> <span class="attr">limit</span>=<span class="string">"1 gb"</span>/&gt;</span></span><br><span class="line">      <span class="tag">&lt;/<span class="name">storeUsage</span>&gt;</span></span><br><span class="line">      <span class="comment">&lt;!-- tempUsage 表示非持久化消息存储的临时内存大小 --&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">tempUsage</span>&gt;</span></span><br><span class="line">          <span class="tag">&lt;<span class="name">tempUsage</span> <span class="attr">limit</span>=<span class="string">"100 mb"</span>/&gt;</span></span><br><span class="line">      <span class="tag">&lt;/<span class="name">tempUsage</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">systemUsage</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">systemUsage</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h5 id="主备配置"><a href="#主备配置" class="headerlink" title="主备配置"></a>主备配置</h5><p>ActiveMQ 主备主要分三种： <code>Master/Slave</code>、 <code>文件共享方式</code>、<code>数据库共享方式</code><br>下面将介绍这三种方式的区别:</p>
+<h6 id="1-Master-Slave"><a href="#1-Master-Slave" class="headerlink" title="1. Master/Slave"></a>1. Master/Slave</h6><p>Master/Slave 方式不需要对 Master Broker 做特殊的配置，只要在 Slave Broker 中指定 Master 即可。其中，指定 Master 有两种方式:</p>
+<ul>
+<li>方法1：在 broker 节点中添加 : <figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">masterConnectorURI=”tcp://localhost:61616″</span><br></pre></td></tr></table></figure></li>
+<li>方法2：添加 services 节点，并指定连接的用户名和密码，配置如下：<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">services</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">masterConnector</span> <span class="attr">remoteURI</span>= <span class="string">"tcp://localhost:61616"</span> <span class="attr">userName</span>=<span class="string">"system"</span> <span class="attr">password</span>=<span class="string">"manager"</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">services</span>&gt;</span></span><br></pre></td></tr></table></figure>
+注： 纯 Master/Slave 只允许一个 Slave 连接到 Master 上（即只可运行2台 MQ 的集群），若 Master 夯机，需要停止 Slave 来恢复负载。</li>
+</ul>
+<h6 id="2-数据库共享方式"><a href="#2-数据库共享方式" class="headerlink" title="2. 数据库共享方式"></a>2. 数据库共享方式</h6><p><strong>采用数据库做消息的持久化</strong>，支持多个 Slave，所有 broker 持久化数据源配置成同一个数据源，多个 slave 竞争同一个数据库锁 ，拿到数据库锁的 slave 会变成 master ;当 master 挂了之后，其中的一个 slave 将会立刻获得数据库锁成为 master，由于采用的是数据库做为持久化，它的性能是有限的</p>
+<h6 id="3-文件共享方式"><a href="#3-文件共享方式" class="headerlink" title="3. 文件共享方式"></a>3. 文件共享方式</h6><p><code>文件共享方式与数据库共享方式类似</code>，区别在于 broker 的持久化采用的是文件，slave 等待获取的锁是文件锁，它具有更高的性能，但是需要文件共享系统的支持。<br>Window下共享KahaDB持久化的目录，配置如下：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">persistenceAdapter</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">kahaDB</span> <span class="attr">directory</span>=<span class="string">"//172.16.1.202/mqdata/kahadb"</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">persistenceAdapter</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h5 id="负载均衡配置"><a href="#负载均衡配置" class="headerlink" title="负载均衡配置"></a>负载均衡配置</h5><p>ActiveMQ 可以实现多个 mq 之间进行路由，假设有两个 mq，分别为 brokerA 和 brokerB，当有一条消息发送到 brokerA 的队列 test 中，有一个客户端连接到 brokerB 上，并且要求获取 test 队列的消息时，brokerA 中队列 test 的消息就会路由到brokerB上, 反之brokerB 的消息也会路由到 brokerA。<br>负载均衡的静态路由的配置如下：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">networkConnectors</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">networkConnector</span> <span class="attr">uri</span>=<span class="string">"static:(tcp://host1:61616,tcp://host2:61616,tcp://..)"</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">networkConnectors</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>networkConnector 属性的官方链接：<a href="http://activemq.apache.org/networks-of-brokers.html" target="_blank" rel="noopener">http://activemq.apache.org/networks-of-brokers.html</a></p>
+<h5 id="持久化配置"><a href="#持久化配置" class="headerlink" title="持久化配置"></a>持久化配置</h5><p>持久化属性是 <code>persistent</code> (默认 true )，同时发送的消息也应该是 persitent 类型。<br>ActiveMQ 消息持久化有三种方式：<code>AMQ</code>、 <code>KahaDB</code>、 <code>JDBC</code><br>下面对上述三种持久化方式进行解释。</p>
+<h6 id="1-AMQ"><a href="#1-AMQ" class="headerlink" title="1. AMQ"></a>1. AMQ</h6><p>AMQ 是一种文件存储形式，具有写入速度快和容易恢复的特点。消息存储在文件中，文件的默认大小为32兆，如果一条消息的大小超过了32 兆，那么这个值必须设置大点。当一个存储文件中的消息已经全部被消费，那么这个文件将被标识为可删除，在下一个清除阶段，这个文件被删除。默认配置如下：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">persistenceAdapter</span>&gt;</span></span><br><span class="line">     <span class="tag">&lt;<span class="name">amqPersistenceAdapter</span> <span class="attr">directory</span>=<span class="string">"activemq-data"</span> <span class="attr">maxFileLength</span>=<span class="string">"32mb"</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">persistenceAdapter</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h6 id="2-KahaDB"><a href="#2-KahaDB" class="headerlink" title="2. KahaDB"></a>2. KahaDB</h6><p>KahaDB 是基于文件的本地数据库储存形式，虽然没有 AMQ 的速度快，但是它具有强扩展性，恢复的时间比 AMQ 短，从 5.4 版本之后KahaDB 做为默认的持久化方式。默认配置如下：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">persistenceAdapter</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">kahaDB</span> <span class="attr">directory</span>=<span class="string">"activemq-data"</span> <span class="attr">journalMaxFileLength</span>=<span class="string">"32mb"</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">persistenceAdapter</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h6 id="3-JDBC"><a href="#3-JDBC" class="headerlink" title="3. JDBC"></a>3. JDBC</h6><p>配置JDBC适配器：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"> <span class="tag">&lt;<span class="name">persistenceAdapter</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!--- dataSource 指定持久化数据库的 bean 标签，createTablesOnStartup 是否在启动的时候创建数据表，默认值是 true --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">jdbcPersistenceAdapter</span> <span class="attr">dataSource</span>=<span class="string">"#mysql-ds"</span> <span class="attr">createTablesOnStartup</span>=<span class="string">"false"</span> /&gt;</span></span><br><span class="line"> <span class="tag">&lt;/<span class="name">persistenceAdapter</span>&gt;</span></span><br><span class="line">``` </span><br><span class="line">**JDBC 具体的持久化配置是在 `bean` 标签中定义**</span><br><span class="line"></span><br><span class="line">下面介绍基于 MYSQL、SQL Server、Oracle、DB2 的持久化配置方案：</span><br><span class="line">* MYSQL 持久化配置如下:</span><br><span class="line">```xml</span><br><span class="line"><span class="comment">&lt;!--- 这里的 mysql-ds 与 persistenceAdapter.jdbcPersistenceAdapter.dataSource 对应 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"mysql-ds"</span> <span class="attr">class</span>=<span class="string">"org.apache.commons.dbcp.BasicDataSource"</span> <span class="attr">destroy-method</span>=<span class="string">"close"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"driverClassName"</span> <span class="attr">value</span>=<span class="string">"com.mysql.jdbc.Driver"</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"url"</span> <span class="attr">value</span>=<span class="string">"jdbc:mysql://localhost/activemq?relaxAutoCommit=true"</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"username"</span> <span class="attr">value</span>=<span class="string">"activemq"</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"password"</span> <span class="attr">value</span>=<span class="string">"activemq"</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"poolPreparedStatements"</span> <span class="attr">value</span>=<span class="string">"true"</span>/&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p>SQL Server 的持久化配置</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"mssql-ds"</span> <span class="attr">class</span>=<span class="string">"net.sourceforge.jtds.jdbcx.JtdsDataSource"</span> <span class="attr">destroy-method</span>=<span class="string">"close"</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"serverName"</span> <span class="attr">value</span>=<span class="string">"SERVERNAME"</span>/&gt;</span></span><br><span class="line">   <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"portNumber"</span> <span class="attr">value</span>=<span class="string">"PORTNUMBER"</span>/&gt;</span></span><br><span class="line">   <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"databaseName"</span> <span class="attr">value</span>=<span class="string">"DATABASENAME"</span>/&gt;</span></span><br><span class="line">   <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"user"</span> <span class="attr">value</span>=<span class="string">"USER"</span>/&gt;</span></span><br><span class="line">   <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"password"</span> <span class="attr">value</span>=<span class="string">"PASSWORD"</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>Oracle 的持久化配置 </p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"oracle-ds"</span> <span class="attr">class</span>=<span class="string">"org.apache.commons.dbcp.BasicDataSource"</span> <span class="attr">destroy-method</span>=<span class="string">"close"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"driverClassName"</span> <span class="attr">value</span>=<span class="string">"oracle.jdbc.driver.OracleDriver"</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"url"</span> <span class="attr">value</span>=<span class="string">"jdbc:oracle:thin:@10.53.132.47:1521:activemq"</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"username"</span> <span class="attr">value</span>=<span class="string">"activemq"</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"password"</span> <span class="attr">value</span>=<span class="string">"activemq"</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"maxActive"</span> <span class="attr">value</span>=<span class="string">"200"</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"poolPreparedStatements"</span> <span class="attr">value</span>=<span class="string">"true"</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br></pre></td></tr></table></figure></li>
+<li><p>DB2 的持久化配置：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"db2-ds"</span> <span class="attr">class</span>=<span class="string">"org.apache.commons.dbcp.BasicDataSource"</span>  <span class="attr">destroy-method</span>=<span class="string">"close"</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"driverClassName"</span> <span class="attr">value</span>=<span class="string">"com.ibm.db2.jcc.DB2Driver"</span>/&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"url"</span> <span class="attr">value</span>=<span class="string">"jdbc:db2://hndb02.bf.ctc.com:50002/activemq"</span>/&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"username"</span> <span class="attr">value</span>=<span class="string">"activemq"</span>/&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"password"</span> <span class="attr">value</span>=<span class="string">"activemq"</span>/&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"maxActive"</span> <span class="attr">value</span>=<span class="string">"200"</span>/&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"poolPreparedStatements"</span> <span class="attr">value</span>=<span class="string">"true"</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br></pre></td></tr></table></figure></li>
+</ul>
+
+      
+    </div>
+    <div class="article-footer">
+      <blockquote class="mt-2x">
+  <ul class="post-copyright list-unstyled">
+    
+    <li class="post-copyright-link hidden-xs">
+      <strong>本文链接：</strong>
+      <a href="http://zhaobiao666.github.io/middleware/ActiveMQ/" title="ActiveMQ 的安装&amp;简单使用&amp;参数详解（Golang版）" target="_blank" rel="external">http://zhaobiao666.github.io/middleware/ActiveMQ/</a>
+    </li>
+    
+    <li class="post-copyright-license">
+      <strong>版权声明： </strong> 本博客所有文章除特别声明外，均采用 <a href="http://creativecommons.org/licenses/by/4.0/deed.zh" target="_blank" rel="external">CC BY 4.0 CN协议</a> 许可协议。转载请注明出处！
+    </li>
+  </ul>
+</blockquote>
+
+
+<div class="panel panel-default panel-badger">
+  <div class="panel-body">
+    <figure class="media">
+      <div class="media-left">
+        <a href="https://github.com/zhaobiao666" target="_blank" class="img-burn thumb-sm visible-lg">
+          <img src="/images/avatar.jpg" class="img-rounded w-full" alt="">
+        </a>
+      </div>
+      <div class="media-body">
+        <h3 class="media-heading"><a href="https://github.com/zhaobiao666" target="_blank"><span class="text-dark">极地东风</span><small class="ml-1x">Block Chain</small></a></h3>
+        <div>Hyperledger Fabric Developer</div>
+      </div>
+    </figure>
+  </div>
+</div>
+
+
+    </div>
+  </article>
+  
+    
+  <section id="comments">
+  	
+           
+    
+  </section>
+
+
+  
+</div>
+
+  <nav class="bar bar-footer clearfix" data-stick-bottom>
+  <div class="bar-inner">
+  
+  <ul class="pager pull-left">
+    
+    
+    <li class="next">
+      <a href="/leetcode/3Sum/" title="三数之合"><span>下一篇&nbsp;&nbsp;</span><i class="icon icon-angle-right" aria-hidden="true"></i></a>
+    </li>
+    
+    
+    <li class="toggle-toc">
+      <a class="toggle-btn collapsed" data-toggle="collapse" href="#collapseToc" aria-expanded="false" title="文章目录" role="button">
+        <span>[&nbsp;</span><span>文章目录</span>
+        <i class="text-collapsed icon icon-anchor"></i>
+        <i class="text-in icon icon-close"></i>
+        <span>]</span>
+      </a>
+    </li>
+    
+  </ul>
+  
+  
+  <!-- Button trigger modal -->
+  <button type="button" class="btn btn-fancy btn-donate pop-onhover bg-gradient-warning" data-toggle="modal" data-target="#donateModal"><span>赏</span></button>
+  <!-- <div class="wave-icon wave-icon-danger btn-donate" data-toggle="modal" data-target="#donateModal">
+    <div class="wave-circle"><span class="icon"><i class="icon icon-bill"></i></span></div>
+  </div> -->
+  
+  
+  <div class="bar-right">
+    
+    <div class="share-component" data-sites="weibo,qq,wechat,facebook,twitter" data-mobile-sites="weibo,qq,qzone"></div>
+    
+  </div>
+  </div>
+</nav>
+  
+<!-- Modal -->
+<div class="modal modal-center modal-small modal-xs-full fade" id="donateModal" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content donate">
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      <div class="modal-body">
+        <div class="donate-box">
+          <div class="donate-head">
+            <p>感谢您的支持，我会继续努力的!</p>
+          </div>
+          <div class="tab-content">
+            <div role="tabpanel" class="tab-pane fade active in" id="alipay">
+              <div class="donate-payimg">
+                <img src="/images/donate/alipayimg.png" alt="扫码支持" title="扫一扫" />
+              </div>
+              <p class="text-muted mv">扫码打赏，你说多少就多少</p>
+              <p class="text-grey">打开支付宝扫一扫，即可进行扫码打赏哦</p>
+            </div>
+            <div role="tabpanel" class="tab-pane fade" id="wechatpay">
+              <div class="donate-payimg">
+                <img src="/images/donate/wechatpayimg.png" alt="扫码支持" title="扫一扫" />
+              </div>
+              <p class="text-muted mv">扫码打赏，你说多少就多少</p>
+              <p class="text-grey">打开微信扫一扫，即可进行扫码打赏哦</p>
+            </div>
+          </div>
+          <div class="donate-footer">
+            <ul class="nav nav-tabs nav-justified" role="tablist">
+              <li role="presentation" class="active">
+                <a href="#alipay" id="alipay-tab" role="tab" data-toggle="tab" aria-controls="alipay" aria-expanded="true"><i class="icon icon-alipay"></i> 支付宝</a>
+              </li>
+              <li role="presentation" class="">
+                <a href="#wechatpay" role="tab" id="wechatpay-tab" data-toggle="tab" aria-controls="wechatpay" aria-expanded="false"><i class="icon icon-wepay"></i> 微信支付</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+</main>
+
+  <footer class="footer" itemscope itemtype="http://schema.org/WPFooter">
+	
+	
+    <ul class="social-links">
+    	
+        <li><a href="https://github.com/zhaobiao666" target="_blank" title="Github" data-toggle=tooltip data-placement=top><i class="icon icon-github"></i></a></li>
+        
+        <li><a href="http://weibo.com/zhaobiao666" target="_blank" title="Weibo" data-toggle=tooltip data-placement=top><i class="icon icon-weibo"></i></a></li>
+        
+        <li><a href="https://twitter.com/zhaobiao666" target="_blank" title="Twitter" data-toggle=tooltip data-placement=top><i class="icon icon-twitter"></i></a></li>
+        
+        <li><a href="https://www.behance.net/zhaobiao666" target="_blank" title="Behance" data-toggle=tooltip data-placement=top><i class="icon icon-behance"></i></a></li>
+        
+        <li><a href="/atom.xml" target="_blank" title="Rss" data-toggle=tooltip data-placement=top><i class="icon icon-rss"></i></a></li>
+        
+    </ul>
+
+    <div class="copyright">
+    	
+        <div class="publishby">
+        	Theme by <a href="https://github.com/cofess" target="_blank"> cofess </a>base on <a href="https://github.com/cofess/hexo-theme-pure" target="_blank">pure</a>.
+        </div>
+    </div>
+</footer>
+  <script src="//cdn.jsdelivr.net/npm/jquery@1.12.4/dist/jquery.min.js"></script>
+<script>
+window.jQuery || document.write('<script src="js/jquery.min.js"><\/script>')
+</script>
+
+<script src="/js/plugin.min.js"></script>
+
+
+<script src="/js/application.js"></script>
+
+
+    <script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '文章',
+            PAGES: '页面',
+            CATEGORIES: '分类',
+            TAGS: '标签',
+            UNTITLED: '(未命名)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+
+<script src="/js/insight.js"></script>
+
+
+
+
+
+
+   
+
+
+
+
+   
+    
+  <!-- <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css"> -->
+  <script src="//cdn.jsdelivr.net/npm/gitalk@1.4.0/dist/gitalk.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/blueimp-md5@2.10.0/js/md5.min.js"></script>
+  <script type="text/javascript">
+  var gitalk = new Gitalk({
+    clientID: 'f302dff65be530be2ffb',
+    clientSecret: 'f7c287c3058a8b0714dcd249cd7993343fec135a',
+    repo: 'zhaobiao666.github.io',
+    owner: 'zhaobiao666',
+    admin: ['zhaobiao666'],
+    id: md5(location.pathname),
+    distractionFreeMode: true
+  })
+  gitalk.render('comments')
+  </script>
+
+      
+
+
+
+
+
+
+
+</body>
+</html>
