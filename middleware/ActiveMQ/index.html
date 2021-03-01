@@ -31,7 +31,7 @@
 <meta property="og:image" content="http://zhaobiao666.github.io/middleware/ActiveMQ/mqHome.jpg">
 <meta property="og:image" content="http://zhaobiao666.github.io/middleware/ActiveMQ/conf.jpg">
 <meta property="article:published_time" content="2021-03-01T02:17:45.000Z">
-<meta property="article:modified_time" content="2021-03-01T03:25:13.890Z">
+<meta property="article:modified_time" content="2021-03-01T03:33:12.137Z">
 <meta property="article:author" content="极地东风">
 <meta property="article:tag" content="middleware,ActiveMQ">
 <meta name="twitter:card" content="summary">
@@ -433,29 +433,16 @@
 </li>
 <li>关闭命令：<code>activemq stop</code></li>
 </ul>
-<h3 id="创建-queue-amp-topic-消息类型的对象"><a href="#创建-queue-amp-topic-消息类型的对象" class="headerlink" title="创建 queue &amp; topic 消息类型的对象"></a>创建 queue &amp; topic 消息类型的对象</h3><blockquote>
-<p>ActiveMQ 有两种消息类型：</p>
-</blockquote>
-<ul>
-<li><code>queue</code></li>
-<li><code>topic</code></li>
-</ul>
-<blockquote>
-<p>两种消息类型区别如下：</p>
-</blockquote>
+<h3 id="创建-queue-amp-topic-消息类型的对象"><a href="#创建-queue-amp-topic-消息类型的对象" class="headerlink" title="创建 queue &amp; topic 消息类型的对象"></a>创建 queue &amp; topic 消息类型的对象</h3><p>ActiveMQ 有两种消息类型：<code>queue</code>，<code>topic</code>。二者区别如下：</p>
 <ul>
 <li>queue 中的每个消息，只能被消费一次，消费完即消失；而 topic 中的每个消息，可以被每一个订阅了该 topic 的消费者消费。</li>
 <li>queue 消费者可以消费任何时间段的消息； 而 topic 消费者只能消费订阅后才发布的消息。因此， topic 模式下，需要先启动消费者，再启动生产者。</li>
 </ul>
-<blockquote>
 <p>queue 消息类型生成：</p>
-</blockquote>
 <ul>
 <li>使用 ActiveMQ 自带的 Web 服务进行创建：<br><img src="/middleware/ActiveMQ/queue.jpg" alt="2ae1093bdf78dff2bfe5270d2aaae56d.jpeg"></li>
 </ul>
-<blockquote>
 <p>topic 消息类型生成：</p>
-</blockquote>
 <ul>
 <li>使用 ActiveMQ 自带的 Web 服务进行创建：<br><img src="/middleware/ActiveMQ/topic.jpg" alt="c6a824c7a74224ca326848d8b9ef2fe9.png"></li>
 </ul>
